@@ -7,7 +7,7 @@ BOOTSTRAP_MACHINE=${2:-osiris}
 VALID_USERNAMES=("thomas" "detbo")
 VALID_MACHINES=("osiris" "horus" "imhotep")
 
-BASE_DIRECTORY="~/.nixpkgs"
+BASE_DIRECTORY="${HOME}/.nixpkgs"
 MACHINE_DIRECTORY="${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}"
 CURRENT_ARCH=$(uname)
 
@@ -50,6 +50,8 @@ if ! command -v nix-env >/dev/null 2>&1; then
 
     PATH="${HOME}/.nix-profile/bin:${PATH}"
 fi
+
+nix-shell -p nix-info --run "nix-info -m"
 
 if ! command -v git >/dev/null 2>&1; then
     nix-env -iA nixpkgs.git 2>/dev/null || nix-env -iA nixos.git || nix --experimental-features 'nix-command flakes' profile install nixpkgs#git || nix-env -iA git -f https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
