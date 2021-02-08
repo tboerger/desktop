@@ -29,5 +29,5 @@ Apache-2.0
 ## Copyright
 
 ```console
-Copyright (c) 2021 Thomas Boerger <thomas@webhippie.de>
+Copyright (c) 2021 Thomas Boerger <thomas@boerger.ws>
 ```
