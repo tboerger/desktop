@@ -1,0 +1,4 @@
+{}:
+{
+  screencapture.location = "~/Screenshots";
+}

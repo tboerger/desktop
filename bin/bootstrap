@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+BOOTSTRAP_USERNAME=${1:-thomas}
+BOOTSTRAP_MACHINE=${2:-osiris}
+
+VALID_USERNAMES=("thomas" "detbo")
+VALID_MACHINES=("osiris" "horus" "imhotep")
+
+BASE_DIRECTORY="~/.nix-config"
+MACHINE_DIRECTORY="${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}"
+CURRENT_ARCH=$(uname)
+
+if [[ "${VALID_USERNAMES[*]}" != *"${BOOTSTRAP_USERNAME}"* ]]; then
+    echo "Provided username is not valid!"
+    exit 1
+fi
+
+if [[ "${VALID_MACHINES[*]}" != *"${BOOTSTRAP_MACHINE}"* ]]; then
+    echo "Provided machine is not valid!"
+    exit 1
+fi
+
+echo "Bootstrapping machine ${BOOTSTRAP_MACHINE} for ${BOOTSTRAP_USERNAME}"
+
+if [[ -d "${BASE_DIRECTORY}" ]]; then
+    echo "Base repository already exists"
+else
+    git clone git@github.com:tboerger/desktop.git "${BASE_DIRECTORY}"
+fi
+
+cd "${BASE_DIRECTORY}" || exit
+ln -sf "${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}/configuration.nix" configuration.nix
+
+if ! command -v nix-env >/dev/null 2>&1; then
+    case "$(uname)" in
+        Linux)
+            curl -L -s https://nixos.org/nix/install | sh -s - --daemon
+            ;;
+        Darwin)
+            curl -L -s https://nixos.org/nix/install | sh -s - --darwin-use-unencrypted-nix-store-volume --daemon
+            ;;
+        *)
+            curl -L -s https://nixos.org/nix/install | sh -s
+            ;;
+    esac
+
+    if [[ -f "${HOME}/.profile" ]]; then
+        source "${HOME}/.profile"
+    fi
+
+    PATH="${HOME}/.nix-profile/bin${PATH-+:$PATH}"
+fi
+
+if ! command -v git >/dev/null 2>&1; then
+    nix-env -iA nixpkgs.git 2>/dev/null || nix-env -iA nixos.git || nix --experimental-features 'nix-command flakes' profile install nixpkgs#git || nix-env -iA git -f https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+fi
+
+if ! command -v ssh >/dev/null 2>&1; then
+    nix-env -iA nixpkgs.openssh 2>/dev/null || nix-env -iA nixos.openssh || nix --experimental-features 'nix-command flakes' profile install nixpkgs#openssh || nix-env -iA openssh -f https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+fi
+
+nix-env -if . || nix --experimental-features 'nix-command flakes' profile install
+
+if ! [[ -f "${HOME}/.profile" ]] || ! grep -q '\(source\|\.\) "\?${HOME}/.nix-profile/etc/profile"\?' "${HOME}/.profile"; then
+    echo '[ -f "${HOME}/.nix-profile/etc/profile" ] && . "${HOME}/.nix-profile/etc/profile"' >> "${HOME}/.profile"
+fi
+
+if ! [[ -f "${HOME}/.zshrc" ]] || ! grep -q '\(source\|\.\) "\?${HOME}/.nix-profile/etc/zshrc"\?' "${HOME}/.zshrc"; then
+    echo '[ -f "${HOME}/.nix-profile/etc/zshrc" ] && source "${HOME}/.nix-profile/etc/zshrc"' >> "${HOME}/.zshrc"
+fi
+
+if ! [[ -f "${HOME}/.bashrc" ]] || ! grep -q '\(source\|\.\) "\?${HOME}/.nix-profile/etc/profile"\?' "${HOME}/.bashrc"; then
+    echo '[ -f "${HOME}/.nix-profile/etc/profile" ] && source "${HOME}/.nix-profile/etc/profile"' >> "${HOME}/.bashrc"
+fi
