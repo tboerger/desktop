@@ -1,11 +1,7 @@
-{ machine, nix }:
+{options}:
 {
-  inherit(machine) distributedBuilds buildMachines;
-
-  package = nix;
-
-  useDaemon  = true;
-  maxJobs    = 4;
+  useDaemon = true;
+  maxJobs = 4;
   buildCores = 2;
   useSandbox = false;
 
@@ -21,7 +17,7 @@
     show-trace = true
   '';
 
-  nixPath = [
-    "darwin-config=$HOME/.nix-config/configuration.nix"
+  nixPath = options.nix.nixPath.default ++ [
+    '$HOME/.nix-defexpr/channels'
   ];
 }

@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, options, ... }:
 let
   machine = "osiris";
 in
 {
-  environment = import ./environment.nix { inherit config lib pkgs; };
+  environment = import ./environment.nix { inherit config pkgs; };
 
   fonts = {
     enableFontDir = true;
@@ -13,10 +13,7 @@ in
     ];
   };
 
-  nix = import ./programs/nix.nix {
-    machine = nix;
-    inherit(pkgs) nix;
-  };
+  nix = import ../../programs/nix.nix { inherit options };
 
   nixpkgs = {
     config = {
@@ -45,3 +42,4 @@ in
 
   system = import ./system.nix {};
 }
+

@@ -1,5 +1,5 @@
 {}:
 {
   defaults = import ./preferences/defaults.nix {};
-  stateVersion = 3;
+  stateVersion = 4;
 }

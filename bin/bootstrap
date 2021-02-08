@@ -7,7 +7,7 @@ BOOTSTRAP_MACHINE=${2:-osiris}
 VALID_USERNAMES=("thomas" "detbo")
 VALID_MACHINES=("osiris" "horus" "imhotep")
 
-BASE_DIRECTORY="~/.nix-config"
+BASE_DIRECTORY="~/.nixpkgs"
 MACHINE_DIRECTORY="${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}"
 CURRENT_ARCH=$(uname)
 
@@ -23,17 +23,8 @@ fi
 
 echo "Bootstrapping machine ${BOOTSTRAP_MACHINE} for ${BOOTSTRAP_USERNAME}"
 
-if [[ -d "${BASE_DIRECTORY}" ]]; then
-    echo "Base repository already exists"
-else
-    git clone git@github.com:tboerger/desktop.git "${BASE_DIRECTORY}"
-fi
-
-cd "${BASE_DIRECTORY}" || exit
-ln -sf "${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}/configuration.nix" configuration.nix
-
 if ! command -v nix-env >/dev/null 2>&1; then
-    case "$(uname)" in
+    case "${CURRENT_ARCH}" in
         Linux)
             curl -L -s https://nixos.org/nix/install | sh -s - --daemon
             ;;
@@ -45,11 +36,11 @@ if ! command -v nix-env >/dev/null 2>&1; then
             ;;
     esac
 
-    if [[ -f "${HOME}/.profile" ]]; then
-        source "${HOME}/.profile"
+    if [[ -f "/etc/zshrc" ]]; then
+        source /etc/.profile
     fi
 
-    PATH="${HOME}/.nix-profile/bin${PATH-+:$PATH}"
+    PATH="${HOME}/.nix-profile/bin:${PATH}"
 fi
 
 if ! command -v git >/dev/null 2>&1; then
@@ -59,8 +50,6 @@ fi
 if ! command -v ssh >/dev/null 2>&1; then
     nix-env -iA nixpkgs.openssh 2>/dev/null || nix-env -iA nixos.openssh || nix --experimental-features 'nix-command flakes' profile install nixpkgs#openssh || nix-env -iA openssh -f https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz
 fi
-
-nix-env -if . || nix --experimental-features 'nix-command flakes' profile install
 
 if ! [[ -f "${HOME}/.profile" ]] || ! grep -q '\(source\|\.\) "\?${HOME}/.nix-profile/etc/profile"\?' "${HOME}/.profile"; then
     echo '[ -f "${HOME}/.nix-profile/etc/profile" ] && . "${HOME}/.nix-profile/etc/profile"' >> "${HOME}/.profile"
@@ -73,3 +62,30 @@ fi
 if ! [[ -f "${HOME}/.bashrc" ]] || ! grep -q '\(source\|\.\) "\?${HOME}/.nix-profile/etc/profile"\?' "${HOME}/.bashrc"; then
     echo '[ -f "${HOME}/.nix-profile/etc/profile" ] && source "${HOME}/.nix-profile/etc/profile"' >> "${HOME}/.bashrc"
 fi
+
+if [[ -d "${BASE_DIRECTORY}" ]]; then
+    echo "Base repository already exists"
+else
+    git clone https://github.com/tboerger/desktop.git "${BASE_DIRECTORY}"
+fi
+
+cd "${BASE_DIRECTORY}" || exit
+
+case "${CURRENT_ARCH}" in
+    Darwin)
+        ln -sf "${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}/configuration.nix" darwin-configuration.nix
+
+        if ! command -v darwin-rebuild >/dev/null 2>&1; then
+            nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+            yes | ./result/bin/darwin-installer
+            rm -rf result/
+
+            PATH="${PATH}:/run/current-system/sw/bin"
+        fi
+
+        ;;
+    *)
+        ln -sf "${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}/configuration.nix" configuration.nix
+
+        ;;
+esac
