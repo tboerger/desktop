@@ -21,6 +21,14 @@ if [[ "${VALID_MACHINES[*]}" != *"${BOOTSTRAP_MACHINE}"* ]]; then
     exit 1
 fi
 
+if [[ "${CURRENT_ARCH}" == "Darwin" ]]; then
+    if [[ $(xcode-select -p) == "" ]]; then
+        echo "Command line tools not installed!"
+        xcode-select --install
+        exit 1
+    fi
+fi
+
 echo "Bootstrapping machine ${BOOTSTRAP_MACHINE} for ${BOOTSTRAP_USERNAME}"
 
 if ! command -v nix-env >/dev/null 2>&1; then
