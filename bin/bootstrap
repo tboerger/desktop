@@ -44,8 +44,8 @@ if ! command -v nix-env >/dev/null 2>&1; then
             ;;
     esac
 
-    if [[ -f "/etc/zshrc" ]]; then
-        source /etc/zshrc
+    if [[ -f "/etc/bashrc" ]]; then
+        source /etc/bashrc
     fi
 
     PATH="${HOME}/.nix-profile/bin:${PATH}"
@@ -85,10 +85,11 @@ case "${CURRENT_ARCH}" in
 
         if ! command -v darwin-rebuild >/dev/null 2>&1; then
             sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.orig
+
             sudo mv /etc/zprofile /etc/zprofile.orig
-            sudo mv /etc/zshrc /etc/zshrc.orig
+            sudo mv /etc/zshrc /etc/zshrc.local
             sudo mv /etc/profile /etc/profile.orig
-            sudo mv /etc/bashrc /etc/bashrc.orig
+            sudo mv /etc/bashrc /etc/bashrc.local
 
             nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
             yes | ./result/bin/darwin-installer
