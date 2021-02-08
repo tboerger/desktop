@@ -23,6 +23,10 @@ in
   };
 
   programs = {
+    zsh = {
+      enable = true;
+    };
+
     gnupg = import ../../programs/gnupg.nix {};
   };
 

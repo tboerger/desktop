@@ -84,6 +84,10 @@ case "${CURRENT_ARCH}" in
         ln -sf "${BASE_DIRECTORY}/machines/${BOOTSTRAP_MACHINE}/configuration.nix" darwin-configuration.nix
 
         if ! command -v darwin-rebuild >/dev/null 2>&1; then
+            if [[ -f "/etc/bashrc" ]]; then
+                source /etc/bashrc
+            fi
+
             sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.orig
 
             sudo mv /etc/zprofile /etc/zprofile.orig

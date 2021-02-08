@@ -1,6 +1,6 @@
 # desktop
 
-This project defines my declarative configuration for macOS. It is based on [nix](https://nixos.org/learn.html) and [nix-darwin](https://github.com/LnL7/nix-darwin), it should be self-contained including a bootstrap script.
+This project defines my declarative configuration for macOS, NixOS and potentially even other environments in the future. It is based on [nix](https://nixos.org/learn.html) and [nix-darwin](https://github.com/LnL7/nix-darwin), it is self-containing including a bootstrap script.
 
 ## Bootstrap
 
