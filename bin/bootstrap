@@ -48,7 +48,7 @@ if ! command -v nix-env >/dev/null 2>&1; then
         source /etc/bashrc
     fi
 
-    PATH="${HOME}/.nix-profile/bin:${PATH}"
+    export PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${PATH}"
 fi
 
 nix-shell -p nix-info --run "nix-info -m"
