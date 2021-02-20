@@ -16,8 +16,4 @@
     keep-derivations = true
     show-trace = true
   '';
-
-  nixPath = options.nix.nixPath.default ++ [
-    '$HOME/.nix-defexpr/channels'
-  ];
 }
