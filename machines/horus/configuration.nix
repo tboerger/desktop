@@ -13,7 +13,7 @@ in
     ];
   };
 
-  nix = import ../../programs/nix.nix { inherit options };
+  nix = import ../../programs/nix.nix { inherit options; };
 
   nixpkgs = {
     config = {

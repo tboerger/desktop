@@ -1,4 +1,4 @@
-{options}:
+{ options }:
 {
   useDaemon = true;
   maxJobs = 4;
