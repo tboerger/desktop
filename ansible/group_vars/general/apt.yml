@@ -1,5 +1,10 @@
 # Standards: 1.2
 ---
+apt_enable_general: False
+apt_enable_universe: False
+apt_enable_multiverse: False
+apt_enable_backports: False
+
 apt_unattended_upgrade_remove_unused_deps: True
 apt_unattended_upgrade_remove_unused_kernel: True
 
