@@ -7,7 +7,7 @@ BASE=${BASE:-/home/thomas/.desktop}
 
 if ! hash git 2>/dev/null; then
     echo "--> install git"
-    apt install --yes git-core
+    apt install --yes git
 fi
 
 if ! hash ansible 2>/dev/null; then
@@ -19,11 +19,11 @@ fi
 if test -d "${BASE}"; then
     echo "--> updating itself"
     pushd "${BASE}" >/dev/null
-        su - thomas git pull --autostash --rebase
+        su -c "git pull --autostash --rebase" thomas
     popd >/dev/null
 else
     echo "--> cloning itself"
-    su - thomas git clone "${REPO}" "${BASE}"
+    su -c "git clone ${REPO} ${BASE}" thomas
 fi
 
 for FILE in galaxy inventory playbook vault; do
