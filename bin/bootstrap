@@ -26,7 +26,7 @@ else
     su -c "git clone ${REPO} ${BASE}" thomas
 fi
 
-for FILE in galaxy inventory playbook vault; do
+for FILE in galaxy inventory later playbook vault; do
     echo "--> linking ${FILE}"
     ln -sf "${BASE}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done

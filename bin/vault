@@ -21,7 +21,7 @@ if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
     exit 1
 fi
 
-if [[ -f "${ROOT}/.vaultpasswd" }}; then
+if [[ -f "${ROOT}/.vaultpasswd" ]]; then
     VAULT_PASSWORD_FILE="${ROOT}/.vaultpasswd"
 else
     if [[ -z "${ANSIBLE_VAULT_PASSWORD}" ]]; then

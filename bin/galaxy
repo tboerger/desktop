@@ -12,15 +12,6 @@ if ! which ansible-galaxy >/dev/null; then
     exit 1
 fi
 
-EXECUTE=$(basename $0)
-STRIPPED=${EXECUTE%-galaxy}
-MACHINE=${MACHINE:-${STRIPPED}}
-
-if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
-    echo "Provided invalid machine!"
-    exit 1
-fi
-
 pushd "${ROOT}" >/dev/null
     ansible-galaxy \
         collection install \
