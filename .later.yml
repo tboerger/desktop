@@ -1,0 +1,9 @@
+---
+rules:
+  exclude_files:
+    - ansible/secrets/
+    - galaxy/
+    - collections/
+    - bin/
+
+...

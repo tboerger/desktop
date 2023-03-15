@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+MACHINE=${1:-unknown}
+REPO=${REPO:-https://github.com/tboerger/desktop.git}
+BASE=${BASE:-/home/thomas/.desktop}
+
+if ! hash git 2>/dev/null; then
+    echo "--> install git"
+    apt install --yes git-core
+fi
+
+if ! hash ansible 2>/dev/null; then
+    echo "--> install ansible"
+    add-apt-repository --yes --update ppa:ansible/ansible
+    apt install --yes ansible
+fi
+
+if test -d "${BASE}"; then
+    echo "--> updating itself"
+    pushd "${BASE}" >/dev/null
+        su - thomas git pull --autostash --rebase
+    popd >/dev/null
+else
+    echo "--> cloning itself"
+    su - thomas git clone "${REPO}" "${BASE}"
+fi
+
+for FILE in galaxy inventory playbook vault; do
+    echo "--> linking ${FILE}"
+    ln -sf "${BASE}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
+done
+
+echo "--> finished bootstrap"

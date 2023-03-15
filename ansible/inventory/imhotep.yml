@@ -1,0 +1,12 @@
+imhotep:
+  hosts:
+    imhotep:
+      ansible_host: localhost
+      connection: local
+  vars:
+    ansible_become: True
+    ansible_python_interpreter: /usr/bin/python3
+
+general:
+  hosts:
+    imhotep:
