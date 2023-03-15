@@ -16,7 +16,7 @@
 - hosts: chnum
   roles: []
 
-- hosts: horsu
+- hosts: horus
   roles: []
 
 - hosts: imhotep
