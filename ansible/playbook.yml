@@ -1,8 +1,6 @@
 # Standards: 1.2
 ---
-- hosts: localhost
-  vars:
-    ansible_connection: local
+- hosts: general
   pre_tasks:
     - name: Check ansible version
       assert:
@@ -10,6 +8,21 @@
         msg: You must update Ansible to at least 2.10 to use this playbook
 
 - hosts: general
+  roles: []
+
+- hosts: anubis
+  roles: []
+
+- hosts: chnum
+  roles: []
+
+- hosts: horsu
+  roles: []
+
+- hosts: imhotep
+  roles: []
+
+- hosts: osiris
   roles: []
 
 ...

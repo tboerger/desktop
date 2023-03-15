@@ -1,0 +1,20 @@
+general:
+  hosts:
+    anubis:
+      ansible_host: localhost
+      connection: local
+    chnum:
+      ansible_host: localhost
+      connection: local
+    horus:
+      ansible_host: localhost
+      connection: local
+    imhotep:
+      ansible_host: localhost
+      connection: local
+    osiris:
+      ansible_host: localhost
+      connection: local
+  vars:
+    ansible_become: True
+    ansible_python_interpreter: /usr/bin/python3

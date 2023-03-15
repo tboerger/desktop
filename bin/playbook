@@ -41,7 +41,8 @@ pushd "${ROOT}" >/dev/null
 
     exec ansible-playbook \
         --vault-password-file "${VAULT_PASSWORD_FILE}" \
-        --inventory-file "ansible/inventory/${MACHINE}.yml" \
+        --inventory-file "ansible/inventory.yml" \
         ansible/playbook.yml \
+        -l "${MACHINE}" \
         "$@"
 popd >/dev/null
