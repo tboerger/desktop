@@ -1,0 +1,15 @@
+# Standards: 1.2
+---
+docker_daemon_config:
+  log-driver: json-file
+  log-opts:
+    max-size: 5m
+    max-file: "3"
+  live-restore: False
+
+docker_networks_general:
+  - name: general
+    driver: bridge
+    state: present
+
+...

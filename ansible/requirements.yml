@@ -6,6 +6,9 @@
 - src: https://github.com/rolehippie/base
   scm: git
   version: master
+- src: https://github.com/rolehippie/cfssl
+  scm: git
+  version: master
 - src: https://github.com/rolehippie/docker
   scm: git
   version: master
@@ -21,13 +24,16 @@
 - src: https://github.com/rolehippie/hosts
   scm: git
   version: master
+- src: https://github.com/rolehippie/kubectl
+  scm: git
+  version: master
+- src: https://github.com/rolehippie/libvirt
+  scm: git
+  version: master
 - src: https://github.com/rolehippie/locales
   scm: git
   version: master
 - src: https://github.com/rolehippie/modprobe
-  scm: git
-  version: master
-- src: https://github.com/rolehippie/nullmailer
   scm: git
   version: master
 - src: https://github.com/rolehippie/openssh

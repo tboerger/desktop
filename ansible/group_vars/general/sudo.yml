@@ -1,0 +1,32 @@
+# Standards: 1.2
+---
+sudo_secure_path:
+  - /usr/local/sbin
+  - /usr/local/bin
+  - /usr/sbin
+  - /usr/bin
+  - /sbin
+  - /bin
+  - /snap/bin
+
+sudo_env_keep:
+  - LANG
+  - LC_ADDRESS
+  - LC_CTYPE
+  - LC_COLLATE
+  - LC_IDENTIFICATION
+  - LC_MEASUREMENT
+  - LC_MESSAGES
+  - LC_MONETARY
+  - LC_NAME
+  - LC_NUMERIC
+  - LC_PAPER
+  - LC_TELEPHONE
+  - LC_TIME
+  - LC_ALL
+  - EMAIL
+  - DEBEMAIL
+  - DEBFULLNAME
+  - GPG_AGENT_INFO
+
+...

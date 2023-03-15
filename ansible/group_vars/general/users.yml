@@ -1,0 +1,65 @@
+# Standards: 1.2
+---
+users_castles_force: False
+
+users_thomas_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn Thomas Boerger
+
+users_general:
+  - name: thomas
+    uid: 1000
+    comment: Thomas Boerger
+    shell: /bin/zsh
+    password: "{{ lookup('file', 'secrets/thomas/password.txt') | password_hash('sha512', lookup('file', 'secrets/thomas/salt.txt')) }}"
+    ohmyzsh: True
+    bashit: False
+    ssh_key:
+      generate: False
+    castles:
+      - tboerger/homeshick-base
+      - tboerger/homeshick-linux
+    groups:
+      - sudo
+      - docker
+    sshkeys: "{{ users_thomas_keys }}"
+
+  - name: anna
+    uid: 1001
+    comment: Anna Boerger
+    shell: /bin/zsh
+    password: "{{ lookup('file', 'secrets/anna/password.txt') | password_hash('sha512', lookup('file', 'secrets/anna/salt.txt')) }}"
+    update_password: on_create
+    ohmyzsh: True
+    bashit: False
+    ssh_key:
+      generate: False
+    castles: []
+    groups: []
+
+  - name: adrian
+    uid: 1002
+    comment: Adrian Boerger
+    shell: /bin/zsh
+    password: "{{ lookup('file', 'secrets/adrian/password.txt') | password_hash('sha512', lookup('file', 'secrets/adrian/salt.txt')) }}"
+    update_password: on_create
+    ohmyzsh: True
+    bashit: False
+    ssh_key:
+      generate: False
+    castles: []
+    groups: []
+
+  - name: tabea
+    uid: 1003
+    comment: Tabea Boerger
+    shell: /bin/zsh
+    password: "{{ lookup('file', 'secrets/tabea/password.txt') | password_hash('sha512', lookup('file', 'secrets/tabea/salt.txt')) }}"
+    update_password: on_create
+    ohmyzsh: True
+    bashit: False
+    ssh_key:
+      generate: False
+    castles: []
+    groups: []
+
+...

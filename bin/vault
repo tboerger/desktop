@@ -12,15 +12,6 @@ if ! which ansible-vault >/dev/null; then
     exit 1
 fi
 
-EXECUTE=$(basename $0)
-STRIPPED=${EXECUTE%-vault}
-MACHINE=${MACHINE:-${STRIPPED}}
-
-if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
-    echo "Provided invalid machine!"
-    exit 1
-fi
-
 if [[ -f "${ROOT}/.vaultpasswd" ]]; then
     VAULT_PASSWORD_FILE="${ROOT}/.vaultpasswd"
 else

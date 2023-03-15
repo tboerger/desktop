@@ -12,15 +12,6 @@ if ! which ansible-playbook >/dev/null; then
     exit 1
 fi
 
-EXECUTE=$(basename $0)
-STRIPPED=${EXECUTE%-playbook}
-MACHINE=${MACHINE:-${STRIPPED}}
-
-if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
-    echo "Provided invalid machine!"
-    exit 1
-fi
-
 if [[ -f "${ROOT}/.vaultpasswd" ]]; then
     VAULT_PASSWORD_FILE="${ROOT}/.vaultpasswd"
 else
@@ -31,6 +22,15 @@ else
 
     VAULT_PASSWORD_FILE=$(mktemp)
     echo ${ANSIBLE_VAULT_PASSWORD} >| ${VAULT_PASSWORD_FILE}
+fi
+
+EXECUTE=$(basename $0)
+STRIPPED=${EXECUTE%-playbook}
+MACHINE=${MACHINE:-${STRIPPED}}
+
+if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
+    echo "Provided invalid machine!"
+    exit 1
 fi
 
 pushd "${ROOT}" >/dev/null
