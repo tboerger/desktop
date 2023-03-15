@@ -10,7 +10,7 @@ To bootstrap this project on a new machine, you have to run the following script
 after adding the new configuration to it:
 
 ```console
-curl https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
+curl -sSL https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
 ```
 
 ## Usage
@@ -18,35 +18,35 @@ curl https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | s
 ### Anubis
 
 ```console
-anubis-update
+anubis-galaxy
 anubis-playbook -D -C
 ```
 
 ### Chnum
 
 ```console
-chnum-update
+chnum-galaxy
 chnum-playbook -D -C
 ```
 
 ### Horus
 
 ```console
-horus-update
+horus-galaxy
 horus-playbook -D -C
 ```
 
 ### Imhotep
 
 ```console
-imhotep-update
+imhotep-galaxy
 imhotep-playbook -D -C
 ```
 
 ### Osiris
 
 ```console
-osiris-update
+osiris-galaxy
 osiris-playbook -D -C
 ```
 
