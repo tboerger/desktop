@@ -1,0 +1,7 @@
+# Standards: 1.2
+---
+flatpak_installs_general:
+  - com.authy.Authy
+  - net.cozic.joplin_desktop
+
+...

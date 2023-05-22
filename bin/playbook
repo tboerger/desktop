@@ -28,7 +28,7 @@ EXECUTE=$(basename $0)
 STRIPPED=${EXECUTE%-playbook}
 MACHINE=${MACHINE:-${STRIPPED}}
 
-if [[ ! -d "${ROOT}/ansible/group_vars/${MACHINE}" ]]; then
+if [[ ! -d "${ROOT}/ansible/host_vars/${MACHINE}" ]]; then
     echo "Provided invalid machine!"
     exit 1
 fi

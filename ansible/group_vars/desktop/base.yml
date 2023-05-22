@@ -1,0 +1,29 @@
+# Standards: 1.2
+---
+base_ubuntu_additional:
+  - autorandr
+  - direnv
+  - exa
+  - gopass
+  - graphviz
+  - httpie
+  - hub
+  - iftop
+  - ipcalc
+  - lastpass-cli
+  - libimage-exiftool-perl
+  - mediainfo
+  - mtr
+  - nmap
+  - pwgen
+  - reflex
+  - shellcheck
+  - silversearcher-ag
+  - sshoot
+  - steam
+  - tldr
+  - udiskie
+  - upx-ucl
+  - yamllint
+
+...

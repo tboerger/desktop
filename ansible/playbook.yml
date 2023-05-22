@@ -1,38 +1,106 @@
 # Standards: 1.2
 ---
-- hosts: general
+- hosts: desktop
   pre_tasks:
     - name: Check ansible version
       assert:
         that: ansible_version.full is version_compare('2.10', '>=')
         msg: You must update Ansible to at least 2.10 to use this playbook
 
-- hosts: general
+- hosts: desktop
+  pre_tasks:
+    - name: Copy wallpaper files
+      loop:
+        - dark.jpg
+        - light.jpg
+        - tower.jpg
+      copy:
+        src: "wallpapers/{{ item }}"
+        dest: "/usr/share/backgrounds/{{ item }}"
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+      tags:
+        - wallpapers
+
+- hosts: desktop
   roles:
-    - role: apt
-    - role: hosts
-    - role: sudo
-    - role: groups
-    - role: users
-    - role: root
-    - role: openssh
-    - role: base
-    - role: locales
-    - role: fzf
-    - role: gai
-    - role: modprobe
-    - role: sysctl
-    - role: tailscale
-    - role: docker
-    - role: libvirt
-    - role: kubectl
-    - role: cfssl
+    - role: rolehippie.apt
+    - role: rolehippie.hosts
+    - role: rolehippie.sudo
+    - role: rolehippie.groups
+    - role: rolehippie.users
+    - role: rolehippie.root
+    - role: rolehippie.openssh
+    - role: rolehippie.base
+    - role: rolehippie.locales
+    - role: rolehippie.fzf
+    - role: rolehippie.gai
+    - role: rolehippie.modprobe
+    - role: rolehippie.sysctl
+    - role: rolehippie.sysfs
+    - role: rolehippie.snapd
+    - role: rolehippie.multipath
+    - role: rolehippie.tailscale
+    - role: rolehippie.docker
+    - role: rolehippie.libvirt
+    - role: rolehippie.flatpak
+
+    - role: rolehippie.golang
+    - role: rolehippie.nodejs
+    - role: rolehippie.temurin
+
+    - role: rolehippie.act
+    - role: rolehippie.ansible
+    - role: rolehippie.cfssl
+    - role: rolehippie.cloud
+    - role: rolehippie.gnome
+    - role: rolehippie.dconf
+    - role: rolehippie.fonts
+    - role: rolehippie.gomplate
+    - role: rolehippie.helm
+    - role: rolehippie.jsonnet
+    - role: rolehippie.krew
+    - role: rolehippie.kubectl
+    - role: rolehippie.kubetools
+    - role: rolehippie.kustomize
+    - role: rolehippie.lsd
+    - role: rolehippie.mc
+    - role: rolehippie.ngrok
+    - role: rolehippie.sops
+    - role: rolehippie.starship
+    - role: rolehippie.terraform
+    - role: rolehippie.yq
+
+    - role: rolehippie.browser
+    - role: rolehippie.citrix
+    - role: rolehippie.clickup
+    - role: rolehippie.clockify
+    - role: rolehippie.onepassword
+    - role: rolehippie.vscode
+    - role: rolehippie.wezterm
+
+    - role: rolehippie.ferdium
+    - role: rolehippie.signal
+    - role: rolehippie.slack
+    - role: rolehippie.teams
+
+    - role: rolehippie.headlamp
+    - role: rolehippie.lens
+
+    - role: rolehippie.gdlauncher
+    - role: rolehippie.lutris
+
+    - role: rolehippie.mopidy
+    - role: rolehippie.ymuse
 
 - hosts: anubis
-  roles: []
+  roles:
+    - role: rolehippie.nvidia
 
 - hosts: chnum
-  roles: []
+  roles:
+    - role: rolehippie.intelgpu
 
 - hosts: horus
   roles: []

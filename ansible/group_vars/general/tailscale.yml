@@ -1,5 +1,0 @@
-# Standards: 1.2
----
-tailscale_authkey: "{{ lookup('file', 'secrets/tailscale/authkey.txt') }}"
-
-...

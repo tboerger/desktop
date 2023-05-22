@@ -1,0 +1,33 @@
+# Standards: 1.2
+---
+gnome_plugins_general:
+  - name: user-theme
+    id: user-theme@gnome-shell-extensions.gcampax.github.com
+  - name: sound-output-device-chooser
+    id: sound-output-device-chooser@kgshank.net
+  - name: removable-drive-menu
+    id: drive-menu@gnome-shell-extensions.gcampax.github.com
+  - name: clipboard-indicator
+    id: clipboard-indicator@tudmotu.com
+  - name: auto-move-windows
+    id: auto-move-windows@gnome-shell-extensions.gcampax.github.com
+  - name: app-icons-taskbar
+    id: aztaskbar@aztaskbar.gitlab.com
+  - name: calc
+    id: calc@danigm.wadobo.com
+  - name: custom-hot-corners-extended
+    id: custom-hot-corners-extended@G-dH.github.com
+  - name: espresso
+    id: espresso@coadmunkee.github.com
+  - name: gtile
+    id: gTile@vibou
+  - name: native-window-placement
+    id: native-window-placement@gnome-shell-extensions.gcampax.github.com
+  - name: vitals
+    id: Vitals@CoreCoding.com
+  - name: windownavigator
+    id: windowsNavigator@gnome-shell-extensions.gcampax.github.com
+  - name: tailscale-status
+    id: tailscale-status@maxgallup.github.com
+
+...

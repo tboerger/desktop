@@ -1,0 +1,112 @@
+# Standards: 1.2
+---
+dconf_default_profiles:
+  - name: gdm
+    profile: |
+      user-db:user
+      system-db:gdm
+      file-db:/usr/share/gdm/greeter-dconf-defaults
+    configs:
+      - name: login-screen
+        config: |
+          [org/gnome/login-screen]
+          disable-user-list=true
+
+          [org/gnome/desktop/background]
+          picture-uri='file:///usr/share/backgrounds/tower.jpg'
+
+          [org/gnome/desktop/screensaver]
+          picture-uri='file:///usr/share/backgrounds/tower.jpg'
+
+dconf_extra_profiles:
+  - name: user
+    profile: |
+      user-db:user
+      system-db:user
+    configs:
+      - name: desktop-config
+        config: |
+          [org/gnome/desktop/calendar]
+          show-weekdate=true
+
+          [org/gnome/desktop/input-sources]
+          sources=[("xkb", "de")]
+          xkb-options=["eurosign:e"]
+
+          [org/gnome/desktop/interface]
+          clock-show-weekday=true
+          show-battery-percentage=true
+          gtk-theme="Nordic-v40"
+
+          [org/gnome/desktop/peripherals/touchpad]
+          tap-to-click=true
+          two-finger-scrolling-enabled=true
+
+          [org/gnome/desktop/wm/preferences]
+          button-layout="appmenu:minimize,maximize,close"
+          theme="Nordic-v40"
+
+          [org/gnome/desktop/background]
+          color-shading-type="solid"
+          picture-options="zoom"
+          picture-uri="file:///usr/share/backgrounds/tower.jpg"
+          picture-uri-dark="file:///usr/share/backgrounds/tower.jpg"
+          primary-color="#000000000000"
+          secondary-color="#000000000000"
+
+          [org/gnome/desktop/screensaver]
+          color-shading-type="solid"
+          picture-options="zoom"
+          picture-uri="file:///usr/share/backgrounds/tower.jpg"
+          picture-uri-dark="file:///usr/share/backgrounds/tower.jpg"
+          primary-color="#000000000000"
+          secondary-color="#000000000000"
+          lock-delay=uint32 0
+
+      - name: shell-config
+        config: |
+          [org/gnome/shell]
+          enabled-extensions={{ gnome_plugins_general | map(attribute='id') | to_json }}
+          disabled-extensions=@as []
+
+          [org/gnome/shell/extensions/user-theme]
+          name="Nordic-v40"
+
+          [org/gnome/shell/extensions/aztaskbar]
+          main-panel-height=(true, 40)
+          show-apps-button=(true, 0)
+
+          [org/gnome/shell/extensions/espresso]
+          has-battery=true
+
+          [org/gnome/shell/extensions/vitals]
+          show-fan=true
+          show-storage=false
+          show-temperature=true
+          show-voltage=true
+
+          [org/gnome/shell/weather]
+          automatic-location=true
+
+          [org/gnome/shell/extensions/custom-hot-corners-extended/misc]
+          show-osd-monitor-indexes=false
+          {% for monitor in [0, 1, 2, 3] %}{% for space in [1, 2, 3, 4, 5, 6, 7, 8] %}
+
+          [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-bottom-left-{{ space }}]
+          action="show-desktop"
+          ctrl=true
+
+          [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-bottom-right-{{ space }}]
+          action="show-desktop"
+          ctrl=true
+
+          [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-top-left-{{ space }}]
+          action="toggle-overview"
+          ctrl=true
+
+          [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-top-right-{{ space }}]
+          action="toggle-overview"
+          ctrl=true
+          {% endfor %}{% endfor %}
+
+...

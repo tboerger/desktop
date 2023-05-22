@@ -1,7 +1,0 @@
-# Standards: 1.2
----
-groups_general:
-  - name: docker
-    system: True
-
-...

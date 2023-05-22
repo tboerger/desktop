@@ -1,0 +1,12 @@
+# Standards: 1.2
+---
+libvirt_images:
+  - name: ubuntu-22.04.qcow2
+    url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+
+libvirt_archives:
+  - name: kali-2023.1
+    url: https://kali.download/cloud-images/kali-2023.1/kali-linux-2023.1-cloud-genericcloud-amd64.tar.xz
+    creates: /var/lib/libvirt/images/kali-2023.1/disk.raw
+
+...

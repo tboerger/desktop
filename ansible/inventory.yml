@@ -1,4 +1,4 @@
-general:
+desktop:
   hosts:
     anubis:
       ansible_host: anubis

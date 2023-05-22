@@ -1,0 +1,9 @@
+# Standards: 1.2
+---
+ansible_extra_pips:
+  - boto3
+  - botocore
+  - passlib
+  - requests
+
+...

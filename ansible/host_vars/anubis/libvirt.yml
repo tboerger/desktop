@@ -1,0 +1,99 @@
+# Standards: 1.2
+---
+libvirt_networks:
+  - name: general
+    bridge: virbr1
+    autostart: True
+    mode: nat
+    address: 10.13.37.1
+    netmask: 255.255.255.0
+    dhcp:
+      enabled: True
+      start: 10.13.37.2
+      end: 10.13.37.254
+    hosts:
+      - name: homer
+        mac: 18:03:9b:fe:56:24
+        ip: 10.13.37.10
+      - name: barney
+        mac: 18:03:a4:e5:9c:7e
+        ip: 10.13.37.11
+      - name: nelson
+        mac: 18:03:45:fc:f9:12
+        ip: 10.13.37.12
+
+libvirt_machines:
+  - name: homer
+    fqdn: homer.boerger.ws
+    memory: 2048
+    cpus: 2
+    vnc: 5901
+    userdata: True
+    overwrite: False
+    password: p455w0rd
+    sshkeys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn
+    interfaces:
+      - type: network
+        source: general
+        mac: 18:03:9b:fe:56:24
+        device: ens3
+        dhcp: True
+    disks:
+      - name: homer-root
+        type: qcow2
+        size: 50g
+        device: vda
+        source: /var/lib/libvirt/images/ubuntu-22.04.qcow2
+    boot:
+      - hd
+  - name: barney
+    fqdn: barney.boerger.ws
+    memory: 2048
+    cpus: 2
+    vnc: 5902
+    userdata: True
+    overwrite: False
+    password: p455w0rd
+    sshkeys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn
+    interfaces:
+      - type: network
+        source: general
+        mac: 18:03:a4:e5:9c:7e
+        device: ens3
+        dhcp: True
+    disks:
+      - name: barney-root
+        type: qcow2
+        size: 50g
+        device: vda
+        source: /var/lib/libvirt/images/ubuntu-22.04.qcow2
+    boot:
+      - hd
+  - name: nelson
+    fqdn: nelson.boerger.ws
+    memory: 2048
+    cpus: 2
+    vnc: 5903
+    userdata: True
+    overwrite: False
+    password: p455w0rd
+    sshkeys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn
+    interfaces:
+      - type: network
+        source: general
+        mac: 18:03:45:fc:f9:12
+        device: ens3
+        dhcp: True
+    disks:
+      - name: nelson-root
+        type: qcow2
+        size: 50g
+        device: vda
+        source: /var/lib/libvirt/images/ubuntu-22.04.qcow2
+    boot:
+      - hd
+
+...
