@@ -1,6 +1,6 @@
 # Standards: 1.2
 ---
-gnome_plugins_general:
+gnome_general_plugins:
   - name: user-theme
     id: user-theme@gnome-shell-extensions.gcampax.github.com
   - name: sound-output-device-chooser
