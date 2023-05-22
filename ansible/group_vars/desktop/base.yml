@@ -25,5 +25,7 @@ base_ubuntu_additional:
   - udiskie
   - upx-ucl
   - yamllint
+  - gnome-shell-extension-manager
+  - gnome-tweaks
 
 ...
