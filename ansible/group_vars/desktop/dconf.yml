@@ -66,8 +66,8 @@ dconf_extra_profiles:
       - name: shell-config
         config: |
           [org/gnome/shell]
-          enabled-extensions={{ gnome_plugins_general | map(attribute='id') | to_json }}
-          disabled-extensions=@as []
+          enabled-extensions={{ gnome_general_plugins | map(attribute='id') | to_json }}
+          disabled-extensions=["ubuntu-dock@ubuntu.com"]
 
           [org/gnome/shell/extensions/user-theme]
           name="Nordic-v40"
@@ -90,23 +90,19 @@ dconf_extra_profiles:
 
           [org/gnome/shell/extensions/custom-hot-corners-extended/misc]
           show-osd-monitor-indexes=false
-          {% for monitor in [0, 1, 2, 3] %}{% for space in [1, 2, 3, 4, 5, 6, 7, 8] %}
+          {% for monitor in [0, 1, 2, 3] %}{% for space in [0] %}
 
           [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-bottom-left-{{ space }}]
           action="show-desktop"
-          ctrl=true
 
           [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-bottom-right-{{ space }}]
           action="show-desktop"
-          ctrl=true
 
           [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-top-left-{{ space }}]
           action="toggle-overview"
-          ctrl=true
 
           [org/gnome/shell/extensions/custom-hot-corners-extended/monitor-{{ monitor }}-top-right-{{ space }}]
           action="toggle-overview"
-          ctrl=true
           {% endfor %}{% endfor %}
 
 ...

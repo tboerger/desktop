@@ -3,8 +3,6 @@
 gnome_general_plugins:
   - name: user-theme
     id: user-theme@gnome-shell-extensions.gcampax.github.com
-  - name: sound-output-device-chooser
-    id: sound-output-device-chooser@kgshank.net
   - name: removable-drive-menu
     id: drive-menu@gnome-shell-extensions.gcampax.github.com
   - name: clipboard-indicator
