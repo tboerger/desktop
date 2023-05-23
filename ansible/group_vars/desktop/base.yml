@@ -27,5 +27,6 @@ base_ubuntu_additional:
   - yamllint
   - gnome-shell-extension-manager
   - gnome-tweaks
+  - gnome-calendar
 
 ...
