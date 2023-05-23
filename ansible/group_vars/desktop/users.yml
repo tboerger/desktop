@@ -3,6 +3,11 @@
 users_castles_force: False
 users_zfs_home: True
 
+users_packages_zsh:
+  - zsh
+  - zsh-syntax-highlighting
+  - zsh-autosuggestions
+
 users_thomas_keys:
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn Thomas Boerger
 
