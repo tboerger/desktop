@@ -8,19 +8,19 @@ push to the `master` branch.
 
 Copy multiple files from the private secrets stick on the machine with the
 following snippets and finally execute the bootstrap script to clone this
-repository. Detect the right stick with `lsblk` and mount it to `/mnt`.
+repository. Generally the stick should be mounted automatically.
 
 ### Netrc
 
 ```console
-cp /mnt/netrc ${HOME}/.netrc
+cp /media/$(id -u)/secrets/netrc ${HOME}/.netrc
 chown $(id -u):$(id -g) ${HOME}/.netrc
 ```
 
 ### Token
 
 ```console
-cp /mnt/ghtoken ${HOME}/.ghtoken
+cp /media/$(id -u)/secrets/ghtoken ${HOME}/.ghtoken
 chown $(id -u):$(id -g) ${HOME}/.ghtoken
 ```
 
@@ -28,14 +28,14 @@ chown $(id -u):$(id -g) ${HOME}/.ghtoken
 
 ```console
 mkdir -p ${HOME}/.ssh/
-cp /mnt/ssh/id_* ${HOME}/.ssh/
+cp /media/$(id -u)/secrets/ssh/id_* ${HOME}/.ssh/
 chown $(id -u):$(id -g) .ssh/id_*
 ```
 
 ### Gnupg
 
 ```console
-for FILE in /mnt/gpg/*.asc; do
+for FILE in /media/$(id -u)/secrets/gpg/*.asc; do
     gpg --import $FILE
 done
 ```
@@ -43,7 +43,7 @@ done
 ### Finish
 
 ```console
-curl -sSL https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
+wget -O- https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
 ```
 
 ## Usage
@@ -51,6 +51,7 @@ curl -sSL https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstra
 ### Anubis
 
 ```console
+export ANSIBLE_VAULT_PASSWORD=p455w0rd
 anubis-galaxy
 anubis-playbook -D -C
 ```
@@ -58,6 +59,7 @@ anubis-playbook -D -C
 ### Chnum
 
 ```console
+export ANSIBLE_VAULT_PASSWORD=p455w0rd
 chnum-galaxy
 chnum-playbook -D -C
 ```
@@ -65,6 +67,7 @@ chnum-playbook -D -C
 ### Horus
 
 ```console
+export ANSIBLE_VAULT_PASSWORD=p455w0rd
 horus-galaxy
 horus-playbook -D -C
 ```
@@ -72,6 +75,7 @@ horus-playbook -D -C
 ### Imhotep
 
 ```console
+export ANSIBLE_VAULT_PASSWORD=p455w0rd
 imhotep-galaxy
 imhotep-playbook -D -C
 ```
@@ -79,6 +83,7 @@ imhotep-playbook -D -C
 ### Osiris
 
 ```console
+export ANSIBLE_VAULT_PASSWORD=p455w0rd
 osiris-galaxy
 osiris-playbook -D -C
 ```
