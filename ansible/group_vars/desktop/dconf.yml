@@ -68,6 +68,7 @@ dconf_extra_profiles:
           [org/gnome/shell]
           enabled-extensions={{ gnome_general_plugins | map(attribute='id') | to_json }}
           disabled-extensions=["ubuntu-dock@ubuntu.com"]
+          favorite-apps=["org.gnome.Calendar.desktop", "org.gnome.Nautilus.desktop"]
 
           [org/gnome/shell/extensions/user-theme]
           name="Nordic-v40"
