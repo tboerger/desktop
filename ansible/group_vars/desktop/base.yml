@@ -28,5 +28,13 @@ base_ubuntu_additional:
   - gnome-shell-extension-manager
   - gnome-tweaks
   - gnome-calendar
+  - gnome-boxes
+  - gnome-connections
+  - gnome-contacts
+  - gnome-maps
+  - gnome-music
+  - gnome-photos
+  - gnome-screenshot
+  - gnome-weather
 
 ...
