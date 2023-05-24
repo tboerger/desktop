@@ -6,9 +6,23 @@ push to the `master` branch.
 
 ## Bootstrap
 
-Copy multiple files from the private secrets stick on the machine with the
-following snippets and finally execute the bootstrap script to clone this
-repository. Generally the stick should be mounted automatically.
+After following the steps of the installation below you got to copy multiple
+files from the private secrets stick on the machine with the following snippets
+and finally execute the bootstrap script to clone this repository. Generally the
+stick should be mounted automatically.
+
+### Install
+
+![select language](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install01.png)
+![keyboard layout](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install02.png)
+![installation type](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install03.png)
+![select filesystem](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install04.png)
+![erase disk](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install05.png)
+![security key](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install06.png)
+![confirm disks](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install07.png)
+![select location](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install08.png)
+![user details](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install09.png)
+![reboot system](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install10.png)
 
 ### Netrc
 
@@ -44,6 +58,7 @@ done
 
 ```console
 wget -O- https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
+echo p455w0rd > /home/$(whoami)/.desktop/.vaultpasswd && chown $(id -u):$(id -g) /home/$(whoami)/.desktop/.vaultpasswd
 ```
 
 ## Usage
@@ -51,40 +66,35 @@ wget -O- https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap
 ### Anubis
 
 ```console
-export ANSIBLE_VAULT_PASSWORD=p455w0rd
-anubis-galaxy
+anubis-update
 anubis-playbook -D -C
 ```
 
 ### Chnum
 
 ```console
-export ANSIBLE_VAULT_PASSWORD=p455w0rd
-chnum-galaxy
+chnum-update
 chnum-playbook -D -C
 ```
 
 ### Horus
 
 ```console
-export ANSIBLE_VAULT_PASSWORD=p455w0rd
-horus-galaxy
+horus-update
 horus-playbook -D -C
 ```
 
 ### Imhotep
 
 ```console
-export ANSIBLE_VAULT_PASSWORD=p455w0rd
-imhotep-galaxy
+imhotep-update
 imhotep-playbook -D -C
 ```
 
 ### Osiris
 
 ```console
-export ANSIBLE_VAULT_PASSWORD=p455w0rd
-osiris-galaxy
+osiris-update
 osiris-playbook -D -C
 ```
 
