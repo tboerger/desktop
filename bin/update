@@ -19,15 +19,15 @@ fi
 
 echo "--> updating itself"
 pushd "${ROOT}" >/dev/null
-    su -c "git pull --autostash --rebase" "${USERNAME}"
+    sudo su -c "git pull --autostash --rebase" "${USERNAME}"
 popd >/dev/null
 
 echo "--> executing galaxy"
-su -c "${MACHINE}-galaxy" "${USERNAME}"
+sudo su -c "${MACHINE}-galaxy" "${USERNAME}"
 
 for FILE in galaxy inventory later playbook vault update; do
     echo "--> linking ${FILE}"
-    ln -sf "${ROOT}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
+    sudo ln -sf "${ROOT}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done
 
 echo "--> finished updating"
