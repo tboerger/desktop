@@ -32,7 +32,7 @@ else
     su -c "git clone ${REPO} ${BASE}" "${USERNAME}"
 fi
 
-for FILE in galaxy inventory later playbook vault; do
+for FILE in galaxy inventory later playbook vault update; do
     echo "--> linking ${FILE}"
     ln -sf "${BASE}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [ -L $0 ]; then
+    ROOT=$(cd $(dirname $(readlink -e $0))/..; pwd)
+else
+    ROOT=$(cd $(dirname $0)/..; pwd)
+fi
+
+USERNAME=${USERNAME:-thomas}
+EXECUTE=$(basename $0)
+STRIPPED=${EXECUTE%-update}
+MACHINE=${MACHINE:-${STRIPPED}}
+
+if [[ ! -d "${ROOT}/ansible/host_vars/${MACHINE}" ]]; then
+    echo "Provided invalid machine!"
+    exit 1
+fi
+
+echo "--> updating itself"
+pushd "${ROOT}" >/dev/null
+    su -c "git pull --autostash --rebase" "${USERNAME}"
+popd >/dev/null
+
+echo "--> executing galaxy"
+su -c "${MACHINE}-galaxy" "${USERNAME}"
+
+for FILE in galaxy inventory later playbook vault update; do
+    echo "--> linking ${FILE}"
+    ln -sf "${ROOT}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
+done
+
+echo "--> finished updating"
