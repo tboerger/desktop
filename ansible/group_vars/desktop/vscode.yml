@@ -3,6 +3,7 @@
 vscode_general_users:
   - username: thomas
     extensions:
+      - arcticicestudio.nord-visual-studio-code
       - dzhavat.bracket-pair-toggler
       - editorconfig.editorconfig
       - foxundermoon.shell-format
