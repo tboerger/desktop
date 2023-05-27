@@ -1,5 +1,18 @@
 # Standards: 1.2
 ---
+gnome_general_packages:
+  - gnome-boxes
+  - gnome-calendar
+  - gnome-connections
+  - gnome-contacts
+  - gnome-maps
+  - gnome-music
+  - gnome-photos
+  - gnome-screenshot
+  - gnome-shell-extension-manager
+  - gnome-tweaks
+  - gnome-weather
+
 gnome_general_plugins:
   - name: user-theme
     id: user-theme@gnome-shell-extensions.gcampax.github.com
