@@ -1,0 +1,13 @@
+# Standards: 1.2
+---
+syncthing_general_users:
+  - username: thomas
+    password: "{{ lookup('file', 'secrets/thomas/password.txt') }}"
+    config:
+      device:
+        '@introducer': "{{ 'true' if inventory_hostname == 'anubis' else 'false' }}"
+        autoAcceptFolders: True
+      gui:
+        address: 0.0.0.0:8384
+
+...

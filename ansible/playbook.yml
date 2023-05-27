@@ -38,9 +38,9 @@
     - role: rolehippie.ansible
     - role: rolehippie.cfssl
     - role: rolehippie.cloud
-    - role: rolehippie.gnome
     - role: rolehippie.dconf
     - role: rolehippie.fonts
+    - role: rolehippie.gnome
     - role: rolehippie.gomplate
     - role: rolehippie.helm
     - role: rolehippie.jsonnet
@@ -51,8 +51,11 @@
     - role: rolehippie.lsd
     - role: rolehippie.mc
     - role: rolehippie.ngrok
+    - role: rolehippie.packwiz
+    - role: rolehippie.sanoid
     - role: rolehippie.sops
     - role: rolehippie.starship
+    - role: rolehippie.syncthing
     - role: rolehippie.terraform
     - role: rolehippie.yq
 
