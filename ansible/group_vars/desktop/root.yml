@@ -11,5 +11,6 @@ root_castles_force: True
 root_castles:
   - tboerger/homeshick-base
   - tboerger/homeshick-linux
+  - tboerger/homeshick-vim
 
 ...
