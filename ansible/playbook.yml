@@ -59,6 +59,7 @@
     - role: rolehippie.terraform
     - role: rolehippie.yq
 
+    - role: rolehippie.bluemail
     - role: rolehippie.browser
     - role: rolehippie.citrix
     - role: rolehippie.clickup
