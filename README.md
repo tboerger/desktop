@@ -27,14 +27,14 @@ stick should be mounted automatically.
 ### Netrc
 
 ```console
-cp /media/$(id -u)/secrets/netrc ${HOME}/.netrc
+cp /media/$(whoami)/secrets/netrc ${HOME}/.netrc
 chown $(id -u):$(id -g) ${HOME}/.netrc
 ```
 
 ### Token
 
 ```console
-cp /media/$(id -u)/secrets/ghtoken ${HOME}/.ghtoken
+cp /media/$(whoami)/secrets/ghtoken ${HOME}/.ghtoken
 chown $(id -u):$(id -g) ${HOME}/.ghtoken
 ```
 
@@ -42,14 +42,14 @@ chown $(id -u):$(id -g) ${HOME}/.ghtoken
 
 ```console
 mkdir -p ${HOME}/.ssh/
-cp /media/$(id -u)/secrets/ssh/id_* ${HOME}/.ssh/
+cp /media/$(whoami)/secrets/ssh/id_* ${HOME}/.ssh/
 chown $(id -u):$(id -g) .ssh/id_*
 ```
 
 ### Gnupg
 
 ```console
-for FILE in /media/$(id -u)/secrets/gpg/*.asc; do
+for FILE in /media/$(whoami)/secrets/gpg/*.asc; do
     gpg --import $FILE
 done
 ```
