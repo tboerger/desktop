@@ -4,6 +4,7 @@ base_ubuntu_additional:
   - autorandr
   - direnv
   - exa
+  - gettext
   - gopass
   - graphviz
   - httpie
