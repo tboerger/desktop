@@ -1,0 +1,16 @@
+# Standards: 1.2
+---
+- name: Create defined groups
+  loop: "{{ groups_general + groups_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.git | default(omit) }}"
+    non_unique: "{{ item.non_unique | default(omit) }}"
+    system: "{{ item.system | default(False) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - groups
+
+...

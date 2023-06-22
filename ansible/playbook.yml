@@ -9,117 +9,52 @@
 
 - hosts: desktop
   roles:
-    - role: rolehippie.apt
-    - role: rolehippie.hosts
-    - role: rolehippie.sudo
-    - role: rolehippie.groups
-    - role: rolehippie.users
-    - role: rolehippie.root
-    - role: rolehippie.openssh
-    - role: rolehippie.base
-    - role: rolehippie.locales
-    - role: rolehippie.fzf
-    - role: rolehippie.gai
-    - role: rolehippie.modprobe
-    - role: rolehippie.sysctl
-    - role: rolehippie.sysfs
-    - role: rolehippie.snapd
-    - role: rolehippie.multipath
-    - role: rolehippie.tailscale
-    - role: rolehippie.docker
-    - role: rolehippie.libvirt
-    - role: rolehippie.flatpak
+    - role: hosts
+    - role: sudo
+    - role: groups
+    - role: users
+    - role: root
+    - role: openssh
+    - role: layers
+    - role: flatpak
+    - role: tailscale
+    - role: libvirt
+    - role: gnome
+    - role: dconf
+    - role: distrobox
+    - role: nixpkgs
 
-    - role: rolehippie.golang
-    - role: rolehippie.nodejs
-    - role: rolehippie.temurin
+    # - role: rolehippie.gomplate
+    # - role: rolehippie.helm
+    # - role: rolehippie.jsonnet
+    # - role: rolehippie.krew
+    # - role: rolehippie.kubectl
+    # - role: rolehippie.kubetools
+    # - role: rolehippie.kustomize
+    # - role: rolehippie.lsd
+    # - role: rolehippie.mc
+    # - role: rolehippie.ngrok
+    # - role: rolehippie.packwiz
+    # - role: rolehippie.sops
+    # - role: rolehippie.starship
+    # - role: rolehippie.syncthing
+    # - role: rolehippie.terraform
+    # - role: rolehippie.yq
 
-    - role: rolehippie.act
-    - role: rolehippie.ansible
-    - role: rolehippie.cfssl
-    - role: rolehippie.cloud
-    - role: rolehippie.dconf
-    - role: rolehippie.fonts
-    - role: rolehippie.gnome
-    - role: rolehippie.gomplate
-    - role: rolehippie.helm
-    - role: rolehippie.jsonnet
-    - role: rolehippie.krew
-    - role: rolehippie.kubectl
-    - role: rolehippie.kubetools
-    - role: rolehippie.kustomize
-    - role: rolehippie.lsd
-    - role: rolehippie.mc
-    - role: rolehippie.ngrok
-    - role: rolehippie.packwiz
-    - role: rolehippie.sanoid
-    - role: rolehippie.sops
-    - role: rolehippie.starship
-    - role: rolehippie.syncthing
-    - role: rolehippie.terraform
-    - role: rolehippie.yq
-
-    - role: rolehippie.bluemail
-    - role: rolehippie.browser
-    - role: rolehippie.citrix
-    - role: rolehippie.clickup
-    - role: rolehippie.clockify
-    - role: rolehippie.onepassword
-    - role: rolehippie.vscode
-    - role: rolehippie.wezterm
-
-    - role: rolehippie.ferdium
-    - role: rolehippie.signal
-    - role: rolehippie.slack
-    - role: rolehippie.teams
-
-    - role: rolehippie.headlamp
-    - role: rolehippie.lens
-
-    - role: rolehippie.gdlauncher
-    - role: rolehippie.lutris
-
-    - role: rolehippie.mopidy
-    - role: rolehippie.ymuse
-
-- hosts: anubis
-  roles:
-    - role: rolehippie.nvidia
-
-- hosts: chnum
-  roles:
-    - role: rolehippie.intelgpu
-
-- hosts: horus
-  roles: []
-
-- hosts: imhotep
-  roles: []
-
-- hosts: osiris
-  roles: []
+    # - role: rolehippie.citrix
+    # - role: rolehippie.clickup
+    # - role: rolehippie.clockify
+    # - role: rolehippie.vscode
 
 - hosts: desktop
   pre_tasks:
-    - name: Copy wallpaper files
-      loop:
-        - dark
-        - light
-        - tower
-      copy:
-        src: "wallpapers/{{ item }}.jpg"
-        dest: "/usr/share/backgrounds/{{ item }}.jpg"
-        owner: root
-        group: root
-        mode: u=rw,g=r,o=r
-      tags:
-        - wallpapers
     - name: Write profile pics
       loop:
         - thomas
         - anna
         - adrian
         - tabea
+      diff: False
       copy:
         src: "profiles/{{ item }}.jpg"
         dest: "/home/{{ item }}/.face"

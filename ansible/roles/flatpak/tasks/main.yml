@@ -1,0 +1,62 @@
+# Standards: 1.2
+---
+- name: Install defined remotes
+  loop: "{{ flatpak_remotes_general + flatpak_remotes_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.flatpak_remote:
+    name: "{{ item.name }}"
+    flatpakrepo_url: "{{ item.url }}"
+    method: "{{ item.method | default(omit) }}"
+    enabled: "{{ item.enabled | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - flatpak
+
+- name: Install defined packages
+  loop: "{{ flatpak_installs_general + flatpak_installs_extra }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  community.general.flatpak:
+    name: "{{ item.name | default(item) }}"
+    method: "{{ item.method | default(omit) }}"
+    remote: "{{ item.remote | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - flatpak
+
+- name: Check installed packages
+  when: (flatpak_byrefs_general + flatpak_byrefs_extra) | length > 0
+  register: flatpak_installed_packages
+  changed_when: False
+  failed_when: False
+  ansible.builtin.command: "flatpak list --app --all --columns=application"
+  tags:
+    - flatpak
+
+- name: Install byref packages
+  loop: "{{ flatpak_byrefs_general + flatpak_byrefs_extra }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.name not in flatpak_installed_packages.stdout_lines
+  ansible.builtin.command: "flatpak install --noninteractive {{ '--system' if item.method | default('system') == 'system' else '--user' }} --from {{ item.url }}"
+  tags:
+    - flatpak
+
+- name: Remove byref packages
+  loop: "{{ flatpak_byrefs_general + flatpak_byrefs_extra }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  when:
+    - item.state | default('present') == 'absent'
+    - item.name in flatpak_installed_packages.stdout_lines
+  community.general.flatpak:
+    name: "{{ item.name | default(item) }}"
+    method: "{{ item.method | default(omit) }}"
+    state: absent
+  tags:
+    - flatpak
+
+...

@@ -1,21 +1,6 @@
 # Standards: 1.2
 ---
-gnome_general_packages:
-  - gnome-boxes
-  - gnome-calendar
-  - gnome-connections
-  - gnome-contacts
-  - gnome-maps
-  - gnome-music
-  - gnome-photos
-  - gnome-screenshot
-  - gnome-shell-extension-manager
-  - gnome-tweaks
-  - gnome-weather
-
-gnome_general_plugins:
-  - name: user-theme
-    id: user-theme@gnome-shell-extensions.gcampax.github.com
+gnome_thomas_plugins:
   - name: removable-drive-menu
     id: drive-menu@gnome-shell-extensions.gcampax.github.com
   - name: clipboard-indicator
@@ -32,13 +17,28 @@ gnome_general_plugins:
     id: espresso@coadmunkee.github.com
   - name: gtile
     id: gTile@vibou
-  - name: native-window-placement
-    id: native-window-placement@gnome-shell-extensions.gcampax.github.com
   - name: vitals
     id: Vitals@CoreCoding.com
-  - name: windownavigator
-    id: windowsNavigator@gnome-shell-extensions.gcampax.github.com
   - name: tailscale-status
     id: tailscale-status@maxgallup.github.com
+
+gnome_other_plugins:
+  - name: calc
+    id: calc@danigm.wadobo.com
+  - name: vitals
+    id: Vitals@CoreCoding.com
+
+gnome_general_plugins:
+  - username: thomas
+    plugins: "{{ gnome_thomas_plugins }}"
+
+  - username: anna
+    plugins: "{{ gnome_other_plugins }}"
+
+  - username: adrian
+    plugins: "{{ gnome_other_plugins }}"
+
+  - username: tabea
+    plugins: "{{ gnome_other_plugins }}"
 
 ...

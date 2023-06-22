@@ -1,71 +1,9 @@
 # Standards: 1.2
 ---
-- name: rolehippie.act
-- name: rolehippie.ansible
-- name: rolehippie.apt
-- name: rolehippie.base
-- name: rolehippie.bluemail
-- name: rolehippie.browser
-- name: rolehippie.cfssl
-- name: rolehippie.citrix
-- name: rolehippie.clickup
-- name: rolehippie.clockify
-- name: rolehippie.cloud
-- name: rolehippie.dconf
-- name: rolehippie.docker
-- name: rolehippie.ferdium
-- name: rolehippie.flatpak
-- name: rolehippie.fonts
-- name: rolehippie.fzf
-- name: rolehippie.gai
-- name: rolehippie.gdlauncher
-- name: rolehippie.gnome
-- name: rolehippie.golang
-- name: rolehippie.gomplate
-- name: rolehippie.groups
-- name: rolehippie.headlamp
-- name: rolehippie.helm
-- name: rolehippie.hosts
-- name: rolehippie.intelgpu
-- name: rolehippie.jsonnet
-- name: rolehippie.krew
-- name: rolehippie.kubectl
-- name: rolehippie.kubetools
-- name: rolehippie.kustomize
-- name: rolehippie.lens
-- name: rolehippie.libvirt
-- name: rolehippie.locales
-- name: rolehippie.lsd
-- name: rolehippie.lutris
-- name: rolehippie.mc
-- name: rolehippie.modprobe
-- name: rolehippie.mopidy
-- name: rolehippie.multipath
-- name: rolehippie.ngrok
-- name: rolehippie.nodejs
-- name: rolehippie.nvidia
-- name: rolehippie.onepassword
-- name: rolehippie.openssh
-- name: rolehippie.packwiz
-- name: rolehippie.root
-- name: rolehippie.sanoid
-- name: rolehippie.signal
-- name: rolehippie.slack
-- name: rolehippie.snapd
-- name: rolehippie.sops
-- name: rolehippie.starship
-- name: rolehippie.sudo
-- name: rolehippie.syncthing
-- name: rolehippie.sysctl
-- name: rolehippie.sysfs
-- name: rolehippie.tailscale
-- name: rolehippie.teams
-- name: rolehippie.temurin
-- name: rolehippie.terraform
-- name: rolehippie.users
-- name: rolehippie.vscode
-- name: rolehippie.wezterm
-- name: rolehippie.ymuse
-- name: rolehippie.yq
+collections:
+  - community.general
+  - containers.podman
+
+roles: []
 
 ...

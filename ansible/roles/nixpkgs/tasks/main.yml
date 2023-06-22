@@ -1,0 +1,153 @@
+# Standards: 1.2
+---
+- name: Define nix rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
+  tags:
+    - nixpkgs
+
+- name: Define var rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "/var/lib{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
+  tags:
+    - nixpkgs
+
+- name: Create nix root
+  ansible.builtin.file:
+    path: /var/lib/nix
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  tags:
+    - nixpkgs
+
+- name: Write rootfs service
+  ansible.builtin.template:
+    src: rootfs.j2
+    dest: /etc/systemd/system/mkdir-rootfs@.service
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - nixpkgs
+
+- name: Write nix mount
+  ansible.builtin.template:
+    src: mount.j2
+    dest: /etc/systemd/system/nix.mount
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - nixpkgs
+
+- name: Start nix mount
+  ansible.builtin.systemd:
+    name: nix.mount
+    state: started
+    daemon_reload: True
+    masked: False
+    enabled: True
+  tags:
+    - nixpkgs
+
+- name: Run nix restorecon
+  changed_when: False
+  ansible.builtin.command:
+    cmd: restorecon -RF /nix
+  tags:
+    - nixpkgs
+
+- name: Check nix install
+  register: nixpkgs_install_check
+  ansible.builtin.stat:
+    path: /nix/var/nix/daemon-socket/socket
+  tags:
+    - nixpkgs
+
+- name: Disable selinux now
+  when: not nixpkgs_install_check.stat.exists
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+  tags:
+    - nixpkgs
+
+- name: Install nix daemon
+  when: not nixpkgs_install_check.stat.exists
+  changed_when: False
+  ansible.builtin.shell:
+    cmd: sh <(curl -L https://nixos.org/nix/install) --daemon --yes --no-modify-profile
+  tags:
+    - nixpkgs
+
+- name: Enable selinux now
+  when: not nixpkgs_install_check.stat.exists
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+  tags:
+    - nixpkgs
+
+- name: Write nix config
+  ansible.builtin.template:
+    src: config.j2
+    dest: /etc/nix/nix.conf
+    owner: root
+    group: root
+    mode: u=rw,g=rw,o=r
+  tags:
+    - nixpkgs
+
+- name: Write nix profile
+  ansible.builtin.template:
+    src: profile.j2
+    dest: /etc/profile.d/nix.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - nixpkgs
+
+- name: Write daemon service
+  ansible.builtin.template:
+    src: daemon.j2
+    dest: /etc/systemd/system/nix-daemon.service
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - nixpkgs
+
+- name: Write daemon socket
+  ansible.builtin.template:
+    src: socket.j2
+    dest: /etc/systemd/system/nix-daemon.socket
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - nixpkgs
+
+- name: Start daemon socket
+  ansible.builtin.systemd:
+    name: nix-daemon.socket
+    state: started
+    daemon_reload: True
+    masked: False
+    enabled: True
+  tags:
+    - nixpkgs
+
+...

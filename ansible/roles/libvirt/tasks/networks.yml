@@ -1,0 +1,77 @@
+# Standards: 1.2
+---
+- name: Define network spec
+  loop: "{{ libvirt_networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('active') != 'destroyed'
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: define
+    xml: "{{ lookup('template', 'networks/spec.j2') }}"
+  tags:
+    - libvirt
+    - networks
+
+- name: Modify network hosts
+  loop: "{{ libvirt_networks | subelements('hosts', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.name }}"
+  when: item.0.state | default('active') != 'destroyed'
+  community.libvirt.virt_net:
+    name: "{{ item.0.name }}"
+    command: modify
+    xml: "<host mac=\"{{ item.1.mac }}\" name=\"{{ item.1.name }}\" ip=\"{{ item.1.ip }}\"/>"
+  tags:
+    - libvirt
+    - networks
+
+- name: Destroy network
+  loop: "{{ libvirt_networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('active') == 'destroyed'
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: destroy
+  tags:
+    - libvirt
+    - networks
+
+- name: Undefine networks
+  loop: "{{ libvirt_networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('active') == 'destroyed'
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    command: destroy
+  tags:
+    - libvirt
+    - networks
+
+- name: Autostart network
+  loop: "{{ libvirt_networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('active') == 'active'
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  tags:
+    - libvirt
+    - networks
+
+- name: Change network state
+  loop: "{{ libvirt_networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('active') == 'active'
+  community.libvirt.virt_net:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('active') }}"
+  tags:
+    - libvirt
+    - networks
+
+...

@@ -1,0 +1,294 @@
+# Standards: 1.2
+---
+# @var openssh_host_keys:description: List of ports to listen to
+# @var openssh_host_keys:example: >
+# openssh_host_keys:
+#   - name: ssh_host_dsa_key
+#     key: "{{ vaulted_ssh_host_dsa_key }}"
+#     pub: "{{ vaulted_ssh_host_dsa_key_pub }}"
+# @end
+openssh_host_keys:
+  - name: ssh_host_ed25519_key
+  - name: ssh_host_rsa_key
+  - name: ssh_host_ecdsa_key
+
+# @var openssh_port:description: Port to bind the daemon to
+openssh_port: 22
+
+# @var openssh_address_family:description: Address family to bind to
+openssh_address_family: any
+
+# @var openssh_listen_addresses:description: List of addresses to bind to
+openssh_listen_addresses:
+  - 0.0.0.0
+  - "::"
+
+# @var openssh_valid_ciphers:description: List of ciphers accepted by the server
+openssh_valid_ciphers:
+  - chacha20-poly1305@openssh.com
+  - aes256-gcm@openssh.com
+  - aes128-gcm@openssh.com
+  - aes256-ctr
+  - aes192-ctr
+  - aes128-ctr
+
+# @var openssh_valid_macs:description: List of macs accepted by the server
+openssh_valid_macs:
+  - hmac-sha2-512-etm@openssh.com
+  - hmac-sha2-256-etm@openssh.com
+  - umac-128-etm@openssh.com
+
+# @var openssh_valid_kex:description: Map of kexs accepted by the server
+openssh_valid_kex:
+  - curve25519-sha256@libssh.org
+  - diffie-hellman-group-exchange-sha256
+
+# @var openssh_syslog_facility:description: Syslog facility
+openssh_syslog_facility: AUTHPRIV
+
+# @var openssh_log_level:description: Logging level
+openssh_log_level: INFO
+
+# @var openssh_deny_users:description: List of users to deny SSH login
+openssh_deny_users: []
+
+# @var openssh_allow_users:description: List of users to allow SSH login
+openssh_allow_users: []
+
+# @var openssh_deny_groups:description: List of groups to deny SSH login
+openssh_deny_groups: []
+
+# @var openssh_allow_groups:description: List of groups to allow SSH login
+openssh_allow_groups: []
+
+# @var openssh_use_pam:description: Use PAM
+openssh_use_pam: True
+
+# @var openssh_login_grace_time:description: Login grace time
+openssh_login_grace_time: 30s
+
+# @var openssh_permit_root_login:description: Permit root login
+openssh_permit_root_login: False
+
+# @var openssh_pubkey_authentication:description: Enable pubkey authentication
+openssh_pubkey_authentication: True
+
+# @var openssh_strict_modes:description: Enable strict mode
+openssh_strict_modes: True
+
+# @var openssh_ignore_rhosts:description: Ignore rhosts
+openssh_ignore_rhosts: True
+
+# @var openssh_ignore_user_known_hosts:description: Ignore user known hosts
+openssh_ignore_user_known_hosts: True
+
+# @var openssh_hostbased_authentication:description: Hostbased authentication
+openssh_hostbased_authentication: False
+
+# @var openssh_max_auth_tries:description: Max allowed authentication tries
+openssh_max_auth_tries: 3
+
+# @var openssh_max_sessions:description: Max allowed sessions
+openssh_max_sessions: 10
+
+# @var openssh_max_startups:description: Define max startups restriction
+openssh_max_startups: 60:30:120
+
+# @var openssh_authorized_keys_file:description: Authorized keys file
+openssh_authorized_keys_file:
+  - .ssh/authorized_keys
+
+# @var openssh_revoked_keys:description: List of revoked keys
+openssh_revoked_keys: []
+
+# @var openssh_revoked_keys_file:description: Path to revoked keys file
+openssh_revoked_keys_file: /etc/ssh/revoked_keys
+
+# @var openssh_password_authentication:description: Enable password authentication
+openssh_password_authentication: False
+
+# @var openssh_permit_empty_passwords:description: Permit empty passwords
+openssh_permit_empty_passwords: False
+
+# @var openssh_challenge_response_authentication:description: Challenge response authentication
+openssh_challenge_response_authentication: False
+
+# @var openssh_trusted_user_ca_keys_file:description: Path to trusted user ca keys file
+# @var openssh_trusted_user_ca_keys_file:example: $ "/etc/ssh/trusted_user_ca_keys"
+openssh_trusted_user_ca_keys_file:
+
+# @var openssh_trusted_user_ca_keys:description: List of trusted user ca keys
+openssh_trusted_user_ca_keys: []
+
+# @var openssh_authorized_principals_file:description: Path to trusted user ca keys file
+# @var openssh_authorized_principals_file:example: $ "/etc/ssh/auth_principals/%u"
+openssh_authorized_principals_file: none
+
+# @var openssh_authorized_principals:description: List of authorized principles
+# @var openssh_authorized_principals:example: >
+# openssh_authorized_principals:
+#   - path: /etc/ssh/auth_principals/root
+#     principals:
+#       - root
+#     owner: root
+#     group: root
+#     dirowner: root
+#     dirgroup: root
+#   - path: /etc/ssh/auth_principals/example
+#     principals:
+#       - webserver
+#       - master
+#   - path: /etc/ssh/auth_principals/foobar
+#     state: absent
+# @end
+openssh_authorized_principals: []
+
+# @var openssh_kerberos_authentication:description: Enable kerberos authentication
+openssh_kerberos_authentication: False
+
+# @var openssh_kerberos_or_local_passwd:description: Kerberos or local passwwd
+openssh_kerberos_or_local_passwd: False
+
+# @var openssh_kerberos_ticket_cleanup:description: Kerberos ticket cleanup
+openssh_kerberos_ticket_cleanup: True
+
+# @var openssh_kerberos_get_afs_token:description: Kerberos get afs token
+openssh_kerberos_get_afs_token: False
+
+# @var openssh_gssapi_authentication:description: Enable GSSAP authentication
+openssh_gssapi_authentication: False
+
+# @var openssh_gssapi_cleanup_credentials:description: GSSAPI cleanup credentials
+openssh_gssapi_cleanup_credentials: True
+
+# @var openssh_gssapi_strict_accept_or_check:description: GSSAPI strict accept or check
+openssh_gssapi_strict_accept_or_check: True
+
+# @var openssh_gssapi_key_exchange:description: GSSAP key exchange
+openssh_gssapi_key_exchange: False
+
+# @var openssh_tcp_keep_alive:description: Keep TCP alive
+openssh_tcp_keep_alive: False
+
+# @var openssh_client_alive_interval:description: Client alive interval
+openssh_client_alive_interval: 300
+
+# @var openssh_client_alive_count_max:description: Max client alive count
+openssh_client_alive_count_max: 3
+
+# @var openssh_permit_tunnel:description: Permit tunnels
+openssh_permit_tunnel: False
+
+# @var openssh_allow_agent_forwarding:description: Allow agent forwarding
+openssh_allow_agent_forwarding: True
+
+# @var openssh_allow_tcp_forwarding:description: Allow TCP forwarding
+openssh_allow_tcp_forwarding: True
+
+# @var openssh_gateway_ports:description: Allow gateway ports
+openssh_gateway_ports: False
+
+# @var openssh_x11_forwarding:description: Allow X11 forwarding
+openssh_x11_forwarding: False
+
+# @var openssh_x11_use_localhost:description: Use localhost for X11
+openssh_x11_use_localhost: True
+
+# @var openssh_permit_user_environment:description: Permit user environment
+openssh_permit_user_environment: False
+
+# @var openssh_accept_env_vars:description: List of accepted environment variables
+openssh_accept_env_vars:
+  - LANG
+  - LC_*
+
+# @var openssh_compression:description: Enable compression
+openssh_compression: False
+
+# @var openssh_use_dns:description: Use DNS
+openssh_use_dns: True
+
+# @var openssh_print_motd:description: Print a message of the day
+openssh_print_motd: False
+
+# @var openssh_print_last_log:description: Print last login
+openssh_print_last_log: True
+
+# @var openssh_banner:description: Enable or disable a banner
+openssh_banner: none
+
+# @var openssh_sftp_enabled:description: Enable SFTP functionality matched by group
+openssh_sftp_enabled: False
+
+# @var openssh_sftp_group:description: Group used to match SFTP access
+openssh_sftp_group: sftponly
+
+# @var openssh_sftp_chroot_directory:description: Chroot directory for SFTP access
+openssh_sftp_chroot_directory: "/home/%u"
+
+# @var openssh_sftp_password_authentication:description: Allow password authentication for SFTP access
+openssh_sftp_password_authentication: False
+
+# @var openssh_match_address:description:
+# @var openssh_match_address:example: >
+# openssh_match_address:
+#   - address: 192.168.1.1
+#     rules:
+#       - PermitRootLogin yes
+# @end
+openssh_match_address: []
+
+# @var openssh_match_group:description:
+# @var openssh_match_group:example: >
+# openssh_match_group:
+#   - group: wheel
+#     rules:
+#       - PasswordAuthentication yes
+# @end
+openssh_match_group: []
+
+# @var openssh_match_user:description:
+# @var openssh_match_user:example: >
+# openssh_match_user:
+#   - user: john
+#     rules:
+#       - PasswordAuthentication yes
+# @end
+openssh_match_user: []
+
+# @var openssh_remote_hosts:description: List of client remote hosts
+# @var openssh_remote_hosts:example: >
+# openssh_remote_hosts:
+#   - names:
+#       - host1
+#       - host1.example.com
+#     options:
+#       - StrictHostKeyChecking no
+# @end
+openssh_remote_hosts: []
+
+# @var openssh_client_port:description: Port to which ssh client should connect
+openssh_client_port: 22
+
+# @var openssh_client_allow_agent_forwarding:description: Allow agent forwarding for client connections
+openssh_client_allow_agent_forwarding: "{{ openssh_allow_agent_forwarding }}"
+
+# @var openssh_client_x11_forwarding:description: Allow x11 forwarding for client connections
+openssh_client_x11_forwarding: "{{ openssh_x11_forwarding }}"
+
+# @var openssh_client_hostbased_authentication:description: Hostbased authentication for client connections
+openssh_client_hostbased_authentication: "{{ openssh_hostbased_authentication }}"
+
+# @var openssh_client_password_authentication:description: Password authentication for client connections
+openssh_client_password_authentication: "{{ openssh_password_authentication }}"
+
+# @var openssh_client_gssapi_authentication:description: GSSAPI authentication for client connections
+openssh_client_gssapi_authentication: "{{ openssh_gssapi_authentication }}"
+
+# @var openssh_client_gssapi_delegate_credentials:description: Delegate GSSAPI credentials for client connections
+openssh_client_gssapi_delegate_credentials: False
+
+# @var openssh_moduli_minimum:description: Minimum size of allowd primes
+openssh_moduli_minimum: 2048
+
+...

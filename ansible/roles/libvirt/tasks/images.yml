@@ -1,0 +1,116 @@
+# Standards: 1.2
+---
+- name: Download defined images
+  loop: "{{ libvirt_images }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/var/lib/libvirt/images/{{ item.name }}"
+    checksum: "{{ item.checksum | default(omit) }}"
+    owner: qemu
+    group: qemu
+    mode: u=rw,g=rw,o=
+    creates: "{{ item.creates | default(omit) }}"
+  tags:
+    - libvirt
+    - images
+
+- name: Remove defined images
+  loop: "{{ libvirt_images }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'absent'
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/images/{{ item.name }}"
+    state: absent
+  tags:
+    - libvirt
+    - images
+
+- name: Create archive path
+  loop: "{{ libvirt_archives }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+  ansible.builtin.file:
+    path: "{{ item.target }}/{{ item.name }}"
+    owner: qemu
+    group: qemu
+    mode: u=rwx,g=x,o=x
+    state: directory
+    recurse: True
+  tags:
+    - libvirt
+    - images
+
+- name: Download defined archives
+  loop: "{{ libvirt_archives }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+  ansible.builtin.unarchive:
+    src: "{{ item.url }}"
+    dest: "{{ item.target }}/{{ item.name }}"
+    include: "{{ item.include | default(omit) }}"
+    exclude: "{{ item.exclude | default(omit) }}"
+    remote_src: True
+    owner: qemu
+    group: qemu
+    mode: u=rw,g=rw,o=
+    creates: "{{ item.creates | default(omit) }}"
+  tags:
+    - libvirt
+    - images
+
+- name: Link defined archives
+  loop: "{{ libvirt_archives }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.link | default(False)
+  ansible.builtin.file:
+    src: "{{ item.target }}/{{ item.name }}/{{ item.link }}"
+    dest: "/var/lib/libvirt/images/{{ item.name }}.qcow2"
+    owner: qemu
+    group: qemu
+    mode: u=rw,g=rw,o=
+    state: link
+  tags:
+    - libvirt
+    - images
+
+- name: Remove defined archives
+  loop: "{{ libvirt_archives }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'absent'
+  ansible.builtin.file:
+    path: "{{ item.target }}/{{ item.name }}"
+    state: absent
+  tags:
+    - libvirt
+    - images
+
+- name: Unlink defined archives
+  loop: "{{ libvirt_archives }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'absent'
+    - item.link | default(False)
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/images/{{ item.name }}.qcow2"
+    state: absent
+  tags:
+    - libvirt
+    - images
+
+...

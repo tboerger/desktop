@@ -1,0 +1,117 @@
+# Standards: 1.2
+---
+- name: Check for requirements
+  register: dconf_psutil_check
+  changed_when: False
+  failed_when: False
+  ansible.builtin.command: rpm -q python3-psutil
+  tags:
+    - dconf
+
+- name: Include layers tasks
+  when: dconf_psutil_check.rc > 0
+  ansible.builtin.include_tasks: layers.yml
+  tags:
+    - dconf
+
+- name: Write profile config
+  notify:
+    - Update dconf
+  loop: "{{ dconf_general_profiles + dconf_extra_profiles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.profile | default(False)
+  ansible.builtin.copy:
+    content: "{{ item.profile }}"
+    dest: "/etc/dconf/profile/{{ item.name }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - dconf
+
+- name: Remove profile config
+  notify:
+    - Update dconf
+  loop: "{{ dconf_general_profiles + dconf_extra_profiles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'absent'
+    - item.profile | default(False)
+  ansible.builtin.file:
+    path: "/etc/dconf/profile/{{ item.name }}"
+    state: absent
+  tags:
+    - dconf
+
+- name: Create profile dir
+  notify:
+    - Update dconf
+  loop: "{{ dconf_general_profiles + dconf_extra_profiles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('present') == 'present'
+  ansible.builtin.file:
+    path: "/etc/dconf/db/{{ item.name }}.d"
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+  tags:
+    - dconf
+
+- name: Remove profile dir
+  notify:
+    - Update dconf
+  loop: "{{ dconf_general_profiles + dconf_extra_profiles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('present') == 'absent'
+  ansible.builtin.file:
+    path: "/etc/dconf/db/{{ item.name }}.d"
+    state: absent
+  tags:
+    - dconf
+
+- name: Write profile entries
+  notify:
+    - Update dconf
+  loop: "{{ (dconf_general_profiles + dconf_extra_profiles) | subelements('configs', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}:{{ item.1.name }}"
+  when: item.1.state | default('present') == 'present'
+  ansible.builtin.copy:
+    content: "{{ item.1.config }}"
+    dest: "/etc/dconf/db/{{ item.0.name }}.d/{{ item.1.name }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - dconf
+
+- name: Remove profile entries
+  notify:
+    - Update dconf
+  loop: "{{ (dconf_general_profiles + dconf_extra_profiles) | subelements('configs', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}:{{ item.1.name }}"
+  when: item.1.state | default('present') == 'absent'
+  ansible.builtin.file:
+    path: "/etc/dconf/db/{{ item.0.name }}.d/{{ item.1.name }}"
+    state: absent
+  tags:
+    - dconf
+
+- name: Include configs tasks
+  loop: "{{ dconf_general_configs + dconf_extra_configs }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.username }}"
+  ansible.builtin.include_tasks: configs.yml
+  tags:
+    - dconf
+
+...

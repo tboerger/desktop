@@ -1,0 +1,79 @@
+# Standards: 1.2
+---
+# @var flatpak_remotes_general:description: List of general remotes
+# @var flatpak_remotes_general:example: >
+# flatpak_remotes_general:
+#   - name: flathub
+#     url: https://flathub.org/repo/flathub.flatpakrepo
+#   - name: example
+#     url: https://example.com/example.flatpakrepo
+#     method: system
+#     enabled: True
+#     state: present
+# @end
+flatpak_remotes_general:
+  - name: fedora
+    url: oci+https://registry.fedoraproject.org
+  - name: flathub
+    url: https://flathub.org/repo/flathub.flatpakrepo
+
+# @var flatpak_remotes_extra:description: List of extra remotes
+# @var flatpak_remotes_extra:example: >
+# flatpak_remotes_extra:
+#   - name: flathub
+#     url: https://flathub.org/repo/flathub.flatpakrepo
+#   - name: example
+#     url: https://example.com/example.flatpakrepo
+#     method: system
+#     enabled: True
+#     state: present
+# @end
+flatpak_remotes_extra: []
+
+# @var flatpak_installs_general:description: List of general packages
+# @var flatpak_installs_general:example: >
+# flatpak_installs_general:
+#   - name: net.blix.BlueMail
+#     state: absent
+#   - name: io.kinvolk.Headlamp
+#     method: user
+#     remote: flathub
+#     state: present
+# @end
+flatpak_installs_general: []
+
+# @var flatpak_installs_extra:description: List of extra packages
+# @var flatpak_installs_extra:example: >
+# flatpak_installs_extra:
+#   - name: net.blix.BlueMail
+#     state: absent
+#   - name: io.kinvolk.Headlamp
+#     method: user
+#     remote: flathub
+#     state: present
+# @end
+flatpak_installs_extra: []
+
+# @var flatpak_byrefs_general:description: List of general packages by flatpakref
+# @var flatpak_byrefs_general:example: >
+# flatpak_byrefs_general:
+#   - name: com.onepassword.OnePassword
+#     url: https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+#     state: absent
+#   - name: org.gnome.gedit
+#     url: https://git.gnome.org/browse/gnome-apps-nightly/plain/gedit.flatpakref
+# @end
+flatpak_byrefs_general: []
+
+# @var flatpak_byrefs_extra:description: List of extra packages by flatpakref
+# @var flatpak_byrefs_extra:example: >
+# flatpak_byrefs_extra:
+#   - name: com.onepassword.OnePassword
+#     url: https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+#     state: absent
+#   - name: org.gnome.gedit
+#     url: https://git.gnome.org/browse/gnome-apps-nightly/plain/gedit.flatpakref
+# @end
+flatpak_byrefs_extra: []
+
+...

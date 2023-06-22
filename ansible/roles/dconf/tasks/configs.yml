@@ -1,0 +1,19 @@
+# Standards: 1.2
+---
+- become: True
+  become_user: "{{ user.username }}"
+  block:
+    - name: "Apply defined configs : {{ user.username }}"
+      loop: "{{ user.configs }}"
+      loop_control:
+        label: "{{ item.name }}"
+      notify:
+        - Update dconf
+      community.general.dconf:
+        key: "{{ item.name }}"
+        value: "{{ item.value }}"
+        state: "{{ item.state | default('present') }}"
+      tags:
+        - dconf
+
+...

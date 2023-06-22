@@ -1,0 +1,29 @@
+# Standards: 1.2
+---
+- name: Restart libvirtd
+  systemd:
+    name: libvirtd
+    state: restarted
+    daemon_reload: True
+
+- name: Restart guests
+  systemd:
+    name: libvirt-guests
+    state: restarted
+    daemon_reload: True
+
+- name: Reload virtlogd
+  failed_when: False
+  systemd:
+    name: virtlogd
+    state: reloaded
+    daemon_reload: True
+
+- name: Reload virtlockd
+  failed_when: False
+  systemd:
+    name: virtlockd
+    state: reloaded
+    daemon_reload: True
+
+...

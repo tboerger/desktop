@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+sleep 3
+STATUS=$(tailscale status --json | jq -r .BackendState)
+
+if [[ ${STATUS} == "Running" ]]; then
+    exit 0
+fi
+
+tailscale up --auth-key {{ tailscale_authkey }}

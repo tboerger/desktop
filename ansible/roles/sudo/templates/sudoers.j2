@@ -1,0 +1,12 @@
+Defaults !visiblepw
+Defaults always_set_home
+Defaults match_group_by_gid
+Defaults always_query_group_plugin
+Defaults env_reset
+Defaults env_keep = "{{ sudo_env_keep | join(" ") }}"
+Defaults secure_path = "{{ sudo_secure_path | join(":") }}"
+
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) NOPASSWD: ALL
+
+#includedir /etc/sudoers.d

@@ -1,0 +1,98 @@
+# Standards: 1.2
+---
+- name: Check for requirements
+  register: root_zsh_check
+  changed_when: False
+  failed_when: False
+  ansible.builtin.command: rpm -q zsh
+  tags:
+    - root
+
+- name: Include layers tasks
+  when: root_zsh_check.rc > 0
+  ansible.builtin.include_tasks: layers.yml
+  tags:
+    - root
+
+- name: Update root password
+  when: root_password | default(False)
+  ansible.builtin.user:
+    name: root
+    password: "{{ root_password }}"
+    update_password: always
+  tags:
+    - root
+
+- name: Enforce root shell
+  when: root_shell | default(False)
+  ansible.builtin.user:
+    name: root
+    shell: "{{ root_shell }}"
+  tags:
+    - root
+
+- name: Install ohmyzsh repo
+  when: root_ohmyzsh | default(False)
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: /root/.oh-my-zsh
+    version: "{{ 'HEAD' if root_ohmyzsh_version == 'latest' else root_ohmyzsh_version }}"
+  tags:
+    - root
+
+- name: Install bashit repo
+  when: root_bashit | default(False)
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/Bash-it/bash-it.git
+    dest: /root/.bash_it
+    version: "{{ 'HEAD' if root_bashit_version == 'latest' else root_bashit_version }}"
+  tags:
+    - root
+
+- name: Clone homeshick base
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/andsens/homeshick.git
+    dest: /root/.homesick/repos/homeshick
+    version: "{{ 'HEAD' if root_homeshick_version == 'latest' else root_homeshick_version }}"
+  tags:
+    - root
+
+- name: Clone homeshick castles
+  loop: "{{ root_castles }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  when: root_castles | default(False)
+  diff: False
+  ansible.builtin.git:
+    repo: "{{ item.name | default(item) if (item.name | default(item)).startswith('http') else 'https://github.com/' + item.name | default(item) }}"
+    dest: "/root/.homesick/repos/{{ (item.name | default(item)) | basename }}"
+    force: "{{ item.force | default(root_castles_force) }}"
+    version: "{{ item.1.version | default('HEAD') }}"
+  tags:
+    - root
+
+- name: Link homeshick castles
+  loop: "{{ root_castles }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  when: root_castles | default(False)
+  changed_when: False
+  ansible.builtin.command: "/root/.homesick/repos/homeshick/bin/homeshick -f -b -q link {{ item | basename }}"
+  tags:
+    - root
+
+- name: Write authorized keys
+  when: root_sshkeys | default(False)
+  ansible.builtin.authorized_key:
+    user: root
+    key: "{{ root_sshkeys | join('\n') }}"
+    path: /root/.ssh/authorized_keys
+    exclusive: True
+    state: present
+  tags:
+    - root
+
+...

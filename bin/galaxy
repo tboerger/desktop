@@ -7,19 +7,22 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-if ! which ansible-galaxy >/dev/null; then
+if ! test -f "${ROOT}/env/bin/ansible-galaxy"; then
     echo "Failed to detect galaxy!"
     exit 1
 fi
 
 pushd "${ROOT}" >/dev/null
-    ansible-galaxy \
+    export ANSIBLE_ROLES_PATH=galaxy:ansible/roles
+    export ANSIBLE_COLLECTIONS_PATH=collections
+
+    "${ROOT}/env/bin/ansible-galaxy" \
         collection install \
-        -r "${ROOT}/ansible/collections.yml" \
+        -r "${ROOT}/ansible/requirements.yml" \
         -p "${ROOT}/collections" \
         "$@"
 
-    ansible-galaxy \
+    "${ROOT}/env/bin/ansible-galaxy" \
         role install \
         -r "${ROOT}/ansible/requirements.yml" \
         -p "${ROOT}/galaxy" \

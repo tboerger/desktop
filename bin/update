@@ -12,7 +12,7 @@ EXECUTE=$(basename $0)
 STRIPPED=${EXECUTE%-update}
 MACHINE=${MACHINE:-${STRIPPED}}
 
-if [[ ! -d "${ROOT}/ansible/host_vars/${MACHINE}" ]]; then
+if ! test -d "${ROOT}/ansible/host_vars/${MACHINE}"; then
     echo "Provided invalid machine!"
     exit 1
 fi

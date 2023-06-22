@@ -1,0 +1,169 @@
+# Standards: 1.2
+---
+- name: Check for requirements
+  register: users_zsh_check
+  changed_when: False
+  failed_when: False
+  ansible.builtin.command: rpm -q zsh
+  tags:
+    - users
+
+- name: Include layers tasks
+  when: users_zsh_check.rc > 0
+  ansible.builtin.include_tasks: layers.yml
+  tags:
+    - users
+
+- name: Create primary group
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.primary_group is undefined
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.uid | default(omit) }}"
+    state: present
+  tags:
+    - users
+
+- name: Create user account
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    password: "{{ item.password | default(omit) }}"
+    group: "{{ item.primary_group | default(item.name) }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    home: "{{ item.home | default('/home/' + item.name) }}"
+    groups: "{{ item.groups | default([]) | join(',') }}"
+    generate_ssh_key: "{{ item.ssh_key.generate | default(False) }}"
+    ssh_key_bits: "{{ item.ssh_key.bits | default(omit) }}"
+    ssh_key_comment: "{{ item.ssh_key.comment | default(omit) }}"
+    ssh_key_file: "{{ item.ssh_key.file | default(omit) }}"
+    ssh_key_passphrase: "{{ item.ssh_key.passphrase | default(omit) }}"
+    ssh_key_type: "{{ item.ssh_key.type | default(omit) }}"
+    update_password: "{{ item.update_password | default('always') }}"
+    remove: "{{ item.remove | default(False) }}"
+    append: True
+    createhome: True
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - users
+
+- name: Install ohmyzsh repo
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.ohmyzsh | default(False)
+  become: True
+  become_user: "{{ item.name }}"
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "{{ item.home | default('/home/' + item.name) }}/.oh-my-zsh"
+    version: "{{ 'HEAD' if users_ohmyzsh_version == 'latest' else users_ohmyzsh_version }}"
+  tags:
+    - users
+
+- name: Install bashit repo
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.bashit | default(False)
+  become: True
+  become_user: "{{ item.name }}"
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/Bash-it/bash-it.git
+    dest: "{{ item.home | default('/home/' + item.name) }}/.bash_it"
+    version: "{{ 'HEAD' if users_bashit_version == 'latest' else users_bashit_version }}"
+  tags:
+    - users
+
+- name: Install homeshick base
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.castles | default([]) | length > 0
+  become: True
+  become_user: "{{ item.name }}"
+  diff: False
+  ansible.builtin.git:
+    repo: https://github.com/andsens/homeshick.git
+    dest: "{{ item.home | default('/home/' + item.name) }}/.homesick/repos/homeshick"
+    version: "{{ 'HEAD' if users_homeshick_version == 'latest' else users_homeshick_version }}"
+  tags:
+    - users
+
+- name: Clone homeshick castles
+  loop: "{{ (users_general + users_extra) | subelements('castles', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1 }}"
+  when:
+    - item.state | default('present') == 'present'
+  become: True
+  become_user: "{{ item.0.name }}"
+  diff: False
+  ansible.builtin.git:
+    repo: "{{ item.1.name | default(item.1) if (item.1.name | default(item.1)).startswith('http') else 'https://github.com/' + item.1.name | default(item.1) }}"
+    dest: "{{ item.0.home | default('/home/' + item.0.name) }}/.homesick/repos/{{ item.1.name | default(item.1) | basename }}"
+    force: "{{ item.1.force | default(users_castles_force) }}"
+    version: "{{ item.1.version | default('HEAD') }}"
+  tags:
+    - users
+
+- name: Link homeshick castles
+  loop: "{{ (users_general + users_extra) | subelements('castles', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1 }}"
+  when:
+    - item.0.state | default('present') == 'present'
+  become: True
+  become_user: "{{ item.0.name }}"
+  changed_when: False
+  ansible.builtin.command: "{{ item.0.home | default('/home/' + item.0.name) }}/.homesick/repos/homeshick/bin/homeshick -f -b -q link {{ item.1 | basename }}"
+  tags:
+    - users
+
+- name: Write authorized keys
+  loop: "{{ users_general + users_extra }}"
+  loop_control:
+    label: "{{ item.name }}: {{ item.sshkeys | default(['None']) | join(', ') }}"
+  when:
+    - item.state | default('present') == 'present'
+    - item.sshkeys | default(False)
+  ansible.builtin.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.sshkeys | join('\n') }}"
+    exclusive: True
+    state: present
+  tags:
+    - users
+
+- name: Write private keys
+  loop: "{{ (users_general + users_extra) | subelements('private', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.name | default('id_rsa') }}"
+  when:
+    - item.0.state | default('present') == 'present'
+  ansible.builtin.copy:
+    content: "{{ item.1.content }}"
+    dest: "{{ item.0.home | default('/home/' + item.0.name) }}/.ssh/{{ item.1.name | default('id_rsa') }}"
+    owner: "{{ item.0.name }}"
+    group: "{{ item.0.primary_group | default(item.0.name) }}"
+    mode: u=rw,g=,o=
+  tags:
+    - users
+
+...

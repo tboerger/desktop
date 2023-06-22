@@ -1,0 +1,83 @@
+# Standards: 1.2
+---
+- name: Delete userdata iso
+  when: item.stat.exists
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/userdata/{{ item.item.name }}.iso"
+    state: absent
+  tags:
+    - libvirt
+    - machines
+
+- name: Create userdata dir
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/userdata/{{ item.item.name }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - libvirt
+    - machines
+
+- name: Create user-data file
+  ansible.builtin.template:
+    src: machines/userdata.j2
+    dest: "/var/lib/libvirt/userdata/{{ item.item.name }}/user-data"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+    - machines
+
+- name: Create meta-data file
+  ansible.builtin.template:
+    src: machines/metadata.j2
+    dest: "/var/lib/libvirt/userdata/{{ item.item.name }}/meta-data"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+    - machines
+
+- name: Create network-config file
+  ansible.builtin.template:
+    src: machines/network.j2
+    dest: "/var/lib/libvirt/userdata/{{ item.item.name }}/network-config"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+    - machines
+
+- name: Generate userdata image
+  ansible.builtin.command: |
+    cloud-localds --network-config /var/lib/libvirt/userdata/{{ item.item.name }}/network-config /var/lib/libvirt/userdata/{{ item.item.name }}.iso /var/lib/libvirt/userdata/{{ item.item.name }}/user-data /var/lib/libvirt/userdata/{{ item.item.name }}/meta-data
+  args:
+    creates: "/var/lib/libvirt/userdata/{{ item.item.name }}.iso"
+  tags:
+    - libvirt
+    - machines
+
+- name: Fix image perms
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/userdata/{{ item.item.name }}.iso"
+    owner: libvirt-qemu
+    group: kvm
+    mode: u=rw,g=rw,o=
+  tags:
+    - libvirt
+    - machines
+
+- name: Delete userdata dir
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/userdata/{{ item.item.name }}"
+    state: absent
+  tags:
+    - libvirt
+    - machines
+
+...

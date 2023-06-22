@@ -1,0 +1,176 @@
+# Standards: 1.2
+---
+- name: Write server keys
+  notify:
+    - Reload openssh
+  loop: '{{ openssh_host_keys }}'
+  loop_control:
+    label: '{{ item.name }}'
+  diff: False
+  when: item.state | default('present') == 'present' and item.key | default(False)
+  copy:
+    content: "{{ item.key | trim }}\n"
+    dest: "/etc/ssh/{{ item.name }}"
+    mode: u=rw,g=,o=
+  tags:
+    - openssh
+
+- name: Remove server keys
+  notify:
+    - Reload openssh
+  loop: '{{ openssh_host_keys }}'
+  loop_control:
+    label: '{{ item.name }}'
+  diff: False
+  when: item.state | default('present') == 'absent'
+  file:
+    path: "/etc/ssh/{{ item.name }}"
+    state: absent
+  tags:
+    - openssh
+
+- name: Write server pubs
+  notify:
+    - Reload openssh
+  loop: '{{ openssh_host_keys }}'
+  loop_control:
+    label: '{{ item.name }}'
+  diff: False
+  when: item.state | default('present') == 'present' and item.pub | default(False)
+  copy:
+    content: "{{ item.pub | trim }}\n"
+    dest: "/etc/ssh/{{ item.name }}.pub"
+    mode: u=rw,g=r,o=r
+  tags:
+    - openssh
+
+- name: Remove server pubs
+  notify:
+    - Reload openssh
+  loop: '{{ openssh_host_keys }}'
+  loop_control:
+    label: '{{ item.name }}'
+  diff: False
+  when: item.state | default('present') == 'absent'
+  file:
+    path: "/etc/ssh/{{ item.name }}.pub"
+    state: absent
+  tags:
+    - openssh
+
+- name: Check small primes
+  register: openssh_register_moduli
+  changed_when: False
+  check_mode: False
+  shell: awk '$5 < {{ openssh_moduli_minimum }}' /etc/ssh/moduli
+  tags:
+    - openssh
+
+- name: Remove small primes
+  notify:
+    - Reload openssh
+  when: openssh_register_moduli.stdout | default(False)
+  changed_when: openssh_register_moduli.stdout | default(False)
+  shell: awk '$5 >= {{ openssh_moduli_minimum }}' /etc/ssh/moduli > /etc/ssh/moduli.new; [ -r /etc/ssh/moduli.new -a -s /etc/ssh/moduli.new ] && mv /etc/ssh/moduli.new /etc/ssh/moduli || true
+  tags:
+    - openssh
+
+- name: Write server config
+  notify:
+    - Reload openssh
+  template:
+    src: config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+    validate: /usr/sbin/sshd -tf %s
+  tags:
+    - openssh
+
+- name: Write client config
+  template:
+    src: client.j2
+    dest: /etc/ssh/ssh_config
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - openssh
+
+- name: Write revoked keys
+  notify:
+    - Reload openssh
+  when: openssh_revoked_keys_file | default(False)
+  copy:
+    content: "{{ openssh_revoked_keys | join('\n') }}"
+    dest: "{{ openssh_revoked_keys_file }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - openssh
+
+- name: Write trusted CAs
+  notify:
+    - Reload openssh
+  when: openssh_trusted_user_ca_keys_file | default(False)
+  copy:
+    content: "{{ openssh_trusted_user_ca_keys | join('\n') }}"
+    dest: "{{ openssh_trusted_user_ca_keys_file }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - openssh
+
+- name: Create principal dirs
+  loop: "{{ openssh_authorized_principals }}"
+  loop_control:
+    label: "{{ item.path | dirname }}"
+  when: item.state | default('present') == 'present'
+  file:
+    path: "{{ item.path | dirname }}"
+    mode: "{{ item.dirmode | default('u=rwx,g=,o=') }}"
+    owner: "{{ item.dirowner | default('root') }}"
+    group: "{{ item.dirgroup | default('root') }}"
+    state: directory
+  tags:
+    - openssh
+
+- name: Write principle file
+  loop: "{{ openssh_authorized_principals }}"
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state | default('present') == 'present'
+  copy:
+    content: "{{ item.principals | join('\n') }}"
+    dest: "{{ item.path }}"
+    mode: "{{ item.mode | default('u=rw,g=,o=') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  tags:
+    - openssh
+
+- name: Remove principle file
+  loop: "{{ openssh_authorized_principals }}"
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state | default('present') == 'absent'
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  tags:
+    - openssh
+
+- name: Disable dynamic motd
+  pamd:
+    name: sshd
+    type: session
+    control: optional
+    module_path: pam_motd.so
+    state: absent
+  tags:
+    - openssh
+
+...

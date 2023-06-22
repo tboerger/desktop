@@ -1,0 +1,26 @@
+# Standards: 1.2
+---
+- name: Install required packages
+  loop: "{{ layers_packages_general + layers_packages_extra }}"
+  loop_control:
+    label: "{{ item.name | default(item) }}"
+  community.general.rpm_ostree_pkg:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - layers
+
+- name: Check boot status
+  changed_when: False
+  register: layers_booted_check
+  ansible.builtin.shell: rpm-ostree status --json | jq -r .deployments[0].booted
+  tags:
+    - layers
+
+- name: Live apply changes
+  when: layers_booted_check.stdout == 'false'
+  ansible.builtin.command: rpm-ostree apply-live --allow-replacement
+  tags:
+    - layers
+
+...

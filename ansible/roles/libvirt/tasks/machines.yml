@@ -1,0 +1,205 @@
+# Standards: 1.2
+---
+- name: Check userdata exists
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.userdata and item.state | default('running') != 'destroyed'
+  register: libvirt_machines_userdata
+  ansible.builtin.stat:
+    path: "/var/lib/libvirt/userdata/{{ item.name }}.iso"
+  tags:
+    - libvirt
+    - machines
+
+- name: Include userdata tasks
+  loop: "{{ libvirt_machines_userdata.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not item.skipped | default(False) and item.item.userdata and (not item.stat.exists or item.item.overwrite | default(False))
+  ansible.builtin.include_tasks: userdata.yml
+  tags:
+    - libvirt
+    - machines
+
+- name: Create lvm volume
+  loop: "{{ libvirt_machines | subelements('disks') }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.name }}"
+  when: item.1.type == "lvm" and item.0.state | default('running') != 'destroyed'
+  register: libvirt_machines_volume
+  community.general.lvol:
+    vg: "{{ item.1.group }}"
+    lv: "{{ item.1.name }}"
+    size: "{{ item.1.size }}"
+    resizefs: True
+  tags:
+    - libvirt
+    - machines
+
+- name: Convert volume source
+  loop: "{{ libvirt_machines_volume.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.0.name }}: {{ item.item.1.name }}"
+  when: item.changed and item.item.1.source is defined
+  register: libvirt_machines_rawfile
+  ansible.builtin.command: |
+    qemu-img convert -O raw {{ item.item.1.source }} {{ item.item.1.source }}-{{ item.item.1.name }}.raw
+  args:
+    creates: "{{ item.item.1.source }}-{{ item.item.1.name }}.raw"
+  tags:
+    - libvirt
+    - machines
+    - skip_ansible_later
+
+- name: Source to volume
+  loop: "{{ libvirt_machines_rawfile.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.item.0.name }}: {{ item.item.item.1.name }}"
+  when: item.changed and item.item.item.1.source is defined
+  ansible.builtin.command: |
+    dd if={{ item.item.item.1.source }}-{{ item.item.item.1.name }}.raw of=/dev/{{ item.item.item.1.group }}/{{ item.item.item.1.name }} bs=4M
+  tags:
+    - libvirt
+    - machines
+    - skip_ansible_later
+
+- name: Delete converted source
+  loop: "{{ libvirt_machines_rawfile.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.item.0.name }}: {{ item.item.item.1.name }}"
+  when: item.item.item.1.source is defined
+  ansible.builtin.file:
+    path: "{{ item.item.item.1.source }}-{{ item.item.item.1.name }}.raw"
+    state: absent
+  tags:
+    - libvirt
+    - machines
+
+- name: Check qcow2 image
+  loop: "{{ libvirt_machines | subelements('disks') }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.name }}"
+  when: item.1.type == "qcow2" and item.state | default('running') != 'destroyed'
+  register: libvirt_machines_image
+  check_mode: True
+  ansible.builtin.stat:
+    path: "/var/lib/libvirt/images/{{ item.1.name }}.qcow2"
+  tags:
+    - libvirt
+    - machines
+
+- name: Source to image
+  loop: "{{ libvirt_machines_image.results }}"
+  loop_control:
+    label: "{{ item.item.0.name }}: {{ item.item.1.name }}"
+  when: item.item.1.source is defined and item.stat is defined and not item.stat.exists
+  register: libvirt_machines_create
+  ansible.builtin.copy:
+    src: "{{ item.item.1.source }}"
+    dest: "/var/lib/libvirt/images/{{ item.item.1.name }}.qcow2"
+    remote_src: True
+    owner: libvirt-qemu
+    group: kvm
+    mode: 0660
+  tags:
+    - libvirt
+    - machines
+
+- name: Resize qcow2 image
+  loop: "{{ libvirt_machines_create.results | default([]) }}"
+  loop_control:
+    label: "{{ item.item.item.0.name }}: {{ item.item.item.1.name }}"
+  when: item.changed
+  ansible.builtin.command: |
+    qemu-img resize /var/lib/libvirt/images/{{ item.item.item.1.name }}.qcow2 {{ item.item.item.1.size | upper }}
+  tags:
+    - libvirt
+    - machines
+    - skip_ansible_later
+
+- name: List running machines
+  register: libvirt_running_machines
+  community.libvirt.virt:
+    command: list_vms
+    state: running
+  tags:
+    - libvirt
+    - machines
+
+- name: Define machine spec
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('running') != 'destroyed' and item.name not in libvirt_running_machines.list_vms
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('template', 'machines/spec.j2') }}"
+  tags:
+    - libvirt
+    - machines
+
+- name: Destroy machine
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('running') == 'destroyed' and item.name in libvirt_running_machines.list_vms
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    command: destroy
+  tags:
+    - libvirt
+    - machines
+
+- name: Undefine machine
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('running') == 'destroyed'
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    command: undefine
+  tags:
+    - libvirt
+    - machines
+
+- name: Autostart machine
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('running') == 'running'
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    autostart: "{{ item.autostart | default(True) }}"
+  tags:
+    - libvirt
+    - machines
+
+- name: Change machine state
+  loop: "{{ libvirt_machines }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.state | default('running') == 'running'
+  community.libvirt.virt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('running') }}"
+  tags:
+    - libvirt
+    - machines
+
+- name: Delete lvm volume
+  loop: "{{ libvirt_machines | subelements('disks') }}"
+  loop_control:
+    label: "{{ item.0.name }}: {{ item.1.name }}"
+  when: item.1.type == "lvm" and item.0.state | default('running') == 'destroyed'
+  register: libvirt_machines_volume
+  community.general.lvol:
+    vg: "{{ item.1.group }}"
+    lv: "{{ item.1.name }}"
+    force: True
+    state: absent
+  tags:
+    - libvirt
+    - machines
+
+...
