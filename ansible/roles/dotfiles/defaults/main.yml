@@ -1,0 +1,22 @@
+# Standards: 1.2
+---
+# @var dotfiles_users_general:description: List of general dotfile configurations
+# @var dotfiles_users_general:example: >
+# dotfiles_users_general:
+#   - username: example
+#     flake: github:example/desktop#example
+# @end
+dotfiles_users_general: []
+
+# @var dotfiles_users_extra:description: List of extra dotfile configurations
+# @var dotfiles_users_extra:example: >
+# dotfiles_users_extra:
+#   - username: example
+#     flake: github:example/desktop#example
+# @end
+dotfiles_users_extra: []
+
+# @var dotfiles_apply_configs:description: Define if the user configs should be applied
+dotfiles_apply_configs: True
+
+...

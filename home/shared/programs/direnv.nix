@@ -10,9 +10,7 @@ in
     profile = {
       programs = {
         direnv = {
-          enable = mkEnableOption "Direnv" // {
-            default = true;
-          };
+          enable = mkEnableOption "Direnv";
         };
       };
     };

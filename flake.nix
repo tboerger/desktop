@@ -37,9 +37,15 @@
       homeConfigurations = {
         "thomas@anubis" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
         "thomas@chnum" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "thomas@horus" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "thomas@imhotep" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "thomas@osiris" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+
+        "anna@anubis" = mkHome [ ./home/anna/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "anna@chnum" = mkHome [ ./home/anna/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+
+        "adrian@anubis" = mkHome [ ./home/adrian/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "adrian@chnum" = mkHome [ ./home/adrian/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+
+        "tabea@anubis" = mkHome [ ./home/tabea/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "tabea@chnum" = mkHome [ ./home/tabea/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
       };
     } // inputs.utils.lib.eachDefaultSystem
       (system:

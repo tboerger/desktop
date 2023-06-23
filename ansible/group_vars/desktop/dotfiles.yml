@@ -1,0 +1,13 @@
+# Standards: 1.2
+---
+dotfiles_users_general:
+  - username: thomas
+    flake: github:tboerger/desktop#thomas
+  - username: anna
+    flake: github:tboerger/desktop#anna
+  - username: adrian
+    flake: github:tboerger/desktop#adrian
+  - username: tabea
+    flake: github:tboerger/desktop#tabea
+
+...

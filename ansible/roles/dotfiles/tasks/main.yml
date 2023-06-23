@@ -1,0 +1,30 @@
+# Standards: 1.2
+---
+- name: Check home manager
+  register: dotfiles_home_manager
+  ansible.builtin.stat:
+    path: /nix/var/nix/profiles/default/bin/home-manager
+  tags:
+    - dotfiles
+
+- name: Install home manager
+  when: not dotfiles_home_manager.stat.exists
+  changed_when: False
+  ansible.builtin.command:
+    cmd: nix run home-manager/master -- init --switch
+  tags:
+    - dotfiles
+
+- name: Include configs tasks
+  loop: "{{ dotfiles_users_general + dotfiles_users_extra }}"
+  loop_control:
+    label: "{{ item.username }}"
+  become: True
+  become_user: "{{ item.username }}"
+  when: dotfiles_apply_configs or item.apply | default(False)
+  ansible.builtin.command:
+    cmd: "home-manager switch --flake {{ item.flake }}"
+  tags:
+    - dotfiles
+
+...
