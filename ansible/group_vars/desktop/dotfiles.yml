@@ -2,12 +2,12 @@
 ---
 dotfiles_users_general:
   - username: thomas
-    flake: github:tboerger/desktop#thomas
+    flake: "github:tboerger/desktop#thomas@{{ inventory_hostname }}"
   - username: anna
-    flake: github:tboerger/desktop#anna
+    flake: "github:tboerger/desktop#anna@{{ inventory_hostname }}"
   - username: adrian
-    flake: github:tboerger/desktop#adrian
+    flake: "github:tboerger/desktop#adrian@{{ inventory_hostname }}"
   - username: tabea
-    flake: github:tboerger/desktop#tabea
+    flake: "github:tboerger/desktop#tabea@{{ inventory_hostname }}"
 
 ...
