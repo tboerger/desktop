@@ -18,6 +18,15 @@ in
 
   profile = {
     programs = {
+      lsd = {
+        enable = true;
+      };
+      packwiz = {
+        enable = true;
+      };
+      readline = {
+        enable = true;
+      };
       starship = {
         enable = true;
       };

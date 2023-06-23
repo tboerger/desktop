@@ -18,10 +18,74 @@ in
 
   profile = {
     programs = {
+      citrix = {
+        enable = true;
+      };
       direnv = {
         enable = true;
       };
+      fzf = {
+        enable = true;
+      };
+      golang = {
+        enable = true;
+      };
+      gomplate = {
+        enable = true;
+      };
+      helm = {
+        enable = true;
+      };
+      jq = {
+        enable = true;
+      };
+      jsonnet = {
+        enable = true;
+      };
+      kubectl = {
+        enable = true;
+      };
+      kustomize = {
+        enable = true;
+      };
+      lsd = {
+        enable = true;
+      };
+      neovim = {
+        enable = true;
+      };
+      ngrok = {
+        enable = true;
+      };
+      packwiz = {
+        enable = true;
+      };
+      readline = {
+        enable = true;
+      };
+      sops = {
+        enable = true;
+      };
       starship = {
+        enable = true;
+      };
+      terraform = {
+        enable = true;
+      };
+      yq = {
+        enable = true;
+      };
+
+      minio = {
+        enable = true;
+      };
+      vscode = {
+        enable = true;
+      };
+    };
+
+    services = {
+      syncthing = {
         enable = true;
       };
     };
@@ -29,27 +93,17 @@ in
 
   home = {
     inherit username homeDirectory;
+
+    sessionVariables = {
+      LC_ALL = "de_DE.UTF-8";
+    };
+
+    file = {
+      ".face" = {
+        source = ./face.jpg;
+      };
+    };
+
     stateVersion = "23.05";
   };
 }
-
-# - role: rolehippie.gomplate
-# - role: rolehippie.helm
-# - role: rolehippie.jsonnet
-# - role: rolehippie.krew
-# - role: rolehippie.kubectl
-# - role: rolehippie.kubetools
-# - role: rolehippie.kustomize
-# - role: rolehippie.lsd
-# - role: rolehippie.ngrok
-# - role: rolehippie.packwiz
-# - role: rolehippie.sops
-# - role: rolehippie.starship
-# - role: rolehippie.syncthing
-# - role: rolehippie.terraform
-# - role: rolehippie.yq
-
-# - role: rolehippie.citrix
-# - role: rolehippie.clickup
-# - role: rolehippie.clockify
-# - role: rolehippie.vscode

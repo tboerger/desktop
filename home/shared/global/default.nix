@@ -6,6 +6,10 @@
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
+
+    overlays = [
+      (import ../overlays)
+    ];
   };
 
   homeage = {

@@ -3,5 +3,6 @@
 {
   imports = [
     ./minio.nix
+    ./vscode.nix
   ];
 }

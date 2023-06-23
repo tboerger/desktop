@@ -2,7 +2,7 @@
 
 {
   imports = [
-
+    ./syncthing.nix
   ];
 
   options = {
