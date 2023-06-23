@@ -19,7 +19,7 @@ in
   profile = {
     programs = {
       direnv = {
-        enable = desktop;
+        enable = true;
       };
     };
   };
