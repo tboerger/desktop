@@ -16,6 +16,14 @@ in
     ./services
   ];
 
+  profile = {
+    programs = {
+      starship = {
+        enable = true;
+      };
+    };
+  };
+
   home = {
     inherit username homeDirectory;
 

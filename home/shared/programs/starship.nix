@@ -10,9 +10,7 @@ in
     profile = {
       programs = {
         starship = {
-          enable = mkEnableOption "Starship" // {
-            default = true;
-          };
+          enable = mkEnableOption "Starship";
         };
       };
     };

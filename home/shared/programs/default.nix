@@ -3,6 +3,7 @@
 {
   imports = [
     ./direnv.nix
+    ./starship.nix
   ];
 
   options = with lib; {

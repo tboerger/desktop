@@ -1,29 +1,59 @@
 # Standards: 1.2
 ---
-- name: Check home manager
-  register: dotfiles_home_manager
+- name: Check general home-manager
+  register: dotfiles_general_hm
   ansible.builtin.stat:
     path: /nix/var/nix/profiles/default/bin/home-manager
   tags:
     - dotfiles
 
-- name: Install home manager
-  when: not dotfiles_home_manager.stat.exists
+- name: Install general home-manager
+  when:
+    - not dotfiles_general_hm.stat.exists
   changed_when: False
   ansible.builtin.command:
     cmd: nix run home-manager/master -- init --switch
   tags:
     - dotfiles
 
-- name: Include configs tasks
+- name: Check nix profiles
   loop: "{{ dotfiles_users_general + dotfiles_users_extra }}"
   loop_control:
     label: "{{ item.username }}"
   become: True
   become_user: "{{ item.username }}"
-  when: dotfiles_apply_configs or item.apply | default(False)
-  ansible.builtin.command:
-    cmd: "home-manager switch --flake {{ item.flake }}"
+  register: dotfiles_profiles_check
+  changed_when: False
+  failed_when: False
+  ansible.builtin.shell:
+    cmd: "nix profile list"
+  tags:
+    - dotfiles
+
+- name: Install nix profiles
+  loop: "{{ dotfiles_profiles_check.results }}"
+  loop_control:
+    label: "{{ item.item.username }}"
+  become: True
+  become_user: "{{ item.item.username }}"
+  when:
+    - item.stdout_lines | length == 0
+  ansible.builtin.shell:
+    cmd: "nix profile install nixpkgs#nix"
+  tags:
+    - dotfiles
+
+- name: Apply defined flakes
+  loop: "{{ dotfiles_users_general + dotfiles_users_extra }}"
+  loop_control:
+    label: "{{ item.username }}"
+  become: True
+  become_user: "{{ item.username }}"
+  when:
+    - item.flake | default(False)
+    - dotfiles_apply_configs or (item.apply | default(False))
+  ansible.builtin.shell:
+    cmd: "nix run home-manager/master -- switch --flake {{ item.flake }}"
   tags:
     - dotfiles
 

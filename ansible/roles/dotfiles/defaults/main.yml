@@ -17,6 +17,6 @@ dotfiles_users_general: []
 dotfiles_users_extra: []
 
 # @var dotfiles_apply_configs:description: Define if the user configs should be applied
-dotfiles_apply_configs: True
+dotfiles_apply_configs: False
 
 ...

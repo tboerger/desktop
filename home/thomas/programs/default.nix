@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./starship.nix
     ./minio.nix
   ];
 }
