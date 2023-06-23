@@ -11,7 +11,7 @@ ConditionPathIsReadWrite=/nix/var/nix/daemon-socket
 
 [Service]
 Environment=NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
-ExecStart=/nix/var/nix/profiles/default/bin/nix-daemon --daemon
+ExecStart=/nix/var/nix/profiles/default/bin/nix daemon
 KillMode=process
 LimitNOFILE=1048576
 
