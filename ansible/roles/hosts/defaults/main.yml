@@ -1,0 +1,18 @@
+# Standards: 1.2
+---
+# @var hosts_name:description: Hostname for the machine
+hosts_name: "{{ inventory_hostname }}"
+
+# @var hosts_fqdn:description: Domain for the machine
+hosts_fqdn:
+
+# @var hosts_additions:description: Additional entries for hosts config
+# @var hosts_additions:example: >
+# hosts_additions:
+#   - 192.168.1.10 host1
+#   - 192.168.1.20 host2
+#   - 192.168.1.30 host3
+# @end
+hosts_additions: []
+
+...

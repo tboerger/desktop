@@ -1,0 +1,31 @@
+AddressFamily {{ openssh_address_family }}
+{% for host in openssh_remote_hosts %}
+
+Host {{ host.names | join(' ') }}
+    {{ host.options | join("\n") | indent(4) }}
+{% endfor %}
+
+Host *
+    Port {{ openssh_client_port }}
+
+    Protocol 2
+    BatchMode no
+    CheckHostIP yes
+    StrictHostKeyChecking ask
+
+    ForwardAgent {{ 'yes' if openssh_client_allow_agent_forwarding is sameas true else 'no' if openssh_client_allow_agent_forwarding is sameas false else openssh_client_allow_agent_forwarding }}
+    ForwardX11 {{ 'yes' if openssh_client_x11_forwarding is sameas true else 'no' if openssh_client_x11_forwarding is sameas false else openssh_client_x11_forwarding }}
+
+    HostbasedAuthentication {{ 'yes' if openssh_client_hostbased_authentication is sameas true else 'no' if openssh_client_hostbased_authentication is sameas false else openssh_client_hostbased_authentication }}
+    PasswordAuthentication {{ 'yes' if openssh_client_password_authentication is sameas true else 'no' if openssh_client_password_authentication is sameas false else openssh_client_password_authentication }}
+
+    GSSAPIAuthentication {{ 'yes' if openssh_client_gssapi_authentication is sameas true else 'no' if openssh_client_gssapi_authentication is sameas false else openssh_client_gssapi_authentication }}
+    GSSAPIDelegateCredentials {{ 'yes' if openssh_client_gssapi_delegate_credentials is sameas true else 'no' if openssh_client_gssapi_delegate_credentials is sameas false else openssh_client_gssapi_delegate_credentials }}
+
+    Tunnel no
+    PermitLocalCommand no
+    UseRoaming no
+
+    Compression {{ 'yes' if openssh_compression is sameas true else 'no' if openssh_compression is sameas false else openssh_compression }}
+
+Include /etc/ssh/ssh_config.d/*.conf

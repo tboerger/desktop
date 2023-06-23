@@ -1,0 +1,71 @@
+# Standards: 1.2
+---
+- name: Write libvirtd default
+  notify:
+    - Restart libvirtd
+  ansible.builtin.template:
+    src: libvirt/libvirtd.j2
+    dest: /etc/sysconfig/libvirtd
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+
+- name: Write guests default
+  notify:
+    - Restart guests
+  ansible.builtin.template:
+    src: libvirt/guests.j2
+    dest: /etc/sysconfig/libvirt-guests
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+
+- name: Write virtlogd default
+  notify:
+    - Reload virtlogd
+  ansible.builtin.template:
+    src: libvirt/virtlogd.j2
+    dest: /etc/sysconfig/virtlogd
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+
+- name: Write virtlockd default
+  notify:
+    - Reload virtlockd
+  ansible.builtin.template:
+    src: libvirt/virtlockd.j2
+    dest: /etc/sysconfig/virtlockd
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - libvirt
+
+- name: Start libvirtd service
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    daemon_reload: True
+    masked: False
+    enabled: True
+  tags:
+    - libvirt
+
+- name: Start guests service
+  ansible.builtin.systemd:
+    name: libvirt-guests
+    state: started
+    daemon_reload: True
+    masked: False
+    enabled: True
+  tags:
+    - libvirt
+
+...

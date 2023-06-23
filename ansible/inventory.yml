@@ -1,25 +1,24 @@
+# Standards: 1.2
+---
 desktop:
   hosts:
     anubis:
       ansible_host: anubis
-      ansible_fqdn: anubis.boerger.ws
       ansible_connection: local
     chnum:
       ansible_host: chnum
-      ansible_fqdn: chnum.boerger.ws
       ansible_connection: local
     horus:
       ansible_host: horus
-      ansible_fqdn: horus.boerger.ws
       ansible_connection: local
     imhotep:
       ansible_host: imhotep
-      ansible_fqdn: imhotep.boerger.ws
       ansible_connection: local
     osiris:
       ansible_host: osiris
-      ansible_fqdn: osiris.boerger.ws
       ansible_connection: local
   vars:
     ansible_become: True
     ansible_python_interpreter: /usr/bin/python3
+
+...

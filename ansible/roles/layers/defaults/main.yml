@@ -1,0 +1,20 @@
+# Standards: 1.2
+---
+# @var layers_packages_general:example: >
+# layers_packages_general:
+#   - foo
+#   - bar
+#   - baz
+# @end
+layers_packages_general: []
+
+# @var layers_packages_extra:description: List of extra packages
+# @var layers_packages_extra:example: >
+# layers_packages_extra:
+#   - foo
+#   - bar
+#   - baz
+# @end
+layers_packages_extra: []
+
+...

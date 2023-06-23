@@ -1,0 +1,41 @@
+# Standards: 1.2
+---
+- become: True
+  become_user: "{{ user.username }}"
+  block:
+    - name: "Create defined instances : {{ user.username }}"
+      loop: "{{ user.instances }}"
+      loop_control:
+        label: "{{ item.name }}"
+      register: distrobox_create
+      changed_when: "'successfully created' in distrobox_create.stderr"
+      failed_when: distrobox_create.rc != 0
+      when: item.state | default('present') == 'present'
+      ansible.builtin.command: "distrobox create --yes --image {{ item.image }} --name {{ item.name }}{{ ' '+item.args if item.args | default(False) else '' }}"
+      tags:
+        - distrobox
+
+    - name: "Init defined instances : {{ user.username }}"
+      loop: "{{ user.instances }}"
+      loop_control:
+        label: "{{ item.name }}"
+      changed_when: False
+      failed_when: False
+      when: item.state | default('present') == 'present'
+      ansible.builtin.command: "distrobox enter --name {{ item.name }} --no-tty -e whoami"
+      tags:
+        - distrobox
+
+    - name: "Remove defined instances : {{ user.username }}"
+      loop: "{{ user.instances }}"
+      loop_control:
+        label: "{{ item.name }}"
+      register: distrobox_remove
+      changed_when: distrobox_remove.rc == 0
+      failed_when: distrobox_remove.rc not in [0, 125]
+      when: item.state | default('present') == 'absent'
+      ansible.builtin.command: "distrobox rm --force {{ item.name }}"
+      tags:
+        - distrobox
+
+...

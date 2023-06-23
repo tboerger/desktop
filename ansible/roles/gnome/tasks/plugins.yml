@@ -1,0 +1,84 @@
+# Standards: 1.2
+---
+- become: True
+  become_user: "{{ user.username }}"
+  block:
+    - name: "Fetch plugin infos : {{ user.username }}"
+      loop: "{{ user.plugins }}"
+      loop_control:
+        label: "{{ item.name | default(item) }}"
+      register: gnome_plugins_info
+      ignore_errors: True
+      check_mode: False
+      ansible.builtin.uri:
+        url: "https://extensions.gnome.org/extension-info/?uuid={{ item.id | default(item) }}&shell_version={{ gnome_shell_version }}"
+        return_content: True
+      tags:
+        - gnome
+
+    - name: "Disable defined plugins : {{ user.username }}"
+      loop: "{{ gnome_plugins_info.results }}"
+      loop_control:
+        label: "{{ item.item.name | default(item.item) }}"
+      failed_when: False
+      changed_when: False
+      when: item.item.state | default('present') == 'absent'
+      ansible.builtin.command: "gnome-extensions disable {{ item.json.uuid }}"
+      tags:
+        - gnome
+
+    - name: "Uninstall defined plugins : {{ user.username }}"
+      loop: "{{ gnome_plugins_info.results }}"
+      loop_control:
+        label: "{{ item.item.name | default(item.item) }}"
+      when: item.item.state | default('present') == 'absent'
+      ansible.builtin.file:
+        path: "gnome-extensions uninstall {{ item.json.uuid }}"
+        state: absent
+      tags:
+        - gnome
+
+    - name: "Create plugin dirs : {{ user.username }}"
+      loop: "{{ gnome_plugins_info.results }}"
+      loop_control:
+        label: "{{ item.item.name | default(item.item) }}"
+      when: item.item.state | default('present') == 'present'
+      ansible.builtin.file:
+        path: "/var/home/{{ user.username }}/.local/share/gnome-shell/extensions/{{ item.json.uuid }}"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        mode: u=rwX,g=rX,o=rX
+        state: directory
+        recurse: True
+      tags:
+        - gnome
+
+    - name: "Install defined plugins : {{ user.username }}"
+      loop: "{{ gnome_plugins_info.results }}"
+      loop_control:
+        label: "{{ item.item.name | default(item.item) }}"
+      when: item.item.state | default('present') == 'present'
+      diff: False
+      ansible.builtin.unarchive:
+        src: "https://extensions.gnome.org{{ item.json.download_url }}"
+        dest: "/var/home/{{ user.username }}/.local/share/gnome-shell/extensions/{{ item.json.uuid }}"
+        owner: "{{ user.username }}"
+        group: "{{ user.username }}"
+        mode: u=rwX,g=rX,o=rX
+        remote_src: True
+        creates: "/var/home/{{ user.username }}/.local/share/gnome-shell/extensions/{{ item.json.uuid }}/metadata.json"
+      tags:
+        - gnome
+
+    - name: "Enable defined plugins : {{ user.username }}"
+      loop: "{{ gnome_plugins_info.results }}"
+      loop_control:
+        label: "{{ item.item.name | default(item.item) }}"
+      failed_when: False
+      changed_when: False
+      when: item.item.state | default('present') == 'absent'
+      ansible.builtin.command: "gnome-extensions enable {{ item.json.uuid }}"
+      tags:
+        - gnome
+
+...

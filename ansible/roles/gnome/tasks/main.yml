@@ -1,0 +1,27 @@
+# Standards: 1.2
+---
+- name: Check shell version
+  register: gnome_version_check
+  failed_when: False
+  changed_when: False
+  check_mode: False
+  ansible.builtin.shell: gnome-shell --version | sed 's/[^0-9.]*\([0-9.]*\).*/\1/'
+  tags:
+    - gnome
+
+- name: Fact shell version
+  ansible.builtin.set_fact:
+    gnome_shell_version: "{{ gnome_version_check.stdout }}"
+  tags:
+    - gnome
+
+- name: Include plugins tasks
+  loop: "{{ gnome_general_plugins + gnome_extra_plugins }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.username }}"
+  ansible.builtin.include_tasks: plugins.yml
+  tags:
+    - gnome
+
+...

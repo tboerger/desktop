@@ -1,0 +1,12 @@
+version: 2
+renderer: networkd
+
+{% if item.item.netplan | default(False) %}
+{{ item.item.netplan | to_nice_yaml(indent=2) | trim }}
+{% else %}
+ethernets:
+{% for interface in item.item.interfaces %}
+  {{ interface.device }}:
+    dhcp4: {{ interface.dhcp | lower }}
+{% endfor %}
+{% endif %}

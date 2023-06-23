@@ -1,0 +1,85 @@
+# Standards: 1.2
+---
+# @var users_general:description: List of global users
+# @var users_general:example: >
+# users_general:
+#   - name: thomas
+#     primary_group: staff
+#     comment: Thomas Mustermann
+#     shell: /bin/bash
+#     castles:
+#       - tboerger/homeshick-base
+#       - name: tboerger/homeshick-osx
+#         force: True
+#     groups:
+#       - admin
+#     sshkeys:
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn tboerger@host1
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7oOi3qaDtfQVFhPKyd0Wk0C/y+QM71vtln8Rl44NlB tboerger@host2
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcPTmdo+7eK+8n2yE7Kx1vyQ4yJwHBngvQOt1MPhKhR tboerger@host3
+#   - name: buser
+#     primary_group: staff
+#     shell: /bin/bash
+#     bashit: True
+#     groups:
+#       - admin
+#   - name: zuser
+#     primary_group: staff
+#     shell: /bin/zsh
+#     ohmyzsh: True
+#     groups:
+#       - admin
+#   - name: user-to-delete
+#     remove: True
+#     state: absent
+# @end
+users_general: []
+
+# @var users_extra:description: List of extra users
+# @var users_extra:example: >
+# users_extra:
+#   - name: thomas
+#     primary_group: staff
+#     comment: Thomas Mustermann
+#     shell: /bin/bash
+#     castles:
+#       - tboerger/homeshick-base
+#       - name: tboerger/homeshick-osx
+#         force: True
+#     groups:
+#       - admin
+#     sshkeys:
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn tboerger@host1
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7oOi3qaDtfQVFhPKyd0Wk0C/y+QM71vtln8Rl44NlB tboerger@host2
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcPTmdo+7eK+8n2yE7Kx1vyQ4yJwHBngvQOt1MPhKhR tboerger@host3
+#   - name: buser
+#     primary_group: staff
+#     shell: /bin/bash
+#     bashit: True
+#     groups:
+#       - admin
+#   - name: zuser
+#     primary_group: staff
+#     shell: /bin/zsh
+#     ohmyzsh: True
+#     groups:
+#       - admin
+#   - name: user-to-delete
+#     remove: True
+#     state: absent
+# @end
+users_extra: []
+
+# @var users_castles_force:description: Force to update homeshick castels
+users_castles_force: False
+
+# @var users_ohmyzsh_version:description: Version of bash-it to install
+users_ohmyzsh_version: latest
+
+# @var users_bashit_version:description: Version of bash-it to install
+users_bashit_version: latest
+
+# @var users_homeshick_version:description: Version of homeshick to install
+users_homeshick_version: latest
+
+...

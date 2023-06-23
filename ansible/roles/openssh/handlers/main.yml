@@ -1,0 +1,9 @@
+# Standards: 1.2
+---
+- name: Reload openssh
+  systemd:
+    name: sshd
+    state: reloaded
+    daemon_reload: True
+
+...

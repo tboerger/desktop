@@ -1,0 +1,86 @@
+<domain type="kvm">
+  <name>{{ item.name }}</name>
+  {% if item.uuid | default(False) %}
+    <uuid>{{ item.uuid }}</uuid>
+  {% endif %}
+
+  <memory unit="MB">{{ item.memory | default(1024) }}</memory>
+  <currentMemory unit="MB">{{ item.memory | default(1024) }}</currentMemory>
+
+  <vcpu>{{ item.cpus | default(1) }}</vcpu>
+
+  <os>
+    <type arch="{{ item.arch | default("x86_64") }}">hvm</type>
+    {% for boot in item.boot | default(["hd"]) %}
+      <boot dev="{{ boot }}"/>
+    {% endfor %}
+  </os>
+
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+
+  <clock offset="utc" />
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+
+  <devices>
+    <emulator>/usr/bin/kvm</emulator>
+
+    {% for disk in item.disks | default([]) %}
+      {% if disk.type == "lvm" %}
+        <disk type="block" device="disk">
+          <driver name="qemu" type="raw" cache="none"/>
+          <source dev="/dev/{{ disk.group }}/{{ disk.name }}"/>
+          <target dev="{{ disk.device | default("vda") }}" bus="virtio"/>
+        </disk>
+      {% endif %}
+      {% if disk.type == "qcow2" %}
+        <disk type="file" device="disk">
+          <driver name="qemu" type="qcow2" cache="none"/>
+          <source file="/var/lib/libvirt/images/{{ disk.name }}.qcow2"/>
+          <target dev="{{ disk.device | default("vda") }}" bus="virtio"/>
+        </disk>
+      {% endif %}
+      {% if disk.type == "cdrom" %}
+        <disk type="file" device="cdrom">
+          <driver name="qemu" type="raw" cache="none"/>
+          <source file="{{ disk.image }}"/>
+          <target dev="hda" bus="ide"/>
+          <readonly/>
+        </disk>
+      {% endif %}
+    {% endfor %}
+    {% if item.userdata | default(True) %}
+      <disk type="file" device="cdrom">
+        <driver name="qemu" type="raw" cache="none"/>
+        <source file="/var/lib/libvirt/userdata/{{ item.name }}.iso"/>
+        <target dev="hda" bus="ide"/>
+        <backingStore/>
+        <readonly/>
+      </disk>
+    {% endif %}
+
+    {% for interface in item.interfaces | default([]) %}
+      <interface type="{{ interface.type }}">
+        <model type="virtio"/>
+        {% if interface.mac | default(False) %}<mac address="{{ interface.mac }}"/>{% endif %}
+        {% if interface.target | default(False) %}<target dev="{{ interface.target }}"/>{% endif %}
+        <source {{ interface.type }}="{{ interface.source }}"/>
+      </interface>
+    {% endfor %}
+
+    <graphics type="vnc" port="{{ item.vnc | default(-1) }}"/>
+
+    <serial type="pty">
+      <target port="0"/>
+    </serial>
+
+    <console type="pty">
+      <target type="serial" port="0"/>
+    </console>
+  </devices>
+</domain>

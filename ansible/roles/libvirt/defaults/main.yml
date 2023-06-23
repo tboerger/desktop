@@ -1,0 +1,89 @@
+# Standards: 1.2
+---
+# @var libvirt_required_packages:description: List of required packages
+libvirt_required_packages:
+  - libvirt
+  - qemu-kvm
+  - genisoimage
+  - guestfs-tools
+  - python3-libvirt
+  - python3-lxml
+
+# @var libvirt_daemon_opts:description: Arguments for the libvirtd
+libvirt_daemon_opts: --timeout 120
+
+# @var libvirt_virtlockd_args:description: Arguments for the virtlockd
+libvirt_virtlockd_args:
+
+# @var libvirt_virtlogd_args:description: Arguments for the virtlogd
+libvirt_virtlogd_args:
+
+# @var libvirt_images:description: List of images to download
+# @var libvirt_images:example: >
+# libvirt_images:
+#   - name: ubuntu-18.04.qcow2
+#     url: https://cloud-images.ubuntu.com/bionic/20200218/bionic-server-cloudimg-amd64.img
+#     checksum: sha256:3c3a67a142572e1f0e524789acefd465751224729cff3a112a7f141ee512e756
+# @end
+libvirt_images: []
+
+# @var libvirt_archives:description: List of images archives to download and extract
+# @var libvirt_archives:example: >
+# libvirt_archives:
+#   - name: kali-2023.1
+#     url: https://kali.download/cloud-images/kali-2023.1/kali-linux-2023.1-cloud-genericcloud-amd64.tar.xz
+#     creates: /var/lib/libvirt/images/kali-2023.1/disk.raw
+# @end
+libvirt_archives: []
+
+# @var libvirt_networks:description: Definition of available networks
+# @var libvirt_networks:example: >
+# libvirt_networks:
+#   - name: virbr1
+#     bridge: virbr1
+#     state: active
+#   - name: virbr2
+#     bridge: virbr2
+#     uuid: 9315F6EA-AEA2-43B0-A5C7-C69FBCF4899E
+#     mac: C5-9E-B7-34-F7-7B
+#     autostart: False
+#     state: active
+#   - name: virbr3
+#     state: absent
+# @end
+libvirt_networks: []
+
+# @var libvirt_machines:description: Definition of available machines
+# @var libvirt_machines:example: >
+# libvirt_machines:
+#   - name: foobar
+#     fqdn: foobar.example.com
+#     memory: 4096
+#     cpus: 4
+#     vnc: 5901
+#     userdata: True
+#     overwrite: False
+#     password: p455w0rd
+#     sshkeys:
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDwHEKPdszS27LCQCao4UhuP0TvFlccP6nRWKm00fquA user1@example
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKggkhEVy1Qgd+y3UNXXXeu9oz4LVsKc2njpSkjpzPdv user2@example
+#       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICmthYIctiIh3UzYIXeSqMqgKm5n1yIX9/0rpeXSlMet user3@example
+#     interfaces:
+#       - type: network
+#         source: general
+#         mac: 18:03:73:40:90:4c
+#         device: ens3
+#         dhcp: True
+#     disks:
+#       - name: foobar-root
+#         type: lvm
+#         group: host-vg
+#         size: 50g
+#         device: vda
+#         source: /var/lib/libvirt/images/ubuntu-18.04.qcow2
+#     boot:
+#       - hd
+# @end
+libvirt_machines: []
+
+...

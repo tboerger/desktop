@@ -1,0 +1,23 @@
+# Standards: 1.2
+---
+# @var groups_general:description: List of general groups
+# @var groups_general:example: >
+# groups_general:
+#   - name: sftp
+#     system: True
+#   - name: group-to-delete
+#     state: absent
+# @end
+groups_general: []
+
+# @var groups_extra:description: List of extra groups
+# @var groups_extra:example: >
+# groups_extra:
+#   - name: sftp
+#     system: True
+#   - name: group-to-delete
+#     state: absent
+# @end
+groups_extra: []
+
+...

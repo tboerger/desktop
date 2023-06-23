@@ -7,11 +7,11 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-if ! which ansible-later >/dev/null; then
+if ! test -f "${ROOT}/env/bin/ansible-later"; then
     echo "Failed to detect later!"
     exit 1
 fi
 
 pushd "${ROOT}" >/dev/null
-    exec ansible-later "$@"
+    "${ROOT}/env/bin/ansible-later" "$@"
 popd >/dev/null

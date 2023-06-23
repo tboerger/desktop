@@ -1,0 +1,30 @@
+# Standards: 1.2
+---
+# @var nixpkgs_selinux_rules:description: List of SELinux rules to apply
+nixpkgs_selinux_rules:
+  - name: etc
+    target: /nix/store/[^/]+/etc(/.*)?
+    type: etc_t
+  - name: lib
+    target: /nix/store/[^/]+/lib(/.*)?
+    type: lib_t
+  - name: systemd
+    target: /nix/store/[^/]+/lib/systemd/system(/.*)?
+    type: systemd_unit_file_t
+  - name: man
+    target: /nix/store/[^/]+/man(/.*)?
+    type: man_t
+  - name: bin
+    target: /nix/store/[^/]+/s?bin(/.*)?
+    type: bin_t
+  - name: share
+    target: /nix/store/[^/]+/share(/.*)?
+    type: usr_t
+  - name: daemon
+    target: /nix/var/nix/daemon-socket(/.*)?
+    type: var_run_t
+  - name: profile
+    target: /nix/var/nix/profiles(/per-user/[^/]+)?/[^/]+
+    type: usr_t
+
+...

@@ -1,7 +1,0 @@
-# Standards: 1.2
----
-krew_extra_plugins:
-  - virt
-  - split-yaml
-
-...

@@ -1,0 +1,22 @@
+#cloud-config
+
+preserve_hostname: False
+hostname: {{ item.item.name }}
+fqdn: {{ item.item.fqdn }}
+
+password: {{ item.item.password | default("p455w0rd") | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}
+chpasswd:
+  expire: False
+
+ssh_svcname: ssh
+ssh_deletekeys: True
+ssh_pwauth: False
+ssh_genkeytypes: ['rsa', 'ecdsa']
+
+ssh_authorized_keys:
+{% for key in item.item.sshkeys | default([]) %}
+  - {{ key }}
+{% endfor %}
+
+packages:
+  - qemu-guest-agent

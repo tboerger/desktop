@@ -1,0 +1,23 @@
+# Standards: 1.2
+---
+# @var distrobox_general_instances:description: List of general instances
+# @var distrobox_general_instances:example: >
+# distrobox_general_instances:
+#   - username: example
+#     instances:
+#       - name: fedora
+#         image: registry.fedoraproject.org/fedora-toolbox:38
+# @end
+distrobox_general_instances: []
+
+# @var distrobox_extra_instances:description: List of extra instances
+# @var distrobox_extra_instances:example: >
+# distrobox_extra_instances:
+#   - username: example
+#     instances:
+#       - name: fedora
+#         image: registry.fedoraproject.org/fedora-toolbox:38
+# @end
+distrobox_extra_instances: []
+
+...

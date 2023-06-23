@@ -1,0 +1,23 @@
+# Standards: 1.2
+---
+- name: Install required packages
+  community.general.rpm_ostree_pkg:
+    name: tailscale
+    state: present
+  tags:
+    - tailscale
+
+- name: Check boot status
+  changed_when: False
+  register: tailscale_booted_check
+  ansible.builtin.shell: rpm-ostree status --json | jq -r .deployments[0].booted
+  tags:
+    - tailscale
+
+- name: Live apply changes
+  when: tailscale_booted_check.stdout == 'false'
+  ansible.builtin.command: rpm-ostree apply-live --allow-replacement
+  tags:
+    - tailscale
+
+...

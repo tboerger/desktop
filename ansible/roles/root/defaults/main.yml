@@ -1,0 +1,45 @@
+# Standards: 1.2
+---
+# @var root_password:description: Update root password to this value
+root_password:
+
+# @var root_shell:description: Enforce this shell for root
+root_shell: /bin/zsh
+
+# @var root_castles:description: List of castles to use
+# @var root_castles:example: >
+# root_castles:
+#   - tboerger/homeshick-base
+#   - name: tboerger/homeshick-linux
+#     force: True
+# @end
+root_castles: []
+
+# @var root_castles_force:description: Force castle updates
+root_castles_force: True
+
+# @var root_ohmyzsh:description: Install oh-my-zsh repo
+root_ohmyzsh: False
+
+# @var root_ohmyzsh_version:description: Version of bash-it to install
+root_ohmyzsh_version: latest
+
+# @var root_bashit:description: Install bash-it repo
+root_bashit: False
+
+# @var root_bashit_version:description: Version of bash-it to install
+root_bashit_version: latest
+
+# @var root_homeshick_version:description: Version of homeshick to install
+root_homeshick_version: latest
+
+# @var root_sshkeys:description: List of authorized keys
+# @var root_sshkeys:example: >
+# root_sshkeys:
+#   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn tboerger@host1
+#   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7oOi3qaDtfQVFhPKyd0Wk0C/y+QM71vtln8Rl44NlB tboerger@host2
+#   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFcPTmdo+7eK+8n2yE7Kx1vyQ4yJwHBngvQOt1MPhKhR tboerger@host3
+# @end
+root_sshkeys: []
+
+...

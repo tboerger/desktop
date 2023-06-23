@@ -1,0 +1,11 @@
+# Standards: 1.2
+---
+distrobox_general_instances:
+  - username: thomas
+    instances:
+      - name: fedora
+        image: registry.fedoraproject.org/fedora-toolbox:38
+      - name: ubuntu
+        image: quay.io/toolbx-images/ubuntu-toolbox:22.04
+
+...

@@ -1,0 +1,53 @@
+# Standards: 1.2
+---
+# @var dconf_general_configs:description: List of general dconf profiles
+# @var dconf_general_configs:example: >
+# dconf_general_profiles:
+#   - name: foobar
+#     profile: |
+#       user-db:user
+#       system-db:gdm
+#     configs:
+#       - name: 01-login-screen
+#         config: |
+#           [org/gnome/login-screen]
+#           disable-user-list=true
+# @end
+dconf_general_profiles: []
+
+# @var dconf_extra_profiles:description: List of extra dconf profiles
+# @var dconf_extra_profiles:example: >
+# dconf_extra_profiles:
+#   - name: foobar
+#     profile: |
+#       user-db:user
+#       system-db:gdm
+#     configs:
+#       - name: 01-login-screen
+#         config: |
+#           [org/gnome/login-screen]
+#           disable-user-list=true
+# @end
+dconf_extra_profiles: []
+
+# @var dconf_general_configs:description: List of general dconf configs
+# @var dconf_general_configs:example: >
+# dconf_general_configs:
+#   - username: example
+#     configs:
+#       - name: /org/gnome/desktop/privacy/remember-recent-files
+#         value: True
+# @end
+dconf_general_configs: []
+
+# @var dconf_extra_configs:description: List of extra dconf configs
+# @var dconf_extra_configs:example: >
+# dconf_extra_configs:
+#   - username: example
+#     configs:
+#       - name: /org/gnome/desktop/privacy/remember-recent-files
+#         value: True
+# @end
+dconf_extra_configs: []
+
+...

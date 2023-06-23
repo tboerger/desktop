@@ -1,0 +1,19 @@
+# Standards: 1.2
+---
+- name: Enforce defined hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+  tags:
+    - hosts
+
+- name: Write hosts config
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - hosts
+
+...

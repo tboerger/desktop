@@ -1,0 +1,23 @@
+# Standards: 1.2
+---
+# @var gnome_general_plugins:description: List of general extensions to install globally
+# @var gnome_general_plugins:example: >
+# gnome_general_plugins:
+#   - username: example
+#     plugins:
+#       - name: user-theme
+#         id: user-theme@gnome-shell-extensions.gcampax.github.com
+# @end
+gnome_general_plugins: []
+
+# @var gnome_extra_plugins:description: List of extra extensions to install globally
+# @var gnome_extra_plugins:example: >
+# gnome_extra_plugins:
+#   - username: example
+#     plugins:
+#       - name: user-theme
+#         id: user-theme@gnome-shell-extensions.gcampax.github.com
+# @end
+gnome_extra_plugins: []
+
+...

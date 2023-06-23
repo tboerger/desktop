@@ -1,19 +1,13 @@
 # Standards: 1.2
 ---
 users_castles_force: False
-users_zfs_home: True
-
-users_packages_zsh:
-  - zsh
-  - zsh-syntax-highlighting
-  - zsh-autosuggestions
 
 users_thomas_keys:
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaQYR0/Oj6k1H03kshz2J7rlGCaDSuaGPhhOs9FcZfn Thomas Boerger
 
 users_general:
   - name: thomas
-    uid: 1000
+    uid: 10000
     comment: Thomas Boerger
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/thomas/password.txt') | password_hash('sha512', lookup('file', 'secrets/thomas/salt.txt')) }}"
@@ -28,12 +22,12 @@ users_general:
       - tboerger/homeshick-desktop
       - tboerger/homeshick-private
     groups:
+      - wheel
       - sudo
-      - docker
     sshkeys: "{{ users_thomas_keys }}"
 
   - name: anna
-    uid: 1001
+    uid: 10001
     comment: Anna Boerger
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/anna/password.txt') | password_hash('sha512', lookup('file', 'secrets/anna/salt.txt')) }}"
@@ -46,7 +40,7 @@ users_general:
     groups: []
 
   - name: adrian
-    uid: 1002
+    uid: 10002
     comment: Adrian Boerger
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/adrian/password.txt') | password_hash('sha512', lookup('file', 'secrets/adrian/salt.txt')) }}"
@@ -59,7 +53,7 @@ users_general:
     groups: []
 
   - name: tabea
-    uid: 1003
+    uid: 10003
     comment: Tabea Boerger
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/tabea/password.txt') | password_hash('sha512', lookup('file', 'secrets/tabea/salt.txt')) }}"

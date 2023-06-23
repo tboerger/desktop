@@ -1,0 +1,12 @@
+# Standards: 1.2
+---
+# @var tailscale_port:description: Port for tailscaled
+tailscale_port: 41641
+
+# @var tailscale_flags:description: Flags for tailscaled
+tailscale_flags:
+
+# @var tailscale_authkey:description: Autconnect tailscaled
+tailscale_authkey:
+
+...
