@@ -4,7 +4,6 @@ rules:
     - ansible/secrets/
     - galaxy/
     - collections/
-    - env/
     - bin/
 
   exclude_filter:

@@ -7,13 +7,13 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-if ! test -f "${ROOT}/env/bin/ansible-inventory"; then
+if ! which ansible-inventory >/dev/null; then
     echo "Failed to detect inventory!"
     exit 1
 fi
 
 pushd "${ROOT}" >/dev/null
-    "${ROOT}/env/bin/ansible-inventory" \
+    ansible-inventory \
         --inventory-file "ansible/inventory.yml" \
         "$@"
 popd >/dev/null

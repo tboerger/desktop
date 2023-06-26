@@ -6,10 +6,10 @@ push to the `master` branch.
 
 ## Bootstrap
 
-After following the steps of the installation below you got to copy multiple
-files from the private secrets stick on the machine with the following snippets
-and finally execute the bootstrap script to clone this repository. Generally the
-stick should be mounted automatically.
+After following the steps of the installation below you got to copy SSH and
+GnuPG keys from the private secrets stick on the machine with the following
+snippets and finally execute the bootstrap script to clone this repository.
+Generally the stick should be mounted automatically.
 
 ### Install
 
@@ -23,20 +23,6 @@ stick should be mounted automatically.
 ![select location](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install08.png)
 ![user details](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install09.png)
 ![reboot system](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install10.png)
-
-### Netrc
-
-```console
-cp /media/$(whoami)/secrets/netrc ${HOME}/.netrc
-chown $(id -u):$(id -g) ${HOME}/.netrc
-```
-
-### Token
-
-```console
-cp /media/$(whoami)/secrets/ghtoken ${HOME}/.ghtoken
-chown $(id -u):$(id -g) ${HOME}/.ghtoken
-```
 
 ### SSH
 

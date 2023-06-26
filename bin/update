@@ -22,12 +22,12 @@ pushd "${ROOT}" >/dev/null
     sudo su -c "git pull --autostash --rebase" "${USERNAME}"
 popd >/dev/null
 
-echo "--> executing galaxy"
-sudo su -c "${MACHINE}-galaxy" "${USERNAME}"
-
 for FILE in galaxy inventory later playbook vault update; do
     echo "--> linking ${FILE}"
     sudo ln -sf "${ROOT}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done
+
+echo "--> executing galaxy"
+sudo su -c "${MACHINE}-galaxy" "${USERNAME}"
 
 echo "--> finished updating"

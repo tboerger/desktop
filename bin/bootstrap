@@ -6,20 +6,9 @@ REPO=${REPO:-https://github.com/tboerger/desktop.git}
 BASE=${BASE:-/home/thomas/.desktop}
 USERNAME=${USERNAME:-thomas}
 
-if ! hash git 2>/dev/null; then
-    echo "--> install git"
-    apt install --yes git curl
-fi
-
 if ! hash ansible 2>/dev/null; then
-    echo "--> ansible gnupg"
-    curl -S "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x6125E2A8C77F2818FB7BD15B93C4A3FD7BB9C367" | gpg --dearmor --output /usr/share/keyrings/ansible-archive-keyring.gpg
-
-    echo "--> ansible repo"
-    echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/ jammy main" >| /etc/apt/sources.list.d/ansible.list
-
     echo "--> install ansible"
-    apt update && apt install --yes ansible
+    pip3 install ansible
 fi
 
 if test -d "${BASE}"; then

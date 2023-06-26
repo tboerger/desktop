@@ -7,7 +7,7 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-if ! test -f "${ROOT}/env/bin/ansible-playbook"; then
+if ! which ansible-playbook >/dev/null; then
     echo "Failed to detect playbook!"
     exit 1
 fi
@@ -39,7 +39,7 @@ pushd "${ROOT}" >/dev/null
     export ANSIBLE_ROLES_PATH=galaxy:ansible/roles
     export ANSIBLE_COLLECTIONS_PATH=collections
 
-    "${ROOT}/env/bin/ansible-playbook" \
+    ansible-playbook \
         --vault-password-file "${VAULT_PASSWORD_FILE}" \
         --inventory-file "ansible/inventory.yml" \
         ansible/playbook.yml \
