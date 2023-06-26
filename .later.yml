@@ -5,6 +5,7 @@ rules:
     - galaxy/
     - collections/
     - bin/
+    - venv/
 
   exclude_filter:
     - ANSIBLE9998

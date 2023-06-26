@@ -52,35 +52,35 @@ echo p455w0rd > /home/$(whoami)/.desktop/.vaultpasswd && chown $(id -u):$(id -g)
 ### Anubis
 
 ```console
-anubis-update
+anubis-selfupdate
 anubis-playbook -D -C
 ```
 
 ### Chnum
 
 ```console
-chnum-update
+chnum-selfupdate
 chnum-playbook -D -C
 ```
 
 ### Horus
 
 ```console
-horus-update
+horus-selfupdate
 horus-playbook -D -C
 ```
 
 ### Imhotep
 
 ```console
-imhotep-update
+imhotep-selfupdate
 imhotep-playbook -D -C
 ```
 
 ### Osiris
 
 ```console
-osiris-update
+osiris-selfupdate
 osiris-playbook -D -C
 ```
 

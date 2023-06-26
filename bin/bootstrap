@@ -4,24 +4,35 @@ set -eo pipefail
 MACHINE=${1:-unknown}
 REPO=${REPO:-https://github.com/tboerger/desktop.git}
 BASE=${BASE:-/home/thomas/.desktop}
-USERNAME=${USERNAME:-thomas}
-
-if ! hash ansible 2>/dev/null; then
-    echo "--> install ansible"
-    pip3 install ansible
-fi
+USER=${USER:-thomas}
 
 if test -d "${BASE}"; then
     echo "--> updating itself"
     pushd "${BASE}" >/dev/null
-        su -c "git pull --autostash --rebase" "${USERNAME}"
+        su -c "git pull --autostash --rebase" "${USER}"
     popd >/dev/null
 else
     echo "--> cloning itself"
-    su -c "git clone ${REPO} ${BASE}" "${USERNAME}"
+    su -c "git clone ${REPO} ${BASE}" "${USER}"
 fi
 
-for FILE in galaxy inventory later playbook vault update; do
+if ! hash ansible 2>/dev/null; then
+    pushd "${BASE}" >/dev/null
+        echo "--> create venv"
+        python3 -mvenv venv
+
+        echo "--> activate venv"
+        source venv/bin/activate
+
+        echo "--> install ansible"
+        pip3 install -r requirements.txt
+
+        echo "--> fix permissions"
+        chown -R ${USER}:${USER} venv
+    popd >/dev/null
+fi
+
+for FILE in galaxy inventory later playbook vault selfupdate; do
     echo "--> linking ${FILE}"
     ln -sf "${BASE}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done

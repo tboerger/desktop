@@ -8,8 +8,12 @@ else
 fi
 
 if ! which ansible-playbook >/dev/null; then
-    echo "Failed to detect playbook!"
-    exit 1
+    if test -d "${ROOT}/venv"; then
+        source "${ROOT}/venv/bin/activate"
+    else
+        echo "Failed to detect playbook!"
+        exit 1
+    fi
 fi
 
 if test -f "${ROOT}/.vaultpasswd"; then
