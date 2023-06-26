@@ -21,6 +21,8 @@ in
       packages = with pkgs; [
         terraform
         terraform-docs
+        tflint
+        tfsec
       ];
     };
   };

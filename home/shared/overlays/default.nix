@@ -24,6 +24,46 @@ self: super:
     };
   };
 
+  vimPlugins = self.lib.recursiveUpdate super.vimPlugins {
+    dockerfile-vim = self.vimUtils.buildVimPluginFrom2Nix {
+      pname = "dockerfile-vim";
+      version = "2021-09-06";
+      src = self.fetchFromGitHub {
+        owner = "ekalinin";
+        repo = "Dockerfile.vim";
+        rev = "2a31e6bcea5977209c05c728c4253d82fd873c82";
+        sha256 = "sha256-MiSGZ5MJ5g37szUuo8XCbuzuAcNBSqYY6hVa/WJwLDY=";
+      };
+    };
+    vim-vividchalk = self.vimUtils.buildVimPluginFrom2Nix {
+      pname = "vim-vividchalk";
+      version = "2019-11-13";
+      src = self.fetchFromGitHub {
+        owner = "tpope";
+        repo = "vim-vividchalk";
+        rev = "be5c6251279bfcfa55cdea8c9a8ccd7a56c8a642";
+        sha256 = "sha256-G7wFjIqhHJtUDuXPIlC34C4kRJz85ytHXpVmazrN1/I=";
+      };
+    };
+  };
+
+  gh-dash = super.callPackage ./gh-dash { };
+  gh-markdown-preview = super.callPackage ./gh-markdown-preview { };
+  gh-poi = super.callPackage ./gh-poi { };
+
+  kubectl-images = super.callPackage ./kubectl-images { };
+  kubectl-ktop = super.callPackage ./kubectl-ktop { };
+  kubectl-neat = super.callPackage ./kubectl-neat { };
+  kubectl-oomd = super.callPackage ./kubectl-oomd { };
+  kubectl-pexec = super.callPackage ./kubectl-pexec { };
+  kubectl-realname-diff = super.callPackage ./kubectl-realname-diff { };
+  kubectl-resource-versions = super.callPackage ./kubectl-resource-versions { };
+  kubectl-split-yaml = super.callPackage ./kubectl-split-yaml { };
+  kubectl-view-secret = super.callPackage ./kubectl-view-secret { };
+  kubectl-whoami = super.callPackage ./kubectl-whoami { };
+
   khelm = super.callPackage ./khelm { };
   ksops = super.callPackage ./ksops { };
+
+  zcustom = super.callPackage ./zcustom { };
 }

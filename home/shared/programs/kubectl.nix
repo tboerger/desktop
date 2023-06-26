@@ -18,6 +18,11 @@ in
 
   config = mkIf cfg.enable {
     home = {
+      shellAliases = {
+        k = "kubectl";
+        kunusedrs = "kubectl get replicaset -o jsonpath=\"{ .items[?(@.spec.replicas==0)].metadata.name }\"";
+      };
+
       packages = with pkgs; [
         argocd
         clusterctl
@@ -27,8 +32,20 @@ in
         kubectl
         kubectx
         kubelogin-oidc
+        kubevirt
         sonobuoy
         stern
+
+        kubectl-images
+        kubectl-ktop
+        kubectl-neat
+        kubectl-oomd
+        kubectl-pexec
+        kubectl-realname-diff
+        kubectl-resource-versions
+        kubectl-split-yaml
+        kubectl-view-secret
+        kubectl-whoami
       ];
 
       file = {
@@ -38,6 +55,10 @@ in
         };
         ".local/bin/kubectl-ns" = {
           source = "${pkgs.kubectx}/bin/kubens";
+          executable = true;
+        };
+        ".local/bin/kubectl-virt" = {
+          source = "${pkgs.kubevirt}/bin/virtctl";
           executable = true;
         };
       };

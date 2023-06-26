@@ -18,6 +18,9 @@ in
 
   profile = {
     programs = {
+      dircolors = {
+        enable = true;
+      };
       lsd = {
         enable = true;
       };
@@ -30,6 +33,9 @@ in
       starship = {
         enable = true;
       };
+      wezterm = {
+        enable = true;
+      };
     };
   };
 
@@ -38,6 +44,7 @@ in
 
     sessionVariables = {
       LC_ALL = "de_DE.UTF-8";
+      LANG = "de_DE.UTF-8";
     };
 
     file = {

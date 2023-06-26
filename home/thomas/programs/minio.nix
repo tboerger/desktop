@@ -10,7 +10,9 @@ in
     profile = {
       programs = {
         minio = {
-          enable = mkEnableOption "Minio";
+          enable = mkEnableOption "Minio" // {
+            default = true;
+          };
         };
       };
     };

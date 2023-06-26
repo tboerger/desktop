@@ -10,7 +10,9 @@ in
     profile = {
       programs = {
         vscode = {
-          enable = mkEnableOption "Vscode";
+          enable = mkEnableOption "Vscode" // {
+            default = true;
+          };
         };
       };
     };

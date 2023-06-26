@@ -18,10 +18,25 @@ in
 
   profile = {
     programs = {
+      act = {
+        enable = true;
+      };
       citrix = {
         enable = true;
       };
+      clouds = {
+        enable = true;
+      };
+      develop = {
+        enable = true;
+      };
+      dircolors = {
+        enable = true;
+      };
       direnv = {
+        enable = true;
+      };
+      fonts = {
         enable = true;
       };
       fzf = {
@@ -54,10 +69,19 @@ in
       neovim = {
         enable = true;
       };
+      network = {
+        enable = true;
+      };
       ngrok = {
         enable = true;
       };
+      nodejs = {
+        enable = true;
+      };
       packwiz = {
+        enable = true;
+      };
+      password = {
         enable = true;
       };
       readline = {
@@ -72,14 +96,10 @@ in
       terraform = {
         enable = true;
       };
+      wezterm = {
+        enable = true;
+      };
       yq = {
-        enable = true;
-      };
-
-      minio = {
-        enable = true;
-      };
-      vscode = {
         enable = true;
       };
     };
@@ -94,11 +114,49 @@ in
   home = {
     inherit username homeDirectory;
 
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
+
     sessionVariables = {
-      LC_ALL = "de_DE.UTF-8";
+      LC_ALL = "en_US.UTF-8";
+      LANG = "en_US.UTF-8";
     };
 
     file = {
+      ".local/bin/git-gh-pages" = {
+        executable = true;
+        source = ./scripts/git-gh-pages.sh;
+      };
+      ".local/bin/git-promote" = {
+        executable = true;
+        source = ./scripts/git-promote.sh;
+      };
+
+      ".local/bin/search-and-replace" = {
+        executable = true;
+        source = ./scripts/search-and-replace.sh;
+      };
+
+      ".local/bin/each-dir" = {
+        executable = true;
+        source = ./scripts/each-dir.sh;
+      };
+
+      ".local/bin/secrets-encrypt" = {
+        executable = true;
+        source = ./scripts/secrets-encrypt.sh;
+      };
+      ".local/bin/secrets-decrypt" = {
+        executable = true;
+        source = ./scripts/secrets-decrypt.sh;
+      };
+
+      ".local/bin/sort-requirements" = {
+        executable = true;
+        source = ./scripts/sort-requirements.rb;
+      };
+
       ".face" = {
         source = ./face.jpg;
       };
