@@ -1,0 +1,18 @@
+# Standards: 1.2
+---
+- name: Write defined values
+  loop: "{{ sysctl_defaults + sysctl_extra }}"
+  loop_control:
+    label: "{{ item.name }}"
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    ignoreerrors: "{{ item.ignoreerrors | default(omit) }}"
+    reload: "{{ item.reload | default(omit) }}"
+    sysctl_file: "{{ item.sysctl_file | default(omit) }}"
+    sysctl_set: "{{ item.sysctl_set | default(True) }}"
+    state: "{{ item.state | default('present') }}"
+  tags:
+    - sysctl
+
+...

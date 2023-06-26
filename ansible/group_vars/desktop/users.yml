@@ -11,16 +11,8 @@ users_general:
     comment: Thomas Boerger
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/thomas/password.txt') | password_hash('sha512', lookup('file', 'secrets/thomas/salt.txt')) }}"
-    ohmyzsh: True
-    bashit: False
     ssh_key:
       generate: False
-    castles:
-      - tboerger/homeshick-base
-      - tboerger/homeshick-linux
-      - tboerger/homeshick-vim
-      - tboerger/homeshick-desktop
-      - tboerger/homeshick-private
     groups:
       - wheel
       - sudo
@@ -32,11 +24,8 @@ users_general:
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/anna/password.txt') | password_hash('sha512', lookup('file', 'secrets/anna/salt.txt')) }}"
     update_password: on_create
-    ohmyzsh: True
-    bashit: False
     ssh_key:
       generate: False
-    castles: []
     groups: []
 
   - name: adrian
@@ -45,11 +34,8 @@ users_general:
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/adrian/password.txt') | password_hash('sha512', lookup('file', 'secrets/adrian/salt.txt')) }}"
     update_password: on_create
-    ohmyzsh: True
-    bashit: False
     ssh_key:
       generate: False
-    castles: []
     groups: []
 
   - name: tabea
@@ -58,11 +44,8 @@ users_general:
     shell: /bin/zsh
     password: "{{ lookup('file', 'secrets/tabea/password.txt') | password_hash('sha512', lookup('file', 'secrets/tabea/salt.txt')) }}"
     update_password: on_create
-    ohmyzsh: True
-    bashit: False
     ssh_key:
       generate: False
-    castles: []
     groups: []
 
 ...

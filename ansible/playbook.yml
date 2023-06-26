@@ -15,6 +15,7 @@
     - role: users
     - role: root
     - role: openssh
+    - role: sysctl
     - role: layers
     - role: flatpak
     - role: tailscale

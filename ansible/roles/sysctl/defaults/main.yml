@@ -1,0 +1,35 @@
+# Standards: 1.2
+---
+# @var sysctl_defaults:description: List of global sysctl settings
+# @var sysctl_defaults:example: >
+# sysctl_defaults:
+#   - name: net.ipv4.ip_forward
+#     value: 1
+#   - name: net.ipv6.conf.all.forwarding
+#     value: 1
+#     ignoreerrors: True
+#     reload: True
+#     sysctl_file: /etc/sysctl.conf
+#     sysctl_set: True
+#   - name: kernel.panic
+#     state: absent
+# @end
+sysctl_defaults: []
+
+# @var sysctl_extra:description: List of extra sysctl settings
+# @var sysctl_extra:example: >
+# sysctl_extra:
+#   - name: net.ipv4.ip_forward
+#     value: 1
+#   - name: net.ipv6.conf.all.forwarding
+#     value: 1
+#     ignoreerrors: True
+#     reload: True
+#     sysctl_file: /etc/sysctl.conf
+#     sysctl_set: True
+#   - name: kernel.panic
+#     state: absent
+# @end
+sysctl_extra: []
+
+...

@@ -1,16 +1,7 @@
 # Standards: 1.2
 ---
 root_password: "{{ lookup('file', 'secrets/root/password.txt') | password_hash('sha512', lookup('file', 'secrets/root/salt.txt')) }}"
-
 root_sshkeys: "{{ users_thomas_keys }}"
-
 root_shell: /bin/zsh
-root_ohmyzsh: True
-
-root_castles_force: True
-root_castles:
-  - tboerger/homeshick-base
-  - tboerger/homeshick-linux
-  - tboerger/homeshick-vim
 
 ...

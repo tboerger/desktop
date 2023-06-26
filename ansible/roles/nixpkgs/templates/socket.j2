@@ -5,8 +5,6 @@ Before=multi-user.target
 After=nix.mount
 BindsTo=nix.mount
 
-ConditionPathIsReadWrite=/nix/var/nix/daemon-socket
-
 [Socket]
 ListenStream=/nix/var/nix/daemon-socket/socket
 

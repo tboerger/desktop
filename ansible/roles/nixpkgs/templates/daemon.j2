@@ -4,13 +4,11 @@ Description=Nix Daemon
 After=nix.mount
 BindsTo=nix.mount
 
-RequiresMountsFor=/nix/store
-RequiresMountsFor=/nix/var
-RequiresMountsFor=/nix/var/nix/db
-ConditionPathIsReadWrite=/nix/var/nix/daemon-socket
+RequiresMountsFor=/nix
 
 [Service]
 Environment=NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
+ExecStartPre=/usr/sbin/restorecon -RF /nix
 ExecStart=/nix/var/nix/profiles/default/bin/nix daemon
 KillMode=process
 LimitNOFILE=1048576
