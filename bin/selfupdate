@@ -9,7 +9,7 @@ fi
 
 USER=${USER:-thomas}
 EXECUTE=$(basename $0)
-STRIPPED=${EXECUTE%-update}
+STRIPPED=${EXECUTE%-selfupdate}
 MACHINE=${MACHINE:-${STRIPPED}}
 
 if ! test -d "${ROOT}/ansible/host_vars/${MACHINE}"; then
