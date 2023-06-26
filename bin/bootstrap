@@ -4,16 +4,16 @@ set -eo pipefail
 MACHINE=${1:-unknown}
 REPO=${REPO:-https://github.com/tboerger/desktop.git}
 BASE=${BASE:-/home/thomas/.desktop}
-USER=${USER:-thomas}
+UZER=${UZER:-thomas}
 
 if test -d "${BASE}"; then
     echo "--> updating itself"
     pushd "${BASE}" >/dev/null
-        su -c "git pull --autostash --rebase" "${USER}"
+        su -c "git pull --autostash --rebase" "${UZER}"
     popd >/dev/null
 else
     echo "--> cloning itself"
-    su -c "git clone ${REPO} ${BASE}" "${USER}"
+    su -c "git clone ${REPO} ${BASE}" "${UZER}"
 fi
 
 if ! hash ansible 2>/dev/null; then
@@ -28,7 +28,7 @@ if ! hash ansible 2>/dev/null; then
         pip3 install -r requirements.txt
 
         echo "--> fix permissions"
-        chown -R ${USER}:${USER} venv
+        chown -R ${UZER}:${UZER} venv
     popd >/dev/null
 fi
 

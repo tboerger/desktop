@@ -7,7 +7,7 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-USER=${USER:-thomas}
+UZER=${UZER:-thomas}
 EXECUTE=$(basename $0)
 STRIPPED=${EXECUTE%-selfupdate}
 MACHINE=${MACHINE:-${STRIPPED}}
@@ -19,7 +19,7 @@ fi
 
 echo "--> updating itself"
 pushd "${ROOT}" >/dev/null
-    sudo su -c "git pull --autostash --rebase" "${USER}"
+    sudo su -c "git pull --autostash --rebase" "${UZER}"
 popd >/dev/null
 
 for FILE in galaxy inventory later playbook vault selfupdate; do
@@ -28,6 +28,6 @@ for FILE in galaxy inventory later playbook vault selfupdate; do
 done
 
 echo "--> executing galaxy"
-sudo su -c "${MACHINE}-galaxy" "${USER}"
+sudo su -c "${MACHINE}-galaxy" "${UZER}"
 
 echo "--> finished updating"
