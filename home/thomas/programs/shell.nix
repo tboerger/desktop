@@ -2,15 +2,15 @@
 with lib;
 
 let
-  cfg = config.profile.programs.zsh;
+  cfg = config.profile.programs.shell;
 
 in
 {
   options = {
     profile = {
       programs = {
-        zsh = {
-          enable = mkEnableOption "Zsh" // {
+        shell = {
+          enable = mkEnableOption "Shell" // {
             default = true;
           };
         };
@@ -36,9 +36,29 @@ in
     };
 
     programs = {
+      bash = {
+        enable = true;
+        enableCompletion = true;
+
+        profileExtra = ''
+          [ -r ~/.nix-profile/etc/profile.d/nix.sh ] && source  ~/.nix-profile/etc/profile.d/nix.sh
+        '';
+
+        logoutExtra = ''
+
+        '';
+
+        sessionVariables = {
+          EDITOR = "vim";
+          PAGER = "less";
+          CLICOLOR = "1";
+          GREP_COLOR = "mt=1;33";
+          IGNOREEOF = "1";
+        };
+      };
+
       zsh = {
         enable = true;
-
         enableCompletion = true;
         enableAutosuggestions = true;
         enableSyntaxHighlighting = true;

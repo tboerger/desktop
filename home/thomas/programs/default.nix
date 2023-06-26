@@ -9,8 +9,8 @@
     ./minio.nix
     ./netrc.nix
     ./netrc.nix
+    ./shell.nix
     ./ssh.nix
     ./vscode.nix
-    ./zsh.nix
   ];
 }
