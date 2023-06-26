@@ -52,6 +52,7 @@
     - root
 
 - name: Clone homeshick base
+  when: root_homeshick | default(False)
   diff: False
   ansible.builtin.git:
     repo: https://github.com/andsens/homeshick.git

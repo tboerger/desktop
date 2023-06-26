@@ -30,6 +30,9 @@ root_bashit: False
 # @var root_bashit_version:description: Version of bash-it to install
 root_bashit_version: latest
 
+# @var root_homeshick:description: Install homeshick repo
+root_homeshick: False
+
 # @var root_homeshick_version:description: Version of homeshick to install
 root_homeshick_version: latest
 
