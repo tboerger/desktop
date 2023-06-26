@@ -16,7 +16,7 @@ else
     su -c "git clone ${REPO} ${BASE}" "${UZER}"
 fi
 
-if ! hash ansible 2>/dev/null; then
+if ! hash ansible >/dev/null 2>&1; then
     pushd "${BASE}" >/dev/null
         echo "--> create venv"
         python3 -mvenv venv

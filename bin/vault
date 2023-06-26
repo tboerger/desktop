@@ -7,7 +7,7 @@ else
     ROOT=$(cd $(dirname $0)/..; pwd)
 fi
 
-if ! which ansible-vault >/dev/null; then
+if ! which ansible-vault >/dev/null 2>&1; then
     if test -d "${ROOT}/venv"; then
         source "${ROOT}/venv/bin/activate"
     else
