@@ -35,6 +35,9 @@
     in
     {
       homeConfigurations = {
+        "root@anubis" = mkHome [ ./home/root/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "root@chnum" = mkHome [ ./home/root/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
+
         "thomas@anubis" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
         "thomas@chnum" = mkHome [ ./home/thomas/default.nix ] nixpkgs.legacyPackages."x86_64-linux";
 
