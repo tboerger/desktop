@@ -53,7 +53,7 @@
     - item.flake | default(False)
     - dotfiles_apply_configs or (item.apply | default(False))
   ansible.builtin.shell:
-    cmd: "nix run home-manager/master -- switch --flake {{ item.flake }}"
+    cmd: "nix run home-manager/master -- -b without_nix switch --flake {{ item.flake }}"
   tags:
     - dotfiles
 
