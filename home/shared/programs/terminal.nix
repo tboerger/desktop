@@ -2,30 +2,54 @@
 with lib;
 
 let
-  cfg = config.profile.programs.wezterm;
+  cfg = config.profile.programs.terminal;
 
 in
 {
   options = {
     profile = {
       programs = {
-        wezterm = {
-          enable = mkEnableOption "Wezterm";
+        terminal = {
+          enable = mkEnableOption "Terminal";
         };
       };
     };
   };
 
   config = mkIf cfg.enable {
-    programs = {
-      wezterm = {
-        enable = true;
+    home = {
+      file = {
+        ".var/app/com.raggesilver.BlackBox/config/glib-2.0/settings/keyfile".text = ''
+          [com/raggesilver/BlackBox]
+          hide-single-tab=true
+          headerbar-draw-line-single-tab=true
+          theme-dark='Solarized Dark'
+          scrollback-mode=1
+          was-maximized=true
+          cursor-shape=0
+          theme-light='Solarized Dark'
+          show-headerbar=true
+          font='Monospace 14'
+          remember-window-size=true
+          style-preference=0
+          stealth-single-tab=true
+          show-menu-button=true
+          headerbar-drag-area=false
+          cursor-blink-mode=1
+        '';
+      };
+    };
 
-        extraConfig = ''
+    xgd = {
+      configFile = {
+        "wezterm/wezterm.lua".text = ''
+          local wezterm = require "wezterm";
+          wezterm.add_to_config_reload_watch_list(wezterm.config_dir)
+
           return {
             check_for_updates = false,
-            color_scheme = "nord",
-            font_size = 12.0,
+            color_scheme = "Solarized Darcula",
+            font_size = 14.0,
 
             exit_behavior = "Close",
             scrollback_lines = 100000,

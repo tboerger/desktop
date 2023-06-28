@@ -33,7 +33,7 @@ in
       starship = {
         enable = true;
       };
-      wezterm = {
+      terminal = {
         enable = true;
       };
     };

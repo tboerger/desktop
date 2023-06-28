@@ -96,7 +96,7 @@ in
       terraform = {
         enable = true;
       };
-      wezterm = {
+      terminal = {
         enable = true;
       };
       yq = {

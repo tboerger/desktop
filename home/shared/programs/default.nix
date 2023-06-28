@@ -27,8 +27,8 @@
     ./readline.nix
     ./sops.nix
     ./starship.nix
+    ./terminal.nix
     ./terraform.nix
-    ./wezterm.nix
     ./yq.nix
   ];
 
