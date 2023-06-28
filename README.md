@@ -29,14 +29,14 @@ Generally the stick should be mounted automatically.
 ```console
 mkdir -p ${HOME}/.ssh/
 cp /media/$(whoami)/secrets/ssh/id_* ${HOME}/.ssh/
-chown $(id -u):$(id -g) .ssh/id_*
+chown -R $(id -u):$(id -g) ${HOME}/.ssh
 ```
 
 ### Gnupg
 
 ```console
 for FILE in /media/$(whoami)/secrets/gpg/*.asc; do
-    gpg --import $FILE
+    gpg --import ${FILE}
 done
 ```
 
