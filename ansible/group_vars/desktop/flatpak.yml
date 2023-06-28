@@ -7,6 +7,7 @@ flatpak_installs_general:
   - com.discordapp.Discord
   - com.getmailspring.Mailspring
   - com.github.IsmaelMartinez.teams_for_linux
+  - com.github.tchx84.Flatseal
   - com.google.Chrome
   - com.ktechpit.whatsie
   - com.mattermost.Desktop
@@ -34,6 +35,7 @@ flatpak_installs_general:
   - org.onlyoffice.desktopeditors
   - org.signal.Signal
   - org.telegram.desktop
+  - org.virt_manager.virt-viewer
   - org.wezfurlong.wezterm
 
 flatpak_byrefs_general:
