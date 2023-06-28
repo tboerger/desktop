@@ -76,4 +76,12 @@ flatpak_byrefs_general: []
 # @end
 flatpak_byrefs_extra: []
 
+# @var flatpak_filesystem_overrides:description: List of filesystem overrides
+# @var flatpak_filesystem_overrides:example: >
+# flatpak_filesystem_overrides:
+#   - /example
+#   - /nix:ro
+# @end
+flatpak_filesystem_overrides: []
+
 ...

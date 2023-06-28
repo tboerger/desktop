@@ -1,0 +1,11 @@
+# Standards: 1.2
+---
+dconf_extra_profiles:
+  - name: local
+    configs:
+      - name: 99-local-system
+        config: |
+          [org/gnome/desktop/interface]
+          scaling-factor=1
+
+...

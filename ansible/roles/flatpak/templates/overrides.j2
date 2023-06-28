@@ -1,0 +1,4 @@
+[Context]
+{% if flatpak_filesystem_overrides | default(False) %}
+filesystems={{ flatpak_filesystem_overrides | sort | join(';') }};
+{% endif %}

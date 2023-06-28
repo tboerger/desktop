@@ -59,4 +59,14 @@
   tags:
     - flatpak
 
+- name: Write overrides config
+  ansible.builtin.template:
+    src: overrides.j2
+    dest: /var/lib/flatpak/overrides/global
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  tags:
+    - flatpak
+
 ...

@@ -12,6 +12,7 @@ flatpak_installs_general:
   - com.mattermost.Desktop
   - com.mattjakeman.ExtensionManager
   - com.nextcloud.desktopclient.nextcloud
+  - com.raggesilver.BlackBox
   - com.skype.Client
   - com.slack.Slack
   - com.valvesoftware.Steam
@@ -20,6 +21,7 @@ flatpak_installs_general:
   - fr.free.Homebank
   - im.riot.Riot
   - io.gdevs.GDLauncher
+  - io.podman_desktop.PodmanDesktop
   - net.cozic.joplin_desktop
   - net.lutris.Lutris
   - org.gnome.Calendar
@@ -37,5 +39,8 @@ flatpak_installs_general:
 flatpak_byrefs_general:
   - name: com.onepassword.OnePassword
     url: https://downloads.1password.com/linux/flatpak/1Password.flatpakref
+
+flatpak_filesystem_overrides:
+  - /nix:ro
 
 ...
