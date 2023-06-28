@@ -5,9 +5,15 @@ dotfiles_users_general:
     flake: "github:tboerger/desktop#thomas@{{ inventory_hostname }}"
   - username: anna
     flake: "github:tboerger/desktop#anna@{{ inventory_hostname }}"
+    apply: True
   - username: adrian
     flake: "github:tboerger/desktop#adrian@{{ inventory_hostname }}"
+    apply: True
   - username: tabea
     flake: "github:tboerger/desktop#tabea@{{ inventory_hostname }}"
+    apply: True
+  - username: root
+    flake: "github:tboerger/desktop#root@{{ inventory_hostname }}"
+    apply: True
 
 ...
