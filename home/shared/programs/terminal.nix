@@ -40,7 +40,7 @@ in
       };
     };
 
-    xgd = {
+    xdg = {
       configFile = {
         "wezterm/wezterm.lua".text = ''
           local wezterm = require "wezterm";
