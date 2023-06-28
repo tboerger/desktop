@@ -11,7 +11,7 @@ GnuPG keys from the private secrets stick on the machine with the following
 snippets and finally execute the bootstrap script to clone this repository.
 Generally the stick should be mounted automatically.
 
-### Screenshots
+### Install
 
 <details>
 <summary>Select Language</summary>
@@ -44,7 +44,7 @@ Generally the stick should be mounted automatically.
 </details>
 
 <details>
-<summary>Encryption Passphrase</summary>
+<summary>Encryption Setup</summary>
 
 ![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install06.png)
 </details>
@@ -84,8 +84,6 @@ Generally the stick should be mounted automatically.
 
 ![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install12.png)
 </details>
-
-### Install
 
 ### SSH
 
