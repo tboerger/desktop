@@ -4,6 +4,10 @@ with lib;
 let
   cfg = config.profile.programs.terminal;
 
+  weztermShellIntegration = ''
+    source "${pkgs.wezterm}/etc/profile.d/wezterm.sh"
+  '';
+
 in
 {
   options = {
@@ -219,6 +223,15 @@ in
             }
           }
         '';
+      };
+    };
+
+    programs = {
+      bash = {
+        initExtra = weztermShellIntegration;
+      };
+      zsh = {
+        initExtra = weztermShellIntegration;
       };
     };
   };
