@@ -11,18 +11,81 @@ GnuPG keys from the private secrets stick on the machine with the following
 snippets and finally execute the bootstrap script to clone this repository.
 Generally the stick should be mounted automatically.
 
-### Install
+### Screenshots
 
-![select language](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install01.png)
-![keyboard layout](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install02.png)
-![installation type](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install03.png)
-![select filesystem](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install04.png)
-![erase disk](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install05.png)
-![security key](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install06.png)
-![confirm disks](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install07.png)
-![select location](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install08.png)
-![user details](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install09.png)
-![reboot system](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install10.png)
+<details>
+<summary>Select Language</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install01.png)
+</details>
+
+<details>
+<summary>Keyboard Layout</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install02.png)
+</details>
+
+<details>
+<summary>Language Support</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install03.png)
+</details>
+
+<details>
+<summary>Select Location</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install04.png)
+</details>
+
+<details>
+<summary>Select Disk</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install05.png)
+</details>
+
+<details>
+<summary>Encryption Passphrase</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install06.png)
+</details>
+
+<details>
+<summary>Select Network</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install07.png)
+</details>
+
+<details>
+<summary>Enable Root</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install08.png)
+</details>
+
+<details>
+<summary>User Details</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install09.png)
+</details>
+
+<details>
+<summary>Create User</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install10.png)
+</details>
+
+<details>
+<summary>Install Summary</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install11.png)
+</details>
+
+<details>
+<summary>Reboot System</summary>
+
+![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install12.png)
+</details>
+
+### Install
 
 ### SSH
 
