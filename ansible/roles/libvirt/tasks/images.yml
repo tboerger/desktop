@@ -41,7 +41,7 @@
     path: "{{ item.target }}/{{ item.name }}"
     owner: qemu
     group: qemu
-    mode: u=rwx,g=x,o=x
+    mode: u=rwx,g=rx,o=rx
     state: directory
     recurse: True
   tags:
@@ -62,7 +62,7 @@
     remote_src: True
     owner: qemu
     group: qemu
-    mode: u=rw,g=rw,o=
+    mode: u=rwX,g=rX,o=rX
     creates: "{{ item.creates | default(omit) }}"
   tags:
     - libvirt
@@ -80,7 +80,7 @@
     dest: "/var/lib/libvirt/images/{{ item.name }}.qcow2"
     owner: qemu
     group: qemu
-    mode: u=rw,g=rw,o=
+    mode: u=rw,g=r,o=r
     state: link
   tags:
     - libvirt
