@@ -11,7 +11,7 @@
       changed_when: "'successfully created' in distrobox_create.stderr"
       failed_when: distrobox_create.rc != 0
       when: item.state | default('present') == 'present'
-      ansible.builtin.command: "distrobox create --yes --image {{ item.image }} --name {{ item.name }}{{ ' '+item.args if item.args | default(False) else '' }}"
+      ansible.builtin.command: "distrobox create --yes --image {{ item.image }} --name {{ item.name }}{% if item.volumes | default(False) %}{% for v in item.volumes %} --volume {{ v }}{% endfor %}{% endif %}{{ ' '+item.args if item.args | default(False) else '' }}"
       tags:
         - distrobox
 
