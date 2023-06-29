@@ -12,7 +12,6 @@ flatpak_installs_general:
   - com.ktechpit.whatsie
   - com.mattermost.Desktop
   - com.mattjakeman.ExtensionManager
-  - com.nextcloud.desktopclient.nextcloud
   - com.raggesilver.BlackBox
   - com.skype.Client
   - com.slack.Slack
