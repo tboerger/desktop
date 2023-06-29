@@ -5,11 +5,7 @@ distrobox_general_instances:
     instances:
       - name: fedora
         image: registry.fedoraproject.org/fedora-toolbox:38
-        volumes:
-          - /nix
       - name: ubuntu
         image: quay.io/toolbx-images/ubuntu-toolbox:22.04
-        volumes:
-          - /nix
 
 ...

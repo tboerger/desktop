@@ -15,6 +15,15 @@
       tags:
         - distrobox
 
+    - name: "Debug create output : {{ user.username }}"
+      loop: "{{ distrobox_create.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"
+      debug:
+        msg: "{{ item.stderr_lines }}"
+      tags:
+        - distrobox
+
     - name: "Init defined instances : {{ user.username }}"
       loop: "{{ user.instances }}"
       loop_control:
