@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [ -L $0 ]; then
+    ROOT=$(cd $(dirname $(readlink -e $0))/..; pwd)
+else
+    ROOT=$(cd $(dirname $0)/..; pwd)
+fi
+
+if ! which ansible >/dev/null 2>&1; then
+    if test -d "${ROOT}/venv"; then
+        source "${ROOT}/venv/bin/activate"
+    else
+        echo "Failed to detect ansible!"
+        exit 1
+    fi
+fi
+
+pushd "${ROOT}" >/dev/null
+    export ANSIBLE_HOST_KEY_CHECKING=false
+    export ANSIBLE_INVENTORY_ENABLED=yaml
+    export ANSIBLE_ROLES_PATH=galaxy:ansible/roles
+    export ANSIBLE_COLLECTIONS_PATH=collections
+
+    ansible \
+        --inventory-file "ansible/inventory.yml" \
+        "$@"
+popd >/dev/null
