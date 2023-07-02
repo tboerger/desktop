@@ -37,6 +37,12 @@ in
         enable = true;
       };
     };
+
+    services = {
+      owncloud = {
+        enable = true;
+      };
+    };
   };
 
   home = {

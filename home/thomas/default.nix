@@ -105,6 +105,9 @@ in
     };
 
     services = {
+      owncloud = {
+        enable = true;
+      };
       syncthing = {
         enable = true;
       };
