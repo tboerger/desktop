@@ -29,7 +29,7 @@ else
 fi
 
 EXECUTE=$(basename "${0}")
-STRIPPED=${EXECUTE%-playbook}
+STRIPPED=${EXECUTE%-layers}
 MACHINE=${MACHINE:-${STRIPPED}}
 
 if ! test -d "${ROOT}/ansible/host_vars/${MACHINE}"; then
