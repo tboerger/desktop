@@ -40,28 +40,6 @@
   tags:
     - nixpkgs
 
-- name: Define nix rules
-  loop: "{{ nixpkgs_selinux_rules }}"
-  loop_control:
-    label: "{{ item.name }}"
-  community.general.sefcontext:
-    target: "{{ item.target }}"
-    setype: "{{ item.type }}"
-    state: present
-  tags:
-    - nixpkgs
-
-- name: Define var rules
-  loop: "{{ nixpkgs_selinux_rules }}"
-  loop_control:
-    label: "{{ item.name }}"
-  community.general.sefcontext:
-    target: "/var/lib{{ item.target }}"
-    setype: "{{ item.type }}"
-    state: present
-  tags:
-    - nixpkgs
-
 - name: Run nix restorecon
   changed_when: False
   ansible.builtin.command:
@@ -97,6 +75,28 @@
   ansible.posix.selinux:
     policy: targeted
     state: enforcing
+  tags:
+    - nixpkgs
+
+- name: Define nix rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
+  tags:
+    - nixpkgs
+
+- name: Define var rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "/var/lib{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
   tags:
     - nixpkgs
 
