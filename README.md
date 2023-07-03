@@ -95,6 +95,7 @@ the current installed version.
 mkdir -p ${HOME}/.ssh/
 cp /media/$(whoami)/secrets/ssh/id_* ${HOME}/.ssh/
 chown -R $(id -u):$(id -g) ${HOME}/.ssh
+chmod u=rw,g=,o= ${HOME}/.ssh/id_*
 ```
 
 ### Gnupg
