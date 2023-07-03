@@ -1,27 +1,5 @@
 # Standards: 1.2
 ---
-- name: Define nix rules
-  loop: "{{ nixpkgs_selinux_rules }}"
-  loop_control:
-    label: "{{ item.name }}"
-  community.general.sefcontext:
-    target: "{{ item.target }}"
-    setype: "{{ item.type }}"
-    state: present
-  tags:
-    - nixpkgs
-
-- name: Define var rules
-  loop: "{{ nixpkgs_selinux_rules }}"
-  loop_control:
-    label: "{{ item.name }}"
-  community.general.sefcontext:
-    target: "/var/lib{{ item.target }}"
-    setype: "{{ item.type }}"
-    state: present
-  tags:
-    - nixpkgs
-
 - name: Create nix root
   ansible.builtin.file:
     path: /var/lib/nix
@@ -59,6 +37,28 @@
     daemon_reload: True
     masked: False
     enabled: True
+  tags:
+    - nixpkgs
+
+- name: Define nix rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
+  tags:
+    - nixpkgs
+
+- name: Define var rules
+  loop: "{{ nixpkgs_selinux_rules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  community.general.sefcontext:
+    target: "/var/lib{{ item.target }}"
+    setype: "{{ item.type }}"
+    state: present
   tags:
     - nixpkgs
 

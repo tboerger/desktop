@@ -84,7 +84,6 @@
     owner: root
     group: root
     mode: u=rw,g=,o=
-    validate: /usr/sbin/sshd -tf %s
   tags:
     - openssh
 

@@ -22,7 +22,6 @@
     - role: libvirt
     - role: gnome
     - role: dconf
-    - role: distrobox
     - role: nixpkgs
     - role: dotfiles
 
