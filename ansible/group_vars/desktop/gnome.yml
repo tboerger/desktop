@@ -21,6 +21,8 @@ gnome_thomas_plugins:
     id: Vitals@CoreCoding.com
   - name: tailscale-status
     id: tailscale-status@maxgallup.github.com
+  - name: tray-icons-reloaded
+    id: trayIconsReloaded@selfmade.pl
 
 gnome_other_plugins:
   - name: calc
