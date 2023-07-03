@@ -1,19 +1,5 @@
 # Standards: 1.2
 ---
-- name: Check for requirements
-  register: dconf_psutil_check
-  changed_when: False
-  failed_when: False
-  ansible.builtin.command: rpm -q python3-psutil
-  tags:
-    - dconf
-
-- name: Include layers tasks
-  when: dconf_psutil_check.rc > 0
-  ansible.builtin.include_tasks: layers.yml
-  tags:
-    - dconf
-
 - name: Write profile config
   notify:
     - Update dconf

@@ -1,6 +1,15 @@
 # Standards: 1.2
 ---
-layers_packages_general: []
+layers_packages_general:
+  - genisoimage
+  - guestfs-tools
+  - libvirt
+  - python3-libvirt
+  - python3-lxml
+  - python3-psutil
+  - qemu-kvm
+  - tailscale
+  - zsh
 
 ...
 

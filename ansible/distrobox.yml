@@ -9,18 +9,6 @@
 
 - hosts: desktop
   roles:
-    - role: hosts
-    - role: sudo
-    - role: groups
-    - role: users
-    - role: root
-    - role: openssh
-    - role: sysctl
-    - role: flatpak
-    - role: tailscale
-    - role: libvirt
-    - role: gnome
-    - role: dconf
-    - role: nixpkgs
+    - role: distrobox
 
 ...

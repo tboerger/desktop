@@ -1,14 +1,5 @@
 # Standards: 1.2
 ---
-# @var libvirt_required_packages:description: List of required packages
-libvirt_required_packages:
-  - libvirt
-  - qemu-kvm
-  - genisoimage
-  - guestfs-tools
-  - python3-libvirt
-  - python3-lxml
-
 # @var libvirt_daemon_opts:description: Arguments for the libvirtd
 libvirt_daemon_opts: --timeout 120
 

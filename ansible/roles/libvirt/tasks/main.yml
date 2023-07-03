@@ -1,19 +1,5 @@
 # Standards: 1.2
 ---
-- name: Check for requirements
-  register: libvirt_package_check
-  changed_when: False
-  failed_when: False
-  ansible.builtin.command: rpm -q libvirt
-  tags:
-    - libvirt
-
-- name: Include layers tasks
-  when: libvirt_package_check.rc > 0
-  ansible.builtin.include_tasks: layers.yml
-  tags:
-    - libvirt
-
 - name: Include libvirt tasks
   ansible.builtin.include_tasks: libvirt.yml
   tags:

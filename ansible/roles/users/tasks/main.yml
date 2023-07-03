@@ -1,19 +1,5 @@
 # Standards: 1.2
 ---
-- name: Check for requirements
-  register: users_zsh_check
-  changed_when: False
-  failed_when: False
-  ansible.builtin.command: rpm -q zsh
-  tags:
-    - users
-
-- name: Include layers tasks
-  when: users_zsh_check.rc > 0
-  ansible.builtin.include_tasks: layers.yml
-  tags:
-    - users
-
 - name: Create primary group
   loop: "{{ users_general + users_extra }}"
   loop_control:

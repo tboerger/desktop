@@ -32,7 +32,7 @@ if ! hash ansible >/dev/null 2>&1; then
     popd >/dev/null
 fi
 
-for FILE in galaxy inventory later playbook vault selfupdate; do
+for FILE in galaxy inventory later layers playbook distrobox dotfiles vault selfupdate; do
     echo "--> linking ${FILE}"
     ln -sf "${BASE}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done

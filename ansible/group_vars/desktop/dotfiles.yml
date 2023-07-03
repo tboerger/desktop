@@ -1,8 +1,11 @@
 # Standards: 1.2
 ---
+fotfiles_apply_thomas: False
+
 dotfiles_users_general:
   - username: thomas
     flake: "github:tboerger/desktop#thomas@{{ inventory_hostname }}"
+    apply: "{{ fotfiles_apply_thomas }}"
   - username: anna
     flake: "github:tboerger/desktop#anna@{{ inventory_hostname }}"
     apply: True

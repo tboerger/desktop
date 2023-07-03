@@ -17,9 +17,10 @@
   tags:
     - layers
 
-- name: Live apply changes
+- name: Notice required reboot
   when: layers_booted_check.stdout == 'false'
-  ansible.builtin.command: rpm-ostree apply-live --allow-replacement
+  debug:
+    msg: Requires a reboot to apply layers
   tags:
     - layers
 

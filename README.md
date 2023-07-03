@@ -122,35 +122,65 @@ echo $VAULTPWD > /home/$(whoami)/.desktop/.vaultpasswd && chown $(id -u):$(id -g
 
 ```console
 anubis-selfupdate
-anubis-playbook -D -C
+
+anubis-layers -D
+reboot
+
+anubis-playbook -D
+anubis-distrobox -D
+anubis-dotfiles -D
 ```
 
 ### Chnum
 
 ```console
 chnum-selfupdate
-chnum-playbook -D -C
+
+chnum-layers -D
+reboot
+
+chnum-playbook -D
+chnum-distrobox -D
+chnum-dotfiles -D
 ```
 
 ### Horus
 
 ```console
 horus-selfupdate
-horus-playbook -D -C
+
+horus-layers -D
+reboot
+
+horus-playbook -D
+horus-distrobox -D
+horus-dotfiles -D
 ```
 
 ### Imhotep
 
 ```console
 imhotep-selfupdate
-imhotep-playbook -D -C
+
+imhotep-layers -D
+reboot
+
+imhotep-playbook -D
+imhotep-distrobox -D
+imhotep-dotfiles -D
 ```
 
 ### Osiris
 
 ```console
 osiris-selfupdate
-osiris-playbook -D -C
+
+osiris-layers -D
+reboot
+
+osiris-playbook -D
+osiris-distrobox -D
+osiris-dotfiles -D
 ```
 
 ## Security

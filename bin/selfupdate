@@ -22,7 +22,7 @@ pushd "${ROOT}" >/dev/null
     sudo su -c "git pull --autostash --rebase" "${UZER}"
 popd >/dev/null
 
-for FILE in galaxy inventory later playbook vault selfupdate; do
+for FILE in galaxy inventory later layers playbook distrobox dotfiles vault selfupdate; do
     echo "--> linking ${FILE}"
     sudo ln -sf "${ROOT}/bin/${FILE}" "/usr/local/bin/${MACHINE}-${FILE}"
 done
