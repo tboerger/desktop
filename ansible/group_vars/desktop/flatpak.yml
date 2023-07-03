@@ -24,6 +24,7 @@ flatpak_installs_general:
   - io.podman_desktop.PodmanDesktop
   - net.cozic.joplin_desktop
   - net.lutris.Lutris
+  - org.fedoraproject.MediaWriter
   - org.gnome.Calendar
   - org.gnome.Contacts
   - org.gnome.eog
