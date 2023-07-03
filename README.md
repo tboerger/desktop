@@ -85,6 +85,10 @@ Generally the stick should be mounted automatically.
 ![](https://raw.githubusercontent.com/tboerger/desktop/master/screenshots/install12.png)
 </details>
 
+After the installation have been finished you should always pin the version to
+have a proper point to rollback. Just execute `sudo ostree admin pin 0` to pin
+the current installed version.
+
 ### SSH
 
 ```console
@@ -104,8 +108,11 @@ done
 ### Finish
 
 ```console
+export MACHINE=example
+export VAULTPWD=p455w0rd
+
 wget -O- https://raw.githubusercontent.com/tboerger/desktop/master/bin/bootstrap | sudo bash -s -- $MACHINE
-echo p455w0rd > /home/$(whoami)/.desktop/.vaultpasswd && chown $(id -u):$(id -g) /home/$(whoami)/.desktop/.vaultpasswd
+echo $VAULTPWD > /home/$(whoami)/.desktop/.vaultpasswd && chown $(id -u):$(id -g) /home/$(whoami)/.desktop/.vaultpasswd
 ```
 
 ## Usage
