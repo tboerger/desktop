@@ -1,6 +1,7 @@
 # Standards: 1.2
 ---
 layers_packages_general:
+  - cloud-utils
   - genisoimage
   - guestfs-tools
   - libvirt
@@ -12,4 +13,3 @@ layers_packages_general:
   - zsh
 
 ...
-

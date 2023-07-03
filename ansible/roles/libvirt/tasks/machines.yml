@@ -99,8 +99,8 @@
     src: "{{ item.item.1.source }}"
     dest: "/var/lib/libvirt/images/{{ item.item.1.name }}.qcow2"
     remote_src: True
-    owner: libvirt-qemu
-    group: kvm
+    owner: qemu
+    group: qemu
     mode: 0660
   tags:
     - libvirt

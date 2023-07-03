@@ -3,7 +3,7 @@
 libvirt_networks:
   - name: general
     bridge: virbr1
-    zone: truested
+    zone: trusted
     autostart: True
     mode: nat
     address: 10.13.37.1

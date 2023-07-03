@@ -65,8 +65,8 @@
 - name: Fix image perms
   ansible.builtin.file:
     path: "/var/lib/libvirt/userdata/{{ item.item.name }}.iso"
-    owner: libvirt-qemu
-    group: kvm
+    owner: qemu
+    group: qemu
     mode: u=rw,g=rw,o=
   tags:
     - libvirt
