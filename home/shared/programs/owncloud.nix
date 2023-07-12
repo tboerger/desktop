@@ -2,13 +2,13 @@
 with lib;
 
 let
-  cfg = config.profile.services.owncloud;
+  cfg = config.profile.programs.owncloud;
 
 in
 {
   options = {
     profile = {
-      services = {
+      programs = {
         owncloud = {
           enable = mkEnableOption "ownCloud";
         };
@@ -17,10 +17,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    services = {
-      owncloud-client = {
-        enable = true;
-      };
+    home = {
+      packages = with pkgs; [
+        owncloud-client
+      ];
     };
   };
 }

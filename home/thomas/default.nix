@@ -75,6 +75,9 @@ in
       nodejs = {
         enable = true;
       };
+      owncloud = {
+        enable = true;
+      };
       packwiz = {
         enable = true;
       };
@@ -102,9 +105,6 @@ in
     };
 
     services = {
-      owncloud = {
-        enable = true;
-      };
       syncthing = {
         enable = true;
       };
@@ -141,20 +141,6 @@ in
       ".local/bin/each-dir" = {
         executable = true;
         source = ./scripts/each-dir.sh;
-      };
-
-      ".local/bin/secrets-encrypt" = {
-        executable = true;
-        source = ./scripts/secrets-encrypt.sh;
-      };
-      ".local/bin/secrets-decrypt" = {
-        executable = true;
-        source = ./scripts/secrets-decrypt.sh;
-      };
-
-      ".local/bin/sort-requirements" = {
-        executable = true;
-        source = ./scripts/sort-requirements.rb;
       };
 
       ".face" = {

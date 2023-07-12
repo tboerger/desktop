@@ -40,6 +40,7 @@ in
           octref.vetur
           redhat.vscode-yaml
           shakram02.bash-beautify
+          signageos.signageos-vscode-sops
           timonwong.shellcheck
           yzhang.markdown-all-in-one
           zxh404.vscode-proto3

@@ -25,12 +25,12 @@ in
         forwardAgent = true;
 
         matchBlocks = {
-          "midgard" = hm.dag.entryBefore ["asgard"] {
+          "midgard" = {
             hostname = "192.168.1.5";
             port = 22;
             user = "thomas";
           };
-          "asgard" = hm.dag.entryBefore ["utgard"] {
+          "asgard" = {
             hostname = "192.168.1.10";
             port = 22;
             user = "thomas";
@@ -41,12 +41,12 @@ in
             user = "thomas";
           };
 
-          "*.cloudpunks.io" = {
+          "*.cloudpunks.io !jumphost1.cloudpunks.io" = {
             user = "oper";
             forwardAgent = true;
             proxyJump = "tboerger@jumphost1.cloudpunks.io";
           };
-          "jumphost1.cloudpunks.io" = hm.dag.entryBefore ["*.cloudpunks.io"] {
+          "jumphost1.cloudpunks.io" = {
             user = "tboerger";
             forwardAgent = true;
           };

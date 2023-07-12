@@ -24,6 +24,9 @@ in
       lsd = {
         enable = true;
       };
+      owncloud = {
+        enable = true;
+      };
       packwiz = {
         enable = true;
       };
@@ -38,11 +41,7 @@ in
       };
     };
 
-    services = {
-      owncloud = {
-        enable = true;
-      };
-    };
+    services = { };
   };
 
   home = {

@@ -14,6 +14,12 @@ self: super:
       version = "0.1.1";
       sha256 = "sha256-pg1nGEk+cn7VlmJeDifXkXeZJLRrEFOyW0bK9W6VGfc=";
     };
+    signageos.signageos-vscode-sops = self.vscode-utils.extensionFromVscodeMarketplace {
+      name = "signageos-vscode-sops";
+      publisher = "signageos";
+      version = "0.8.0";
+      sha256 = "sha256-LcbbKvYQxob2zKnmAlylIedQkJ1INl/i9DSK7MemW9Y=";
+    };
   };
 
   vimPlugins = self.lib.recursiveUpdate super.vimPlugins {

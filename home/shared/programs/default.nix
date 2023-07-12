@@ -21,6 +21,7 @@
     ./network.nix
     ./ngrok.nix
     ./nodejs.nix
+    ./owncloud.nix
     ./packwiz.nix
     ./password.nix
     ./readline.nix

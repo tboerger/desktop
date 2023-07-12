@@ -27,6 +27,7 @@ in
         argocd
         clusterctl
         fluxcd
+        grafana-loki
         k9s
         kind
         kubectl

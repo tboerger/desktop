@@ -33,6 +33,15 @@ in
       };
     };
 
+    services = {
+      gpg-agent = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        pinentryFlavor = "gnome3";
+      };
+    };
+
     programs = {
       git = {
         enable = true;

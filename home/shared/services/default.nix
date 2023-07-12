@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./owncloud.nix
     ./syncthing.nix
   ];
 
