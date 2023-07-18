@@ -37,6 +37,7 @@ in
         sonobuoy
         stern
 
+        kubectl-get-all
         kubectl-images
         kubectl-ktop
         kubectl-neat

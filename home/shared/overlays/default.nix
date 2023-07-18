@@ -49,6 +49,7 @@ self: super:
   gh-markdown-preview = super.callPackage ./gh-markdown-preview { };
   gh-poi = super.callPackage ./gh-poi { };
 
+  kubectl-get-all = super.callPackage ./kubectl-get-all { };
   kubectl-images = super.callPackage ./kubectl-images { };
   kubectl-ktop = super.callPackage ./kubectl-ktop { };
   kubectl-neat = super.callPackage ./kubectl-neat { };
