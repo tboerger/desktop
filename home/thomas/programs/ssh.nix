@@ -41,14 +41,19 @@ in
             user = "thomas";
           };
 
-          "*.cloudpunks.io !jumphost1.cloudpunks.io" = {
+          "jumphost1.cloudpunks.io" = {
+            user = "tboerger";
+            forwardAgent = true;
+          };
+          "*.cloudopserve.io !jumphost1.cloudpunks.io" = lib.hm.dag.entryAfter ["jumphost1.cloudpunks.io"] {
             user = "oper";
             forwardAgent = true;
             proxyJump = "tboerger@jumphost1.cloudpunks.io";
           };
-          "jumphost1.cloudpunks.io" = {
-            user = "tboerger";
+          "*.cloudpunks.io !jumphost1.cloudpunks.io" = lib.hm.dag.entryAfter ["jumphost1.cloudpunks.io"] {
+            user = "oper";
             forwardAgent = true;
+            proxyJump = "tboerger@jumphost1.cloudpunks.io";
           };
         };
       };
