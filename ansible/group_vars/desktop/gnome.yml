@@ -23,12 +23,16 @@ gnome_thomas_plugins:
     id: tailscale-status@maxgallup.github.com
   - name: tray-icons-reloaded
     id: trayIconsReloaded@selfmade.pl
+  - name: alphabetical-app-grid
+    id: AlphabeticalAppGrid@stuarthayhurst
 
 gnome_other_plugins:
   - name: calc
     id: calc@danigm.wadobo.com
   - name: vitals
     id: Vitals@CoreCoding.com
+  - name: alphabetical-app-grid
+    id: AlphabeticalAppGrid@stuarthayhurst
 
 gnome_general_plugins:
   - username: thomas
