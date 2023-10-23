@@ -52,7 +52,10 @@ in
         enable = true;
         enableCompletion = true;
         enableAutosuggestions = true;
-        enableSyntaxHighlighting = true;
+
+        syntaxHighlighting = {
+          enable = true;
+        };
 
         profileExtra = ''
           [ -r ~/.nix-profile/etc/profile.d/nix.sh ] && source  ~/.nix-profile/etc/profile.d/nix.sh

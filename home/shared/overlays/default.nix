@@ -23,7 +23,7 @@ self: super:
   };
 
   vimPlugins = self.lib.recursiveUpdate super.vimPlugins {
-    dockerfile-vim = self.vimUtils.buildVimPluginFrom2Nix {
+    dockerfile-vim = self.vimUtils.buildVimPlugin {
       pname = "dockerfile-vim";
       version = "2021-09-06";
       src = self.fetchFromGitHub {
@@ -33,7 +33,7 @@ self: super:
         sha256 = "sha256-MiSGZ5MJ5g37szUuo8XCbuzuAcNBSqYY6hVa/WJwLDY=";
       };
     };
-    vim-vividchalk = self.vimUtils.buildVimPluginFrom2Nix {
+    vim-vividchalk = self.vimUtils.buildVimPlugin {
       pname = "vim-vividchalk";
       version = "2019-11-13";
       src = self.fetchFromGitHub {
