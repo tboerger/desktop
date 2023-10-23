@@ -71,6 +71,9 @@ in
           "[vue]" = {
             "editor.defaultFormatter" = "octref.vetur";
           };
+          "[yaml]" = {
+            "editor.defaultFormatter" = "redhat.vscode-yaml";
+          };
         };
       };
     };
