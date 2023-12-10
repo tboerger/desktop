@@ -11,7 +11,7 @@ buildGoModule rec {
     sha256 = "sha256-/+9HB1MXVbOoTJ3HytcM7QpMcI97dylvY2AYVG9sADc=";
   };
 
-  vendorSha256 = "sha256-WW4oA6qr7cGF2Lq+SgNUBhiSmZxVN8zL96kU5XbvcFQ=";
+  vendorHash = "sha256-WW4oA6qr7cGF2Lq+SgNUBhiSmZxVN8zL96kU5XbvcFQ=";
 
   doCheck = false;
   subPackages = [ "cmd/kubectl-split-yaml" ];

@@ -11,7 +11,7 @@ buildGoModule rec {
     sha256 = "sha256-guehDP+uohQ2VD4GvkQ0Zf59XX7xewfUzcqzV/ojf6Q=";
   };
 
-  vendorSha256 = "sha256-/hlCDJzkq4fhlovgTDetzVgBZvwy5AwklJIPhTmYe4s=";
+  vendorHash = "sha256-/hlCDJzkq4fhlovgTDetzVgBZvwy5AwklJIPhTmYe4s=";
 
   doCheck = false;
   subPackages = [ "cmd/plugin" ];

@@ -49,16 +49,22 @@ self: super:
   gh-markdown-preview = super.callPackage ./gh-markdown-preview { };
   gh-poi = super.callPackage ./gh-poi { };
 
+  kubectl-deprecations = super.callPackage ./kubectl-deprecations { };
   kubectl-get-all = super.callPackage ./kubectl-get-all { };
   kubectl-images = super.callPackage ./kubectl-images { };
   kubectl-ktop = super.callPackage ./kubectl-ktop { };
   kubectl-neat = super.callPackage ./kubectl-neat { };
   kubectl-oomd = super.callPackage ./kubectl-oomd { };
+  kubectl-outdated = super.callPackage ./kubectl-outdated { };
   kubectl-pexec = super.callPackage ./kubectl-pexec { };
+  kubectl-pod-lens = super.callPackage ./kubectl-pod-lens { };
+  kubectl-rakkess = super.callPackage ./kubectl-rakkess { };
   kubectl-realname-diff = super.callPackage ./kubectl-realname-diff { };
   kubectl-resource-versions = super.callPackage ./kubectl-resource-versions { };
+  kubectl-rolesum = super.callPackage ./kubectl-rolesum { };
   kubectl-split-yaml = super.callPackage ./kubectl-split-yaml { };
   kubectl-view-secret = super.callPackage ./kubectl-view-secret { };
+  kubectl-who-can = super.callPackage ./kubectl-who-can { };
   kubectl-whoami = super.callPackage ./kubectl-whoami { };
 
   khelm = super.callPackage ./khelm { };
