@@ -41,6 +41,7 @@ in
         kubectl-get-all
         kubectl-images
         kubectl-ktop
+        kubectl-moco
         kubectl-neat
         kubectl-oomd
         kubectl-outdated

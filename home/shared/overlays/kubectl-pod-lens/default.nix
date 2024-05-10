@@ -2,16 +2,16 @@
 
 buildGoModule rec {
   pname = "kubectl-pod-lens";
-  version = "0.1.2";
+  version = "0.3.1";
 
   src = fetchFromGitHub {
     owner = "sunny0826";
     repo = "kubectl-pod-lens";
     rev = "v${version}";
-    sha256 = "sha256-ZndDViJB23J1V/G36owYG8epk9EoNklLHXoMjaW+zlM=";
+    sha256 = "sha256-KoNQWAKdHcdkyMR1lr8CrLc0AxK4WszWqw0zKP2n9sY=";
   };
 
-  vendorHash = "sha256-sqo7HSLshQwxVHlKX3CrBz0lDom1R6zpgX1TFf4Z6Co=";
+  vendorHash = "sha256-V6iHO+eNDWP+IEcG2PnCAyGISw/VU8yz5UTe4JZCZKk=";
 
   doCheck = false;
   subPackages = [ "cmd/plugin" ];

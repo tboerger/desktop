@@ -2,15 +2,15 @@
 with lib;
 
 let
-  cfg = config.profile.programs.yq;
+  cfg = config.profile.programs.citrix;
 
 in
 {
   options = {
     profile = {
       programs = {
-        yq = {
-          enable = mkEnableOption "Yq";
+        citrix = {
+          enable = mkEnableOption "Citrix";
         };
       };
     };
@@ -19,7 +19,7 @@ in
   config = mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        yq-go
+        citrix_workspace
       ];
     };
   };

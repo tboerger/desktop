@@ -4,7 +4,7 @@ with lib;
 let
   cfg = config.profile.programs.develop;
 
-  python310 = pkgs.python310.withPackages (p: with p; [
+  python312 = pkgs.python312.withPackages (p: with p; [
     boto3
     botocore
     passlib
@@ -26,7 +26,7 @@ in
   config = mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        python310
+        python312
 
         ansible
         ansible-lint

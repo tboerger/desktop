@@ -21,6 +21,9 @@ in
       act = {
         enable = true;
       };
+      citrix = {
+        enable = true;
+      };
       clouds = {
         enable = true;
       };

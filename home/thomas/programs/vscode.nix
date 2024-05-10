@@ -37,7 +37,7 @@ in
           ms-python.python
           ms-vscode-remote.remote-ssh
           naumovs.color-highlight
-          octref.vetur
+          Vue.volar
           redhat.vscode-yaml
           shakram02.bash-beautify
           signageos.signageos-vscode-sops
@@ -69,7 +69,7 @@ in
             "editor.formatOnType" = true;
           };
           "[vue]" = {
-            "editor.defaultFormatter" = "octref.vetur";
+            "editor.defaultFormatter" = "Vue.volar";
           };
           "[yaml]" = {
             "editor.defaultFormatter" = "redhat.vscode-yaml";

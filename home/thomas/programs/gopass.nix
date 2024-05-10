@@ -47,15 +47,7 @@ in
 
             [mounts "cloudpunks"]
                 path = ${config.xdg.dataHome}/gopass/stores/cloudpunks
-            [mounts "restlos"]
-                path = ${config.xdg.dataHome}/gopass/stores/restlos
-            [mounts "adorsys"]
-                path = ${config.xdg.dataHome}/gopass/stores/adorsys
 
-            [mounts "adorsys"]
-                path = ${config.xdg.dataHome}/gopass/stores/webhippie
-            [mounts "adorsys"]
-                path = ${config.xdg.dataHome}/gopass/stores/boerger
             [mounts "gopad"]
                 path = ${config.xdg.dataHome}/gopass/stores/gopad
             [mounts "kleister"]

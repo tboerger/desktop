@@ -3,6 +3,7 @@
 {
   imports = [
     ./act.nix
+    ./citrix.nix
     ./clouds.nix
     ./develop.nix
     ./dircolors.nix
